@@ -1,0 +1,3 @@
+# Drag this folder into Netlify “Deploy manually”, or connect Git and set publish directory to “.” (root).
+[build]
+  publish = "."

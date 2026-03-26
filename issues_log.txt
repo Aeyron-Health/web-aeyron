@@ -1,0 +1,26 @@
+AEYRON Health — issues log (project root)
+
+2026-03-25 — Remove “Co-Founder” from titles
+- Problem: User wanted no “Co-Founder” wording on team roles.
+- Solution: In founders.html, changed CEO/CTO/COO lines to drop “& Co-Founder” (Pingash, Vansh, Siddharth). CMO line unchanged.
+
+Path: /Users/pingashvohra/Desktop/aeyron health/ (Finder: Desktop → aeyron health). Open this folder in Cursor if the file tree looks empty elsewhere.
+
+2026-03-25 — Vercel static deploy (founders + dashboard mockups)
+- Problem: Site on Vercel was missing founders page and the clinician dashboard section (mockups live in founders.html only).
+- Root cause: Deployed repo or upload did not include the full project root (need index.html, founders.html, logos/, same folder).
+- Solution: Added vercel.json (cleanUrls) at project root. Redeploy after git push with Root Directory = this folder (or repo root if these files are at repo root). No build command; static HTML. URLs: / and /founders (cleanUrls strips .html).
+
+2026-03-25 — Founders: remove institutional logo tiles + hosting
+- Problem: UW / GWU / Velocity logo row on founders looked bad; user wants to deploy the site.
+- Solution: Removed that whole row from founders.html, deleted logos/uwaterloo.svg and logos/gwu.svg (velocity.png kept for index.html team section). Added netlify.toml with publish = "." so drag-and-drop or Git deploys the folder as a static site.
+
+2026-03-25 — Founders page felt like “no changes” / bloated dump
+- Problem: founders.html embedded ~3.3k lines by pasting the entire landing CSS; hard to trust, looked like noise; easy to think nothing real shipped.
+- Root cause: Full index stylesheet was concatenated instead of only the rules this page uses.
+- Solution: Replaced founders.html with a lean ~650-line self-contained file: same tokens, nav, cursor, .rv, steam logos, footer, mockups, active Founders tab (teal underline). Theme init: invalid/missing localStorage → light. Product section on subtle bg2 band.
+
+2026-03-25 — Founders page & site sync
+- Problem: Project had no index.html; logos/ was empty; institutional assets needed for index + founders.
+- Root cause: Landing assets lived in Downloads and MCP asset cache; not yet copied into this folder.
+- Solution: Copied Downloads/index.html (aeyronhealth.co, contains “The First Warning”) into project root as index.html. Populated logos/ from saved partner marks + simple UW/GWU SVG wordmarks. Nav on index updated with Founders links only (two insertion points).
