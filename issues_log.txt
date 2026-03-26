@@ -4,6 +4,10 @@ AEYRON Health — issues log (project root)
 - Problem: User wanted no “Co-Founder” wording on team roles.
 - Solution: In founders.html, changed CEO/CTO/COO lines to drop “& Co-Founder” (Pingash, Vansh, Siddharth). CMO line unchanged.
 
+2026-03-25 — Local git repo for Vercel deploy
+- Problem: User wanted GitHub + Vercel setup automated.
+- Solution: Initialized a dedicated git repo in this folder only (separate from home-directory git). Initial commit includes index.html, founders.html, logos/, vercel.json, netlify.toml, issues_log, .gitignore. User must create an empty GitHub repo, add remote, and push (requires their credentials).
+
 Path: /Users/pingashvohra/Desktop/aeyron health/ (Finder: Desktop → aeyron health). Open this folder in Cursor if the file tree looks empty elsewhere.
 
 2026-03-25 — Vercel static deploy (founders + dashboard mockups)
