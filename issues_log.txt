@@ -1,5 +1,10 @@
 AEYRON Health — issues log (project root)
 
+2026-03-28 — Clinical intelligence: four local screenshots; remove broken Devpost pair
+- Problem: Two Devpost CloudFront gallery images (494, 495) did not paste or load reliably; section needed the four real App Clip UI shots.
+- Root cause: Remote asset URLs were fragile; user had correct screenshots locally.
+- Solution: Added `assets/platform-clinical-1.png` … `4.png` (copied from workspace images) and pointed `#s-platform` `.plat-grid` at those files only; removed all four CloudFront `src`s. Set width/height from actual PNG dimensions; kept `.plat-shot.rv` for stagger animation.
+
 2026-03-28 — Prototype PNG: AI background removal (rembg)
 - Problem: User asset had checkerboard/watermark/sparkle baked in; needed product-only transparent PNG.
 - Root cause: Flattened “transparency” pattern in raster file, not true alpha.
