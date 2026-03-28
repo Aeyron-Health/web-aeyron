@@ -1040,21 +1040,39 @@
         background: transparent;
         border: none;
         box-shadow: none;
-        touch-action: none
+        touch-action: none;
+        isolation: isolate
     }
 
     .pebble-persp {
         width: 100%;
-        perspective: 900px;
-        perspective-origin: 50% 45%;
+        perspective: 1000px;
+        perspective-origin: 50% 42%;
         display: flex;
         flex-direction: column;
         align-items: center
     }
 
+    .pebble-float {
+        transform-style: preserve-3d;
+        animation: pebbleFloat 5.2s ease-in-out infinite;
+        will-change: transform
+    }
+
+    @keyframes pebbleFloat {
+        0%, 100% {
+            transform: translateY(0) rotateX(4deg) rotateY(-10deg)
+        }
+
+        50% {
+            transform: translateY(-14px) rotateX(6deg) rotateY(10deg)
+        }
+    }
+
     .pebble-stage {
         transform-style: preserve-3d;
-        will-change: transform
+        will-change: transform;
+        backface-visibility: hidden
     }
 
     .pebble-img {
@@ -1065,7 +1083,19 @@
         border-radius: 48% / 38%;
         user-select: none;
         -webkit-user-drag: none;
-        filter: drop-shadow(0 28px 48px rgba(0, 0, 0, .55)) drop-shadow(0 0 40px rgba(0, 191, 165, .12))
+        vertical-align: middle;
+        animation: pebbleShadow 5.2s ease-in-out infinite;
+        filter: drop-shadow(0 36px 52px rgba(0, 0, 0, .65)) drop-shadow(0 18px 28px rgba(0, 0, 0, .4)) drop-shadow(0 0 36px rgba(0, 191, 165, .14))
+    }
+
+    @keyframes pebbleShadow {
+        0%, 100% {
+            filter: drop-shadow(0 32px 48px rgba(0, 0, 0, .62)) drop-shadow(0 14px 22px rgba(0, 0, 0, .38)) drop-shadow(0 0 32px rgba(0, 191, 165, .1))
+        }
+
+        50% {
+            filter: drop-shadow(0 48px 64px rgba(0, 0, 0, .7)) drop-shadow(0 24px 36px rgba(0, 0, 0, .45)) drop-shadow(0 0 48px rgba(0, 229, 200, .16))
+        }
     }
 
     .pebble-hint {
@@ -2164,6 +2194,92 @@
         pointer-events: none
     }
 
+    #s-platform {
+        background: var(--bg);
+        padding: 88px 60px 72px;
+        position: relative;
+        border-top: 1px solid var(--border-subtle)
+    }
+
+    #s-platform::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(180deg, transparent 0%, rgba(0, 191, 165, .02) 50%, transparent 100%);
+        pointer-events: none
+    }
+
+    .plat-wrap {
+        max-width: 1200px;
+        margin: 0 auto;
+        position: relative;
+        z-index: 1
+    }
+
+    .plat-head {
+        text-align: center;
+        margin-bottom: 40px
+    }
+
+    .plat-lbl {
+        font-family: 'Space Mono', monospace;
+        font-size: .6rem;
+        letter-spacing: .3em;
+        text-transform: uppercase;
+        color: var(--teal-hi);
+        margin-bottom: 18px
+    }
+
+    .plat-h {
+        font-family: 'Playfair Display', serif;
+        font-size: clamp(2rem, 4vw, 3rem);
+        font-weight: 400;
+        line-height: 1.2;
+        color: var(--text)
+    }
+
+    .plat-h em {
+        font-style: italic;
+        color: var(--teal-hi)
+    }
+
+    .plat-track {
+        margin: 0 -8px;
+        padding: 0 8px
+    }
+
+    .plat-scroll {
+        display: flex;
+        gap: 20px;
+        overflow-x: auto;
+        padding: 8px 4px 22px;
+        scroll-snap-type: x mandatory;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: thin;
+        scrollbar-color: rgba(0, 191, 165, .35) transparent
+    }
+
+    .plat-scroll::-webkit-scrollbar {
+        height: 6px
+    }
+
+    .plat-scroll::-webkit-scrollbar-thumb {
+        background: rgba(0, 191, 165, .35);
+        border-radius: 3px
+    }
+
+    .plat-shot {
+        flex: 0 0 auto;
+        width: min(320px, 78vw);
+        max-height: 520px;
+        object-fit: contain;
+        border-radius: 14px;
+        border: 1px solid rgba(0, 191, 165, .18);
+        box-shadow: 0 12px 40px rgba(0, 0, 0, .35), 0 0 0 1px rgba(0, 191, 165, .06);
+        scroll-snap-align: start;
+        background: rgba(0, 0, 0, .15)
+    }
+
     #s-team {
         background: var(--bg);
         padding: 88px 60px 72px;
@@ -2283,10 +2399,10 @@
     }
 
     #s-founders {
-        background: var(--bg);
+        background: #0C0C0C;
         padding: 88px 60px 72px;
         position: relative;
-        border-top: 1px solid var(--border-subtle)
+        border-top: 1px solid rgba(0, 191, 165, 0.12)
     }
 
     #s-founders::before {
@@ -2323,7 +2439,7 @@
         font-size: clamp(2rem, 4vw, 3.2rem);
         font-weight: 400;
         line-height: 1.2;
-        color: var(--text)
+        color: var(--white)
     }
 
     .sf-h em {
@@ -2338,24 +2454,25 @@
         justify-items: center
     }
 
-    .sf-card {
+    #s-founders .sf-card {
         width: 100%;
         max-width: 340px;
-        background: var(--card);
-        border: 1px solid var(--border-subtle);
+        background: rgba(255, 255, 255, 0.04);
+        border: 1px solid rgba(0, 191, 165, 0.22);
         border-radius: 16px;
         padding: 28px 24px;
         display: flex;
         flex-direction: column;
         align-items: center;
         text-align: center;
-        transition: transform .35s ease, box-shadow .35s ease, border-color .35s ease
+        transition: transform .35s ease, box-shadow .35s ease, border-color .35s ease;
+        box-shadow: 0 0 0 1px rgba(0, 191, 165, 0.06)
     }
 
-    .sf-card:hover {
+    #s-founders .sf-card:hover {
         transform: translateY(-6px);
-        box-shadow: 0 20px 48px rgba(0, 0, 0, .35), 0 0 0 1px var(--teal-glow), 0 0 32px var(--teal-ghost);
-        border-color: rgba(0, 191, 165, .35)
+        box-shadow: 0 24px 56px rgba(0, 0, 0, .45), 0 0 0 1px rgba(0, 229, 200, 0.2), 0 0 40px var(--teal-ghost);
+        border-color: rgba(0, 229, 200, 0.35)
     }
 
     .sf-av {
@@ -2375,11 +2492,11 @@
         box-shadow: 0 8px 24px rgba(0, 191, 165, .2)
     }
 
-    .sf-name {
+    #s-founders .sf-name {
         font-family: 'Playfair Display', serif;
         font-size: 1.25rem;
         font-weight: 700;
-        color: var(--text);
+        color: var(--white);
         margin-bottom: .35rem
     }
 
@@ -2392,12 +2509,12 @@
         margin-bottom: 14px
     }
 
-    .sf-bio {
+    #s-founders .sf-bio {
         font-family: 'Inter', sans-serif;
         font-size: .88rem;
         font-weight: 300;
         line-height: 1.65;
-        color: var(--text-muted);
+        color: #9CA3AF;
         margin-bottom: 18px
     }
 
@@ -2644,6 +2761,10 @@
             padding:80px 24px
         }
 
+        #s-platform {
+            padding: 80px 24px
+        }
+
         #s-founders {
             padding: 80px 24px
         }
@@ -2876,7 +2997,7 @@
                     <a href="#s8">Traction</a>
                 </li>
                 <li>
-                    <a href="founders.html">Founders</a>
+                    <a href="#s-founders">Founders</a>
                 </li>
             </ul>
             <button type="button" class="theme-toggle" id="themeToggle" aria-label="Toggle dark/light mode" title="Toggle theme">☀</button>
@@ -2889,7 +3010,7 @@
                 <a href="#s7">How It Works</a>
                 <a href="#s-team">The Team</a>
                 <a href="#s8">Traction</a>
-                <a href="founders.html">Founders</a>
+                <a href="#s-founders">Founders</a>
             </div>
         </div>
     </nav>
@@ -3140,8 +3261,10 @@
                 </div>
                 <div class="mirror-frame" id="pebble-root">
                     <div class="pebble-persp">
-                        <div class="pebble-stage" id="pebble-stage">
-                            <img class="pebble-img" src="prototype.png" alt="Respira pebble hardware prototype" width="500" height="500" draggable="false">
+                        <div class="pebble-float" id="pebble-float">
+                            <div class="pebble-stage" id="pebble-stage">
+                                <img class="pebble-img" src="prototype.png" alt="Respira pebble hardware prototype" width="500" height="500" draggable="false">
+                            </div>
                         </div>
                         <p class="pebble-hint" id="pebble-hint">Drag to rotate</p>
                     </div>
@@ -3492,6 +3615,23 @@
         </div>
     </section>
 
+    <section id="s-platform">
+        <div class="plat-wrap">
+            <div class="plat-head">
+                <div class="plat-lbl rv">The Platform</div>
+                <h2 class="plat-h rv">Clinical intelligence, <em>delivered</em>.</h2>
+            </div>
+            <div class="plat-track">
+                <div class="plat-scroll">
+                    <img class="plat-shot rv" src="https://d112y698adiu2z.cloudfront.net/photos/production/software_photos/004/409/492/datas/original.jpeg" alt="AEYRON dashboard interface" width="800" height="600" loading="lazy" decoding="async">
+                    <img class="plat-shot rv" src="https://d112y698adiu2z.cloudfront.net/photos/production/software_photos/004/409/493/datas/original.jpeg" alt="AEYRON clinical view" width="800" height="600" loading="lazy" decoding="async">
+                    <img class="plat-shot rv" src="https://d112y698adiu2z.cloudfront.net/photos/production/software_photos/004/409/601/datas/original.jpeg" alt="AEYRON app screen" width="800" height="600" loading="lazy" decoding="async">
+                    <img class="plat-shot rv" src="https://d112y698adiu2z.cloudfront.net/photos/production/software_photos/004/409/504/datas/original.png" alt="AEYRON platform" width="800" height="600" loading="lazy" decoding="async">
+                </div>
+            </div>
+        </div>
+    </section>
+
     <section id="s-team">
         <div class="steam-wrap">
             <div class="steam-head">
@@ -3515,7 +3655,7 @@
                     </div>
                     <div class="steam-logo-item rv">
                         <div class="steam-logo-box">
-                            <img src="logos/loreal.png" alt="AMD" loading="lazy">
+                            <img src="logos/amd.png" alt="AMD" loading="lazy">
                         </div>
                         <span class="steam-logo-name">AMD</span>
                     </div>
@@ -4116,6 +4256,9 @@
     });
     document.querySelectorAll('.sf-card.rv').forEach((el, i) => {
         el.style.transitionDelay = (i * .1) + 's'
+    });
+    document.querySelectorAll('.plat-shot.rv').forEach((el, i) => {
+        el.style.transitionDelay = (i * .08) + 's'
     });
     (function() {
         const cv = document.getElementById('wcv');

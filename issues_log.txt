@@ -1,5 +1,10 @@
 AEYRON Health — issues log (project root)
 
+2026-03-28 — AMD asset, dark founders, 3D pebble, platform screenshots, remove founders.html
+- Problem: AMD logo used wrong file (loreal.png); founders cards read as white in light theme; pebble felt flat; needed Devpost UI gallery; standalone founders page duplicated index and listed extra person; nav linked to founders.html.
+- Root cause: Legacy img src; light theme --card is near-white; minimal pebble CSS; no platform section; founders.html was legacy.
+- Solution: Replaced AMD src with logos/amd.png and saved correct AMD mark to logos/amd.png. Scoped #s-founders to dark background and teal-bordered cards; white names, gray bios. Added pebble-float + pebbleShadow animations and float wrapper around #pebble-stage; kept drag on stage. New #s-platform horizontal scroll with four Devpost CloudFront URLs. Deleted founders.html; nav Founders → #s-founders. Stagger on .plat-shot.rv. Verified cursor lerp 0.2.
+
 2026-03-28 — Landing: team logo cleanup, founders section, pebble viewer, cursor
 - Problem: Duplicate L'Oréal row misused amd.png; product section needed founder bios; mirror mockup replaced by prototype asset; custom cursor felt sluggish.
 - Root cause: Legacy logo HTML error; no founders block on index; mirror UI was illustrative only; cursor ring used 0.1 lerp.
