@@ -1031,7 +1031,7 @@
         width: 250px;
         height: 370px;
         max-width: min(94vw, 250px);
-        padding: 0 0 10px;
+        padding: 0;
         background: transparent;
         border: none;
         border-radius: 0;
@@ -1107,23 +1107,6 @@
         -webkit-user-drag: none;
         vertical-align: middle;
         filter: drop-shadow(0 30px 60px rgba(0, 0, 0, .5))
-    }
-
-    .pebble-hint {
-        display: block;
-        margin-top: 14px;
-        font-family: 'Space Mono', monospace;
-        font-size: .55rem;
-        letter-spacing: .14em;
-        text-transform: uppercase;
-        color: var(--text-muted);
-        opacity: .85;
-        transition: opacity .4s ease
-    }
-
-    .pebble-hint.gone {
-        opacity: 0;
-        pointer-events: none
     }
 
     .ann {
@@ -3285,7 +3268,6 @@
                                 <img class="pebble-img" src="prototype.png" alt="Respira pebble hardware prototype" width="800" height="800" draggable="false">
                             </div>
                         </div>
-                        <span class="pebble-hint" id="pebble-hint">Drag to rotate</span>
                     </div>
                 </div>
             </div>
@@ -4394,7 +4376,6 @@
     })();
     (function() {
         const stage = document.getElementById('pebble-stage'),
-            hint = document.getElementById('pebble-hint'),
             root = document.getElementById('pebble-root');
         if (!stage || !root)
             return;
@@ -4418,8 +4399,6 @@
             rotY += dx * sens;
             rotX -= dy * sens;
             rotX = Math.max(-maxX, Math.min(maxX, rotX));
-            if (hint && (Math.abs(dx) > 2 || Math.abs(dy) > 2))
-                hint.classList.add('gone');
             apply()
         }
         function onUp(e) {

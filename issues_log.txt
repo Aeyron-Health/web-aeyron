@@ -1,5 +1,9 @@
 AEYRON Health — issues log (project root)
 
+2026-03-28 — Device: remove “Drag to rotate” hint
+- Problem: User did not want on-screen drag hint text.
+- Solution: Removed `#pebble-hint` span, `.pebble-hint` CSS, and hint handling in pebble pointer script; trimmed `.mirror-frame` bottom padding.
+
 2026-03-28 — Pebble container 250×370, float + shadow per spec
 - Problem: Device graphic felt undersized vs annotations; user wanted legacy mirror dimensions and simpler float/shadow.
 - Solution: `.mirror-frame` fixed at 250px×370px; `pebble-float` uses `@keyframes pebble-float` (translateY 0 / -14px, 5s); `.pebble-img` uses single `filter: drop-shadow(0 30px 60px rgba(0,0,0,.5))`, no animated filter; hint as `<span class="pebble-hint">`. No legacy mirror HUD markup present.
