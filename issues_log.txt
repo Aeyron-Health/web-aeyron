@@ -1,5 +1,10 @@
 AEYRON Health — issues log (project root)
 
+2026-03-28 — Revert: new pebble PNG swap
+- Problem: User asked to undo the replacement of `prototype.png` with the supplied 250×370 asset and related `<img>` dimension change.
+- Solution: `git revert` of commit c4b3d2c (`fix: new pebble PNG 250×370`); prior raster and `width="800" height="800"` restored.
+
+
 2026-03-28 — Device: remove “Drag to rotate” hint
 - Problem: User did not want on-screen drag hint text.
 - Solution: Removed `#pebble-hint` span, `.pebble-hint` CSS, and hint handling in pebble pointer script; trimmed `.mirror-frame` bottom padding.
