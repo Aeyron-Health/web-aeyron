@@ -1,5 +1,9 @@
 AEYRON Health — issues log (project root)
 
+2026-03-28 — Favicon: navy logo PNG + SVG ring, cache bust
+- Problem: User saw cached light/cyan favicon; wanted navy mark from supplied asset and immediate refresh.
+- Solution: Added `favicon.png` from user asset; updated `favicon.svg` with cream ring (`#EFE8DD`) + navy `#152238` + white wave; `<head>` uses PNG first then SVG with `?v=4`; `apple-touch-icon` and nav logo use `favicon.png?v=4`.
+
 2026-03-28 — Pebble STL: small product logo texture
 - Problem: User wanted the circular wave mark applied like a tiny logo on the 3D pebble.
 - Solution: Added `assets/pebble-logo.png`; `pebble-stl.js` loads it via `TextureLoader`, small `PlaneGeometry` (~4.8% of model max dimension, image aspect), `MeshBasicMaterial` with transparency + polygon offset; parented to STL mesh at bottom-front from geometry `boundingBox`; `rotation.y = π` for correct facing.
