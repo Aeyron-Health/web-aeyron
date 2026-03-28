@@ -1,5 +1,10 @@
 AEYRON Health — issues log (project root)
 
+2026-03-28 — Pebble viewer: larger device, no frame oval
+- Problem: Product read small inside pill-shaped gray frame; user wanted device filling vertical space with only shadow on section background.
+- Root cause: `.mirror-frame` used `border-radius: 999px`, gradient fill, and inset shadow; `.pebble-img` capped at 480px with auto height.
+- Solution: Fixed frame ~390×510px, transparent frame (no border/oval bg); flex layout so image uses `object-fit: contain` at ~100% in stage; softer float keyframes and slightly lighter drop-shadow filters; mobile uses `min(510px, 58vh)`.
+
 2026-03-28 — Favicon head tags
 - Problem: Needed explicit favicon + Apple touch icon in `<head>`.
 - Solution: Confirmed `rel="icon"` → `favicon.svg`; added `<link rel="apple-touch-icon" href="favicon.svg">` after it.
