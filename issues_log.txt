@@ -1,5 +1,9 @@
 AEYRON Health — issues log (project root)
 
+2026-03-28 — Favicon head tags
+- Problem: Needed explicit favicon + Apple touch icon in `<head>`.
+- Solution: Confirmed `rel="icon"` → `favicon.svg`; added `<link rel="apple-touch-icon" href="favicon.svg">` after it.
+
 2026-03-28 — Device: remove overlaid favicon lockup
 - Problem: User wanted the circular wave logo removed from the pebble graphic area.
 - Root cause: Prior change added `.pebble-logo-lockup` with `favicon.svg` over `prototype.png`.
