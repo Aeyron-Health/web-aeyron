@@ -1,5 +1,9 @@
 AEYRON Health — issues log (project root)
 
+2026-03-28 — Pebble: wide horizontal capsule frame
+- Problem: Device viewer felt narrow vs reference; user wanted extended horizontal “pill” presentation.
+- Solution: `.mirror-frame` set to max ~580px with `border-radius: 999px`, horizontal padding, subtle gradient + teal border/shadow; `.pebble-img` max-width up to 480px with wider silhouette radius; mobile tighter padding.
+
 2026-03-28 — Platform: two screenshots only, dark band, pebble size
 - Problem: Third Devpost image showed a face (even when filtered); fourth was terminal/code and clipped; platform section read light; user wanted pebble slightly larger with multiply blend on dark.
 - Root cause: Four-up horizontal scroll; outer two assets were wrong for marketing; #s-platform used var(--bg).
