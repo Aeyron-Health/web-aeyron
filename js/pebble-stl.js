@@ -6,12 +6,15 @@ import { STLLoader } from 'three/addons/loaders/STLLoader.js';
 
 const DEG = Math.PI / 180;
 
+/** Smaller on-screen = more padding (matches reference framing). */
+const FIT_SCALE = 1.06;
+
 function fitMeshToPivot(meshWrapper, pivot) {
     meshWrapper.updateMatrixWorld(true);
     const box = new THREE.Box3().setFromObject(meshWrapper);
     const size = box.getSize(new THREE.Vector3());
     const maxDim = Math.max(size.x, size.y, size.z, 1e-6);
-    const scale = 1.55 / maxDim;
+    const scale = FIT_SCALE / maxDim;
     meshWrapper.scale.setScalar(scale);
     meshWrapper.updateMatrixWorld(true);
     const box2 = new THREE.Box3().setFromObject(meshWrapper);
@@ -27,23 +30,30 @@ function init() {
         return;
 
     const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(40, 1, 0.02, 200);
-    camera.position.set(0, 0.08, 2.35);
+    const camera = new THREE.PerspectiveCamera(36, 1, 0.02, 200);
+    camera.position.set(0.06, 0.04, 2.72);
 
     const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     renderer.setClearColor(0x000000, 0);
     renderer.outputColorSpace = THREE.SRGBColorSpace;
     renderer.toneMapping = THREE.ACESFilmicToneMapping;
-    renderer.toneMappingExposure = 1.05;
+    renderer.toneMappingExposure = 0.98;
     wrap.appendChild(renderer.domElement);
 
-    scene.add(new THREE.AmbientLight(0xffffff, 0.52));
-    const key = new THREE.DirectionalLight(0xffffff, 0.92);
-    key.position.set(1.1, 1.8, 1.2);
+    scene.add(new THREE.AmbientLight(0xffffff, 0.4));
+    scene.add(new THREE.HemisphereLight(0xffffff, 0x2a3038, 0.28));
+
+    const key = new THREE.DirectionalLight(0xffffff, 0.78);
+    key.position.set(0.4, 1.25, 0.55);
     scene.add(key);
-    const rim = new THREE.DirectionalLight(0xb8d4ff, 0.38);
-    rim.position.set(-1.4, 0.2, -1.1);
+
+    const fill = new THREE.DirectionalLight(0xf2f4f8, 0.28);
+    fill.position.set(-0.85, 0.35, 0.45);
+    scene.add(fill);
+
+    const rim = new THREE.DirectionalLight(0xc8d4e8, 0.18);
+    rim.position.set(-0.2, -0.4, -1.2);
     scene.add(rim);
 
     const pivot = new THREE.Group();
@@ -53,8 +63,9 @@ function init() {
     let rotY = 0;
     const sens = 0.45;
     const maxX = 25;
-    const baseX = -16 * DEG;
-    const baseY = 20 * DEG;
+    /** Upright egg, ~18° Y to show front + left profile (reference). */
+    const baseX = -9 * DEG;
+    const baseY = 18 * DEG;
 
     function applyRotation() {
         pivot.rotation.set(baseX + rotX * DEG, baseY + rotY * DEG, 0, 'YXZ');
@@ -71,9 +82,9 @@ function init() {
             geometry.computeVertexNormals();
             geometry.center();
             const mat = new THREE.MeshStandardMaterial({
-                color: 0xededed,
-                metalness: 0.14,
-                roughness: 0.44
+                color: 0xf7f7f6,
+                metalness: 0.03,
+                roughness: 0.78
             });
             const mesh = new THREE.Mesh(geometry, mat);
             const meshWrapper = new THREE.Group();

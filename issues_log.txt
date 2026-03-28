@@ -1,5 +1,9 @@
 AEYRON Health — issues log (project root)
 
+2026-03-28 — Pebble STL: match reference render
+- Problem: User wanted WebGL pebble to match reference (matte white, soft top-front light, upright with ~18° yaw showing left side, more frame padding).
+- Solution: Tuned `pebble-stl.js`: lower FIT_SCALE (~1.06), softer ACES exposure, hemisphere + key (top-front) + fill + faint rim; matte material (roughness .78, metalness .03); base pose baseX −9°, baseY 18°; camera pulled back with narrower FOV.
+
 2026-03-28 — Device: PebbleDevice.stl + Three.js viewer
 - Problem: User wanted the pebble shown as an interactive STL with correct orientation and sizing in the 250×370 frame.
 - Solution: Added `PebbleDevice.stl` at site root; `js/pebble-stl.js` (Three.js + STLLoader) renders into `#pebble-canvas-wrap`, fits mesh to view, base YXZ rotation for presentation, pointer drag on `#pebble-root`; import map for unpkg `three`; CSS drop-shadow on canvas wrap; removed legacy CSS-transform drag on `#pebble-stage`. On load failure, falls back to `prototype.png`.
