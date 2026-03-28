@@ -1,5 +1,10 @@
 AEYRON Health — issues log (project root)
 
+2026-03-28 — Device render PNG, platform carousel symmetry, privacy on dashboard shot
+- Problem: Pebble area should use updated device render; platform row looked asymmetric (last image clipped); dashboard screenshot showed identifiable face.
+- Root cause: Asset path unchanged from prior file; scroll strip had minimal horizontal padding; third Devpost image included a portrait.
+- Solution: Refreshed prototype.png from supplied device render. Dark theme: mix-blend-mode multiply on .pebble-img so studio grey blends into section. Platform: symmetric scroll padding, center snap, width calc for even margins; .plat-shot-privacy on third image with brightened, desaturated, blurred filter.
+
 2026-03-28 — AMD asset, dark founders, 3D pebble, platform screenshots, remove founders.html
 - Problem: AMD logo used wrong file (loreal.png); founders cards read as white in light theme; pebble felt flat; needed Devpost UI gallery; standalone founders page duplicated index and listed extra person; nav linked to founders.html.
 - Root cause: Legacy img src; light theme --card is near-white; minimal pebble CSS; no platform section; founders.html was legacy.
