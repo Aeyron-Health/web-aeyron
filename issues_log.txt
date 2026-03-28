@@ -1,5 +1,9 @@
 AEYRON Health — issues log (project root)
 
+2026-03-28 — Pebble STL: small product logo texture
+- Problem: User wanted the circular wave mark applied like a tiny logo on the 3D pebble.
+- Solution: Added `assets/pebble-logo.png`; `pebble-stl.js` loads it via `TextureLoader`, small `PlaneGeometry` (~4.8% of model max dimension, image aspect), `MeshBasicMaterial` with transparency + polygon offset; parented to STL mesh at bottom-front from geometry `boundingBox`; `rotation.y = π` for correct facing.
+
 2026-03-28 — Pebble drag: full 360° rotation
 - Problem: User wanted unrestricted rotation (360°), not ±25° pitch clamp.
 - Solution: Removed `maxX` clamp in `js/pebble-stl.js` so drag accumulates freely on both axes (Euler YXZ).
