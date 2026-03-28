@@ -2,3 +2,6 @@
 *.log
 .vercel
 .env*.local
+.venv-img/
+.u2net/
+prototype_src.png

@@ -1,5 +1,10 @@
 AEYRON Health — issues log (project root)
 
+2026-03-28 — Prototype PNG: AI background removal (rembg)
+- Problem: User asset had checkerboard/watermark/sparkle baked in; needed product-only transparent PNG.
+- Root cause: Flattened “transparency” pattern in raster file, not true alpha.
+- Solution: Local venv with `rembg` (u2net) + `U2NET_HOME` in project; wrote `prototype.png` with alpha. Removed `mix-blend-mode: multiply` on `.pebble-img` so white device renders correctly on navy. Gitignore `.venv-img/`, `.u2net/`, `prototype_src.png`.
+
 2026-03-28 — Platform: +2 Devpost shots; new transparent pebble PNG
 - Problem: User wanted two more Clinical intelligence gallery images (Devpost-style, no faces) and a new device render for `prototype.png`.
 - Solution: Added CloudFront `.../004/409/494/` and `495/` JPEGs (same submission series as 492–493); 2×2 grid, max-width 980px. Replaced `prototype.png` with supplied Gemini render; removed `.pebble-crop` zoom hack so transparent PNG displays cleanly with rounded rect + drop-shadow + dark multiply.
