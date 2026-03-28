@@ -1,5 +1,9 @@
 AEYRON Health — issues log (project root)
 
+2026-03-28 — Pebble viewer: cache-bust module script
+- Problem: User still saw old behavior (logo on mesh) because browsers cached `pebble-stl.js`.
+- Solution: Added `?v=6` to `<script type="module" src="js/pebble-stl.js?v=6">` so deploys pull fresh viewer code.
+
 2026-03-28 — Pebble STL: remove product logo plane
 - Problem: User wanted the textured logo removed from the 3D pebble mesh.
 - Solution: Removed `TextureLoader` / logo plane block from `js/pebble-stl.js`; deleted `assets/pebble-logo.png`.
