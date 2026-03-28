@@ -13,6 +13,14 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore-compat.js"></script>
+    <script type="importmap">
+    {
+        "imports": {
+            "three": "https://unpkg.com/three@0.170.0/build/three.module.js",
+            "three/addons/": "https://unpkg.com/three@0.170.0/examples/jsm/"
+        }
+    }
+    </script>
     <style>
     *, *::before, *::after {
         box-sizing: border-box;
@@ -1091,6 +1099,23 @@
         transform-style: preserve-3d;
         will-change: transform;
         backface-visibility: hidden
+    }
+
+    .pebble-canvas-wrap {
+        width: 100%;
+        height: 100%;
+        min-height: 0;
+        position: relative;
+        overflow: hidden;
+        border-radius: 0;
+        filter: drop-shadow(0 30px 60px rgba(0, 0, 0, .5))
+    }
+
+    .pebble-canvas-wrap canvas {
+        display: block;
+        width: 100%;
+        height: 100%;
+        vertical-align: top
     }
 
     .pebble-img {
@@ -2643,7 +2668,7 @@
             padding: 0 0 8px
         }
 
-        .pebble-img {
+        .pebble-canvas-wrap, .pebble-img {
             max-width: 100%;
             max-height: 100%
         }
@@ -3261,7 +3286,7 @@
                     <div class="pebble-persp">
                         <div class="pebble-float" id="pebble-float">
                             <div class="pebble-stage" id="pebble-stage">
-                                <img class="pebble-img" src="prototype.png" alt="Respira pebble hardware prototype" width="250" height="370" draggable="false">
+                                <div class="pebble-canvas-wrap" id="pebble-canvas-wrap"></div>
                             </div>
                         </div>
                     </div>
@@ -4370,56 +4395,6 @@
             }
         }, 1000);
     })();
-    (function() {
-        const stage = document.getElementById('pebble-stage'),
-            root = document.getElementById('pebble-root');
-        if (!stage || !root)
-            return;
-        let rotX = 0,
-            rotY = 0,
-            dragging = false,
-            lx = 0,
-            ly = 0;
-        const sens = .45,
-            maxX = 25;
-        function apply() {
-            stage.style.transform = 'rotateX(' + rotX + 'deg) rotateY(' + rotY + 'deg)'
-        }
-        function onMove(e) {
-            if (!dragging)
-                return;
-            const dx = e.clientX - lx,
-                dy = e.clientY - ly;
-            lx = e.clientX;
-            ly = e.clientY;
-            rotY += dx * sens;
-            rotX -= dy * sens;
-            rotX = Math.max(-maxX, Math.min(maxX, rotX));
-            apply()
-        }
-        function onUp(e) {
-            dragging = false;
-            try {
-                root.releasePointerCapture(e.pointerId)
-            } catch (err) {}
-            root.removeEventListener('pointermove', onMove);
-            root.removeEventListener('pointerup', onUp);
-            root.removeEventListener('pointercancel', onUp)
-        }
-        function onDown(e) {
-            if (e.pointerType === 'mouse' && e.button !== 0)
-                return;
-            dragging = true;
-            lx = e.clientX;
-            ly = e.clientY;
-            root.setPointerCapture(e.pointerId);
-            root.addEventListener('pointermove', onMove);
-            root.addEventListener('pointerup', onUp);
-            root.addEventListener('pointercancel', onUp)
-        }
-        root.addEventListener('pointerdown', onDown);
-        apply()
-    })();
     ScrollTrigger.create({
         trigger: '#s7',
         start: 'top center',
@@ -4485,5 +4460,6 @@
         })
     })();
     </script>
+    <script type="module" src="js/pebble-stl.js"></script>
 </body>
 </html>

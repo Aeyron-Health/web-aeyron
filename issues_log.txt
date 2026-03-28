@@ -1,5 +1,9 @@
 AEYRON Health — issues log (project root)
 
+2026-03-28 — Device: PebbleDevice.stl + Three.js viewer
+- Problem: User wanted the pebble shown as an interactive STL with correct orientation and sizing in the 250×370 frame.
+- Solution: Added `PebbleDevice.stl` at site root; `js/pebble-stl.js` (Three.js + STLLoader) renders into `#pebble-canvas-wrap`, fits mesh to view, base YXZ rotation for presentation, pointer drag on `#pebble-root`; import map for unpkg `three`; CSS drop-shadow on canvas wrap; removed legacy CSS-transform drag on `#pebble-stage`. On load failure, falls back to `prototype.png`.
+
 2026-03-28 — Stats strip (#s4): remove hardware cost card
 - Problem: User wanted the hardware cost stat removed from the metrics row.
 - Solution: Deleted the “Hardware Cost Per Unit” `s4-card`; `.s4-grid` is now three columns; at ≤900px added `.s4-card:nth-child(3) { border-right: none }` for the third cell in a 2-column grid.
