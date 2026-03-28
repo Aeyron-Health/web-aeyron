@@ -1,5 +1,9 @@
 AEYRON Health — issues log (project root)
 
+2026-03-28 — Pebble frame 380×500; favicon head verified
+- Problem: User wanted slightly smaller fixed frame than 390×510; confirm SVG favicon + apple-touch only.
+- Solution: `.mirror-frame` set to `width: 380px; height: 500px` (mobile `max-width`/`min(height)` aligned). Head already had single `favicon.svg` icon link + apple-touch-icon; no duplicate `.ico`/`.png`.
+
 2026-03-28 — Pebble viewer: larger device, no frame oval
 - Problem: Product read small inside pill-shaped gray frame; user wanted device filling vertical space with only shadow on section background.
 - Root cause: `.mirror-frame` used `border-radius: 999px`, gradient fill, and inset shadow; `.pebble-img` capped at 480px with auto height.
