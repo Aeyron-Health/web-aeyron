@@ -1,5 +1,10 @@
 AEYRON Health — issues log (project root)
 
+2026-03-28 — Device: remove overlaid favicon lockup
+- Problem: User wanted the circular wave logo removed from the pebble graphic area.
+- Root cause: Prior change added `.pebble-logo-lockup` with `favicon.svg` over `prototype.png`.
+- Solution: Removed wrapper + overlay markup and related CSS; pebble is again a single `prototype.png` inside `#pebble-stage` (contrast/saturation filters unchanged).
+
 2026-03-28 — Device section: wider callout span + brand logo on pebble
 - Problem: Feature callouts (dots) sat too close vertically; prototype PNG showed baked-in device lettering instead of current brand mark; render looked soft.
 - Root cause: Inline `top` values 19–63% compressed the stack; raster included old logo art.
