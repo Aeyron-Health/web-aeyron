@@ -1,5 +1,9 @@
 AEYRON Health — issues log (project root)
 
+2026-03-28 — Platform: +2 Devpost shots; new transparent pebble PNG
+- Problem: User wanted two more Clinical intelligence gallery images (Devpost-style, no faces) and a new device render for `prototype.png`.
+- Solution: Added CloudFront `.../004/409/494/` and `495/` JPEGs (same submission series as 492–493); 2×2 grid, max-width 980px. Replaced `prototype.png` with supplied Gemini render; removed `.pebble-crop` zoom hack so transparent PNG displays cleanly with rounded rect + drop-shadow + dark multiply.
+
 2026-03-28 — Favicon brand: navy dark theme, logo asset, pebble crop
 - Problem: User wanted product photo cropped to device only; nav to use favicon; dark mode palette to match favicon navy (#152238); light mode unchanged.
 - Solution: Replaced inline SVG logo with `favicon.svg` in `.logo-mark`. `[data-theme="dark"]` tokens use #152238 / #1a2a4a / #1e2f52; nav.sc and #s-platform / #s-founders backgrounds aligned. Added `.pebble-crop` with overflow hidden and scaled `.pebble-img` (138% width, negative margins) to trim studio floor/edges without re-exporting PNG.

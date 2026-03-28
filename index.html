@@ -1078,22 +1078,13 @@
         backface-visibility: hidden
     }
 
-    .pebble-crop {
-        overflow: hidden;
-        width: min(100%, 480px);
-        max-width: 100%;
-        border-radius: 42% / 36%;
-        display: block;
-        line-height: 0
-    }
-
     .pebble-img {
         display: block;
-        width: 138%;
-        max-width: none;
+        width: 100%;
+        max-width: min(100%, 480px);
         height: auto;
-        margin: -7% -19% -10% -19%;
-        border-radius: 0;
+        margin: 0 auto;
+        border-radius: 45% / 38%;
         user-select: none;
         -webkit-user-drag: none;
         vertical-align: middle;
@@ -2260,7 +2251,7 @@
         display: grid;
         grid-template-columns: repeat(2, minmax(0, 1fr));
         gap: clamp(20px, 3vw, 32px);
-        max-width: 920px;
+        max-width: 980px;
         margin: 0 auto;
         padding: 8px 0 4px
     }
@@ -3271,9 +3262,7 @@
                     <div class="pebble-persp">
                         <div class="pebble-float" id="pebble-float">
                             <div class="pebble-stage" id="pebble-stage">
-                                <div class="pebble-crop">
-                                    <img class="pebble-img" src="prototype.png" alt="Respira pebble hardware prototype" width="500" height="500" draggable="false">
-                                </div>
+                                <img class="pebble-img" src="prototype.png" alt="Respira pebble hardware prototype" width="800" height="800" draggable="false">
                             </div>
                         </div>
                         <p class="pebble-hint" id="pebble-hint">Drag to rotate</p>
@@ -3634,6 +3623,8 @@
             <div class="plat-grid">
                 <img class="plat-shot rv" src="https://d112y698adiu2z.cloudfront.net/photos/production/software_photos/004/409/492/datas/original.jpeg" alt="AEYRON clinical assessment — live App Clip" width="800" height="600" loading="lazy" decoding="async">
                 <img class="plat-shot rv" src="https://d112y698adiu2z.cloudfront.net/photos/production/software_photos/004/409/493/datas/original.jpeg" alt="AEYRON telemetry — breath rate and alerts" width="800" height="600" loading="lazy" decoding="async">
+                <img class="plat-shot rv" src="https://d112y698adiu2z.cloudfront.net/photos/production/software_photos/004/409/494/datas/original.jpeg" alt="AEYRON platform — Devpost gallery" width="800" height="600" loading="lazy" decoding="async">
+                <img class="plat-shot rv" src="https://d112y698adiu2z.cloudfront.net/photos/production/software_photos/004/409/495/datas/original.jpeg" alt="AEYRON platform — Devpost gallery" width="800" height="600" loading="lazy" decoding="async">
             </div>
         </div>
     </section>
