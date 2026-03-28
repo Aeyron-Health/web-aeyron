@@ -1,5 +1,9 @@
 AEYRON Health — issues log (project root)
 
+2026-03-28 — Stats strip (#s4): remove hardware cost card
+- Problem: User wanted the hardware cost stat removed from the metrics row.
+- Solution: Deleted the “Hardware Cost Per Unit” `s4-card`; `.s4-grid` is now three columns; at ≤900px added `.s4-card:nth-child(3) { border-right: none }` for the third cell in a 2-column grid.
+
 2026-03-28 — Revert: new pebble PNG swap
 - Problem: User asked to undo the replacement of `prototype.png` with the supplied 250×370 asset and related `<img>` dimension change.
 - Solution: `git revert` of commit c4b3d2c (`fix: new pebble PNG 250×370`); prior raster and `width="800" height="800"` restored.

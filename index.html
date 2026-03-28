@@ -765,7 +765,7 @@
 
     .s4-grid {
         display: grid;
-        grid-template-columns: repeat(4, 1fr);
+        grid-template-columns: repeat(3, 1fr);
         border-top: 1px solid var(--border-subtle);
         border-bottom: 1px solid var(--border-subtle)
     }
@@ -2675,6 +2675,10 @@
             border-right:1px solid var(--border-subtle)
         }
 
+        .s4-card:nth-child(3) {
+            border-right:none
+        }
+
         .s4-card:nth-child(n + 3) {
             border-bottom:none
         }
@@ -3153,14 +3157,6 @@
                 <div class="s4-l">Weeks of Detectable Warning</div>
                 <div class="s4-s">Measurable respiratory decline precedes pneumonia hospitalization — Thorax, BMJ 2021 · Movement Disorders 2022</div>
             </div>
-            <div class="s4-card">
-                <div class="s4-n">
-                    ~$
-                    <span class="cu" data-t="80">0</span>
-                </div>
-                <div class="s4-l">Hardware Cost Per Unit</div>
-                <div class="s4-s">Affordable components — Respira mirror unit, ~$160/month subscription for care facilities</div>
-            </div>
         </div>
     </section>
 
@@ -3265,7 +3261,7 @@
                     <div class="pebble-persp">
                         <div class="pebble-float" id="pebble-float">
                             <div class="pebble-stage" id="pebble-stage">
-                                <img class="pebble-img" src="prototype.png" alt="Respira pebble hardware prototype" width="800" height="800" draggable="false">
+                                <img class="pebble-img" src="prototype.png" alt="Respira pebble hardware prototype" width="250" height="370" draggable="false">
                             </div>
                         </div>
                     </div>
