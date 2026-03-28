@@ -1732,32 +1732,34 @@
     }
 
     .s7-steps {
-        max-width: 860px;
+        max-width: 900px;
         margin: 0 auto;
         position: relative;
-        padding-left: 58px
+        padding-left: 64px
     }
 
     .s7-line {
         position: absolute;
-        left: 19px;
+        left: 22.5px;
         top: 0;
         bottom: 0;
-        width: 1px;
-        background: rgba(0, 191, 165, .12)
+        width: 3px;
+        border-radius: 3px;
+        background: rgba(0, 191, 165, .14)
     }
 
     [data-theme="light"] .s7-line {
-        background: rgba(0, 122, 110, .25)
+        background: rgba(0, 122, 110, .28)
     }
 
     .s7-line-fill {
         position: absolute;
-        left: 19px;
+        left: 22.5px;
         top: 0;
-        width: 1px;
+        width: 3px;
+        border-radius: 3px;
         height: 0;
-        background: linear-gradient(to bottom, var(--teal-hi), rgba(0, 191, 165, .2));
+        background: linear-gradient(to bottom, var(--teal-hi), rgba(0, 191, 165, .22));
         transition: height .1s
     }
 
@@ -1784,10 +1786,10 @@
 
     .s7-step-num {
         position: absolute;
-        left: -54px;
+        left: -60px;
         top: 0;
-        width: 32px;
-        height: 32px;
+        width: 40px;
+        height: 40px;
         border-radius: 50%;
         border: 1px solid var(--border);
         display: flex;
@@ -1795,14 +1797,14 @@
         justify-content: center;
         background: var(--bg);
         font-family: 'Space Mono', monospace;
-        font-size: .56rem;
+        font-size: .62rem;
         color: var(--teal-hi);
         transition: border-color .3s, box-shadow .3s
     }
 
     .s7-step.on .s7-step-num {
         border-color: var(--teal-hi);
-        box-shadow: 0 0 18px var(--teal-glow)
+        box-shadow: 0 0 22px var(--teal-glow)
     }
 
     .s7-step-tag {
@@ -2246,20 +2248,28 @@
     .plat-grid {
         display: grid;
         grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: clamp(20px, 3vw, 32px);
-        max-width: 980px;
+        gap: clamp(24px, 3.5vw, 40px);
+        max-width: 1120px;
         margin: 0 auto;
-        padding: 8px 0 4px
+        padding: 12px 0 8px
     }
 
     .plat-shot {
         width: 100%;
-        max-height: 520px;
+        max-height: min(640px, 68vh);
         object-fit: contain;
-        border-radius: 14px;
-        border: 1px solid rgba(0, 191, 165, .22);
-        box-shadow: 0 16px 48px rgba(0, 0, 0, .45), 0 0 0 1px rgba(0, 191, 165, .08);
-        background: rgba(0, 0, 0, .25)
+        object-position: center top;
+        border-radius: 18px;
+        border: 1px solid rgba(0, 191, 165, .32);
+        box-shadow:
+            0 0 0 1px rgba(0, 0, 0, .35) inset,
+            0 20px 56px rgba(0, 0, 0, .5),
+            0 0 0 1px rgba(0, 191, 165, .1);
+        background: linear-gradient(165deg, rgba(12, 18, 28, .9) 0%, rgba(0, 0, 0, .45) 100%);
+        filter: contrast(1.06) saturate(1.04);
+        image-rendering: auto;
+        -webkit-backface-visibility: hidden;
+        backface-visibility: hidden
     }
 
     #s-team {
@@ -2681,15 +2691,19 @@
         }
 
         .s7-steps {
-            padding-left: 44px;
+            padding-left: 56px;
             padding-right:0
         }
 
+        .s7-line, .s7-line-fill {
+            left: 20.5px
+        }
+
         .s7-step-num {
-            left: -44px;
-            width: 28px;
-            height: 28px;
-            font-size:.5rem
+            left: -52px;
+            width: 36px;
+            height: 36px;
+            font-size:.54rem
         }
 
         .s7-step {

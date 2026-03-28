@@ -1,5 +1,10 @@
 AEYRON Health — issues log (project root)
 
+2026-03-28 — How It Works timeline + Clinical intelligence polish
+- Problem: Vertical step rail felt thin and small; clinical gallery screenshots looked slightly soft and compact.
+- Root cause: 1px s7 connector line and 32px step badges; plat-grid capped at 980px / 520px tall with minimal border depth.
+- Solution: s7 — 3px rounded track aligned to larger 40px (36px mobile) numbered dots, wider step column; #s-platform — grid max 1120px, taller shots (max-height min(640px,68vh)), stronger teal frame + inset shadow, subtle contrast/saturation filter for perceived sharpness.
+
 2026-03-28 — Clinical intelligence: four local screenshots; remove broken Devpost pair
 - Problem: Two Devpost CloudFront gallery images (494, 495) did not paste or load reliably; section needed the four real App Clip UI shots.
 - Root cause: Remote asset URLs were fragile; user had correct screenshots locally.
