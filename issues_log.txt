@@ -1,5 +1,10 @@
 AEYRON Health — issues log (project root)
 
+2026-03-28 — Platform: two screenshots only, dark band, pebble size
+- Problem: Third Devpost image showed a face (even when filtered); fourth was terminal/code and clipped; platform section read light; user wanted pebble slightly larger with multiply blend on dark.
+- Root cause: Four-up horizontal scroll; outer two assets were wrong for marketing; #s-platform used var(--bg).
+- Solution: Dropped images 601 and 504; kept 492 and 493 in a centered `.plat-grid` (2×1 desktop, 1 col ≤900px). Forced #s-platform to #0C0C0C and white heading text. Pebble: max-width 268px, radius 47%/41%, mirror-frame 268px; `[data-theme="dark"] .pebble-img { mix-blend-mode: multiply }` unchanged.
+
 2026-03-28 — Device render PNG, platform carousel symmetry, privacy on dashboard shot
 - Problem: Pebble area should use updated device render; platform row looked asymmetric (last image clipped); dashboard screenshot showed identifiable face.
 - Root cause: Asset path unchanged from prior file; scroll strip had minimal horizontal padding; third Devpost image included a portrait.

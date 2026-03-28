@@ -1033,7 +1033,7 @@
 
     .mirror-frame {
         position: relative;
-        width: 250px;
+        width: 268px;
         height: auto;
         min-height: 280px;
         border-radius: 50% / 42%;
@@ -1078,9 +1078,9 @@
     .pebble-img {
         display: block;
         width: 100%;
-        max-width: 260px;
+        max-width: 268px;
         height: auto;
-        border-radius: 46% / 40%;
+        border-radius: 47% / 41%;
         user-select: none;
         -webkit-user-drag: none;
         vertical-align: middle;
@@ -2199,17 +2199,17 @@
     }
 
     #s-platform {
-        background: var(--bg);
+        background: #0C0C0C;
         padding: 88px 60px 72px;
         position: relative;
-        border-top: 1px solid var(--border-subtle)
+        border-top: 1px solid rgba(0, 191, 165, 0.12)
     }
 
     #s-platform::before {
         content: '';
         position: absolute;
         inset: 0;
-        background: linear-gradient(180deg, transparent 0%, rgba(0, 191, 165, .02) 50%, transparent 100%);
+        background: linear-gradient(180deg, transparent 0%, rgba(0, 191, 165, .04) 50%, transparent 100%);
         pointer-events: none
     }
 
@@ -2239,7 +2239,7 @@
         font-size: clamp(2rem, 4vw, 3rem);
         font-weight: 400;
         line-height: 1.2;
-        color: var(--text)
+        color: var(--white)
     }
 
     .plat-h em {
@@ -2247,48 +2247,23 @@
         color: var(--teal-hi)
     }
 
-    .plat-track {
-        margin: 0;
-        padding: 0;
-        width: 100%
-    }
-
-    .plat-scroll {
-        display: flex;
-        gap: clamp(18px, 2.2vw, 26px);
-        overflow-x: auto;
-        padding: 8px clamp(20px, 5vw, 56px) 26px;
-        scroll-snap-type: x mandatory;
-        scroll-padding-inline: clamp(20px, 5vw, 56px);
-        -webkit-overflow-scrolling: touch;
-        scrollbar-width: thin;
-        scrollbar-color: rgba(0, 191, 165, .35) transparent
-    }
-
-    .plat-scroll::-webkit-scrollbar {
-        height: 6px
-    }
-
-    .plat-scroll::-webkit-scrollbar-thumb {
-        background: rgba(0, 191, 165, .35);
-        border-radius: 3px
+    .plat-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: clamp(20px, 3vw, 32px);
+        max-width: 920px;
+        margin: 0 auto;
+        padding: 8px 0 4px
     }
 
     .plat-shot {
-        flex: 0 0 auto;
-        width: min(300px, calc(100vw - 2 * clamp(20px, 5vw, 56px) - 24px));
+        width: 100%;
         max-height: 520px;
         object-fit: contain;
         border-radius: 14px;
-        border: 1px solid rgba(0, 191, 165, .18);
-        box-shadow: 0 12px 40px rgba(0, 0, 0, .35), 0 0 0 1px rgba(0, 191, 165, .06);
-        scroll-snap-align: center;
-        background: rgba(0, 0, 0, .15)
-    }
-
-    .plat-shot-privacy {
-        filter: brightness(1.5) saturate(0.38) blur(4px);
-        opacity: .96
+        border: 1px solid rgba(0, 191, 165, .22);
+        box-shadow: 0 16px 48px rgba(0, 0, 0, .45), 0 0 0 1px rgba(0, 191, 165, .08);
+        background: rgba(0, 0, 0, .25)
     }
 
     #s-team {
@@ -2778,6 +2753,11 @@
 
         #s-founders {
             padding: 80px 24px
+        }
+
+        .plat-grid {
+            grid-template-columns: 1fr;
+            max-width: 420px
         }
 
         .sf-grid {
@@ -3632,13 +3612,9 @@
                 <div class="plat-lbl rv">The Platform</div>
                 <h2 class="plat-h rv">Clinical intelligence, <em>delivered</em>.</h2>
             </div>
-            <div class="plat-track">
-                <div class="plat-scroll">
-                    <img class="plat-shot rv" src="https://d112y698adiu2z.cloudfront.net/photos/production/software_photos/004/409/492/datas/original.jpeg" alt="AEYRON dashboard interface" width="800" height="600" loading="lazy" decoding="async">
-                    <img class="plat-shot rv" src="https://d112y698adiu2z.cloudfront.net/photos/production/software_photos/004/409/493/datas/original.jpeg" alt="AEYRON clinical view" width="800" height="600" loading="lazy" decoding="async">
-                    <img class="plat-shot plat-shot-privacy rv" src="https://d112y698adiu2z.cloudfront.net/photos/production/software_photos/004/409/601/datas/original.jpeg" alt="AEYRON dashboard analytics (identifiers obscured)" width="800" height="600" loading="lazy" decoding="async">
-                    <img class="plat-shot rv" src="https://d112y698adiu2z.cloudfront.net/photos/production/software_photos/004/409/504/datas/original.png" alt="AEYRON platform" width="800" height="600" loading="lazy" decoding="async">
-                </div>
+            <div class="plat-grid">
+                <img class="plat-shot rv" src="https://d112y698adiu2z.cloudfront.net/photos/production/software_photos/004/409/492/datas/original.jpeg" alt="AEYRON clinical assessment — live App Clip" width="800" height="600" loading="lazy" decoding="async">
+                <img class="plat-shot rv" src="https://d112y698adiu2z.cloudfront.net/photos/production/software_photos/004/409/493/datas/original.jpeg" alt="AEYRON telemetry — breath rate and alerts" width="800" height="600" loading="lazy" decoding="async">
             </div>
         </div>
     </section>
