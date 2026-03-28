@@ -1,5 +1,9 @@
 AEYRON Health — issues log (project root)
 
+2026-03-28 — Pebble product image: new transparent PNG
+- Problem: User supplied updated pebble render for `#s6` device viewer.
+- Solution: Replaced `prototype.png` with provided asset (250×370 px, transparent); set `<img width="250" height="370">`. `.mirror-frame` remains 250×370 with `object-fit: contain` on `.pebble-img`.
+
 2026-03-28 — Device: remove “Drag to rotate” hint
 - Problem: User did not want on-screen drag hint text.
 - Solution: Removed `#pebble-hint` span, `.pebble-hint` CSS, and hint handling in pebble pointer script; trimmed `.mirror-frame` bottom padding.
