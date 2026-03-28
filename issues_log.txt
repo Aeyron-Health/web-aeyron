@@ -1,5 +1,9 @@
 AEYRON Health — issues log (project root)
 
+2026-03-28 — Pebble STL: remove product logo plane
+- Problem: User wanted the textured logo removed from the 3D pebble mesh.
+- Solution: Removed `TextureLoader` / logo plane block from `js/pebble-stl.js`; deleted `assets/pebble-logo.png`.
+
 2026-03-28 — Favicon: navy logo PNG + SVG ring, cache bust
 - Problem: User saw cached light/cyan favicon; wanted navy mark from supplied asset and immediate refresh.
 - Solution: Added `favicon.png` from user asset; updated `favicon.svg` with cream ring (`#EFE8DD`) + navy `#152238` + white wave; `<head>` uses PNG first then SVG with `?v=4`; `apple-touch-icon` and nav logo use `favicon.png?v=4`.

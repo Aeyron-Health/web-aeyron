@@ -90,41 +90,6 @@ function init() {
             meshWrapper.add(mesh);
             mesh.rotation.x = -Math.PI / 2;
             mesh.updateMatrixWorld(true);
-            geometry.computeBoundingBox();
-            const bb = geometry.boundingBox;
-            const dx = bb.max.x - bb.min.x;
-            const dy = bb.max.y - bb.min.y;
-            const dz = bb.max.z - bb.min.z;
-            const maxDim = Math.max(dx, dy, dz, 1e-6);
-
-            const logoUrl = new URL('../assets/pebble-logo.png', import.meta.url).href;
-            new THREE.TextureLoader().load(
-                logoUrl,
-                (tx) => {
-                    tx.colorSpace = THREE.SRGBColorSpace;
-                    tx.anisotropy = Math.min(8, renderer.capabilities.getMaxAnisotropy());
-                    const logoW = maxDim * 0.048;
-                    const logoH = logoW * (177 / 161);
-                    const logoGeo = new THREE.PlaneGeometry(logoW, logoH);
-                    const logoMat = new THREE.MeshBasicMaterial({
-                        map: tx,
-                        transparent: true,
-                        depthWrite: false,
-                        polygonOffset: true,
-                        polygonOffsetFactor: -2,
-                        polygonOffsetUnits: -1,
-                        side: THREE.DoubleSide
-                    });
-                    const logo = new THREE.Mesh(logoGeo, logoMat);
-                    mesh.add(logo);
-                    logo.position.set(
-                        (bb.min.x + bb.max.x) * 0.5,
-                        bb.min.y + dy * 0.07,
-                        bb.max.z + dz * 0.018
-                    );
-                    logo.rotation.y = Math.PI;
-                }
-            );
             fitMeshToPivot(meshWrapper, pivot);
         },
         undefined,
