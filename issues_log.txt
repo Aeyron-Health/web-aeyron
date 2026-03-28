@@ -1,5 +1,9 @@
 AEYRON Health — issues log (project root)
 
+2026-03-28 — Pebble drag: full 360° rotation
+- Problem: User wanted unrestricted rotation (360°), not ±25° pitch clamp.
+- Solution: Removed `maxX` clamp in `js/pebble-stl.js` so drag accumulates freely on both axes (Euler YXZ).
+
 2026-03-28 — Pebble STL: match reference render
 - Problem: User wanted WebGL pebble to match reference (matte white, soft top-front light, upright with ~18° yaw showing left side, more frame padding).
 - Solution: Tuned `pebble-stl.js`: lower FIT_SCALE (~1.06), softer ACES exposure, hemisphere + key (top-front) + fill + faint rim; matte material (roughness .78, metalness .03); base pose baseX −9°, baseY 18°; camera pulled back with narrower FOV.

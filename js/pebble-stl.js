@@ -62,7 +62,6 @@ function init() {
     let rotX = 0;
     let rotY = 0;
     const sens = 0.45;
-    const maxX = 25;
     /** Upright egg, ~18° Y to show front + left profile (reference). */
     const baseX = -9 * DEG;
     const baseY = 18 * DEG;
@@ -133,7 +132,6 @@ function init() {
         ly = e.clientY;
         rotY += dx * sens;
         rotX -= dy * sens;
-        rotX = Math.max(-maxX, Math.min(maxX, rotX));
         applyRotation();
     }
 
