@@ -1078,6 +1078,45 @@
         backface-visibility: hidden
     }
 
+    .pebble-device-wrap {
+        position: relative;
+        display: block;
+        width: 100%;
+        max-width: min(100%, 480px);
+        margin: 0 auto
+    }
+
+    .pebble-logo-lockup {
+        position: absolute;
+        left: 50%;
+        bottom: 13%;
+        transform: translateX(-50%);
+        width: clamp(52px, 19%, 96px);
+        z-index: 2;
+        pointer-events: none
+    }
+
+    .pebble-logo-lockup::before {
+        content: '';
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        width: 118%;
+        height: 118%;
+        border-radius: 50%;
+        background: radial-gradient(circle at 50% 45%, rgba(248, 249, 251, .97) 0%, rgba(228, 232, 236, .94) 55%, rgba(210, 216, 222, .88) 100%);
+        box-shadow: 0 1px 0 rgba(255, 255, 255, .55), inset 0 1px 2px rgba(255, 255, 255, .35);
+        z-index: -1
+    }
+
+    .pebble-logo-img {
+        display: block;
+        width: 100%;
+        height: auto;
+        filter: drop-shadow(0 2px 6px rgba(0, 0, 0, .22))
+    }
+
     .pebble-img {
         display: block;
         width: 100%;
@@ -1089,16 +1128,16 @@
         -webkit-user-drag: none;
         vertical-align: middle;
         animation: pebbleShadow 5.2s ease-in-out infinite;
-        filter: drop-shadow(0 40px 56px rgba(0, 0, 0, .65)) drop-shadow(0 22px 32px rgba(0, 0, 0, .42)) drop-shadow(0 0 40px rgba(0, 191, 165, .15))
+        filter: contrast(1.08) saturate(1.05) drop-shadow(0 40px 56px rgba(0, 0, 0, .65)) drop-shadow(0 22px 32px rgba(0, 0, 0, .42)) drop-shadow(0 0 40px rgba(0, 191, 165, .15))
     }
 
     @keyframes pebbleShadow {
         0%, 100% {
-            filter: drop-shadow(0 32px 48px rgba(0, 0, 0, .62)) drop-shadow(0 14px 22px rgba(0, 0, 0, .38)) drop-shadow(0 0 32px rgba(0, 191, 165, .1))
+            filter: contrast(1.08) saturate(1.05) drop-shadow(0 32px 48px rgba(0, 0, 0, .62)) drop-shadow(0 14px 22px rgba(0, 0, 0, .38)) drop-shadow(0 0 32px rgba(0, 191, 165, .1))
         }
 
         50% {
-            filter: drop-shadow(0 48px 64px rgba(0, 0, 0, .7)) drop-shadow(0 24px 36px rgba(0, 0, 0, .45)) drop-shadow(0 0 48px rgba(0, 229, 200, .16))
+            filter: contrast(1.08) saturate(1.05) drop-shadow(0 48px 64px rgba(0, 0, 0, .7)) drop-shadow(0 24px 36px rgba(0, 0, 0, .45)) drop-shadow(0 0 48px rgba(0, 229, 200, .16))
         }
     }
 
@@ -1141,17 +1180,17 @@
     .ann-line::after {
         content: '';
         position: absolute;
-        right: -3px;
-        top: -3px;
-        width: 6px;
-        height: 6px;
+        right: -3.5px;
+        top: -3.5px;
+        width: 7px;
+        height: 7px;
         border-radius: 50%;
         background: var(--teal-hi)
     }
 
     .ann.r .ann-line::after {
         right: auto;
-        left: -3px
+        left: -3.5px
     }
 
     .ann-title {
@@ -3226,43 +3265,43 @@
     <div id="s6">
         <div class="s6-sticky">
             <div class="s6-left">
-                <div class="ann" style="top:19%;right:calc(50% + 148px);flex-direction:row-reverse" id="a1">
+                <div class="ann" style="top:10%;right:calc(50% + 148px);flex-direction:row-reverse" id="a1">
                     <div class="ann-text">
                         <span class="ann-title">Breathing Radar</span>
                         <span class="ann-sub">Measures chest movement</span>
                     </div>
-                    <div class="ann-line" style="width:52px"></div>
+                    <div class="ann-line" style="width:60px"></div>
                 </div>
-                <div class="ann" style="top:40%;right:calc(50% + 148px);flex-direction:row-reverse" id="a2">
+                <div class="ann" style="top:42%;right:calc(50% + 148px);flex-direction:row-reverse" id="a2">
                     <div class="ann-text">
                         <span class="ann-title">Smart Processor</span>
                         <span class="ann-sub">On-device AI</span>
                     </div>
-                    <div class="ann-line" style="width:52px"></div>
+                    <div class="ann-line" style="width:60px"></div>
                 </div>
-                <div class="ann" style="top:62%;right:calc(50% + 148px);flex-direction:row-reverse" id="a3">
+                <div class="ann" style="top:74%;right:calc(50% + 148px);flex-direction:row-reverse" id="a3">
                     <div class="ann-text">
                         <span class="ann-title">Voice Sensor</span>
                         <span class="ann-sub">Detects voice changes</span>
                     </div>
-                    <div class="ann-line" style="width:52px"></div>
+                    <div class="ann-line" style="width:60px"></div>
                 </div>
-                <div class="ann r" style="top:19%;left:calc(50% + 148px)" id="a4">
-                    <div class="ann-line" style="width:52px"></div>
+                <div class="ann r" style="top:10%;left:calc(50% + 148px)" id="a4">
+                    <div class="ann-line" style="width:60px"></div>
                     <div class="ann-text">
                         <span class="ann-title">Clear Glass</span>
                         <span class="ann-sub">Looks like a normal mirror</span>
                     </div>
                 </div>
-                <div class="ann r" style="top:41%;left:calc(50% + 148px)" id="a5">
-                    <div class="ann-line" style="width:52px"></div>
+                <div class="ann r" style="top:42%;left:calc(50% + 148px)" id="a5">
+                    <div class="ann-line" style="width:60px"></div>
                     <div class="ann-text">
                         <span class="ann-title">Runs On-Device</span>
                         <span class="ann-sub">No cloud · Low cost</span>
                     </div>
                 </div>
-                <div class="ann r" style="top:63%;left:calc(50% + 148px)" id="a6">
-                    <div class="ann-line" style="width:52px"></div>
+                <div class="ann r" style="top:74%;left:calc(50% + 148px)" id="a6">
+                    <div class="ann-line" style="width:60px"></div>
                     <div class="ann-text">
                         <span class="ann-title">Drop-in Install</span>
                         <span class="ann-sub">15 min · no retrofit</span>
@@ -3272,7 +3311,12 @@
                     <div class="pebble-persp">
                         <div class="pebble-float" id="pebble-float">
                             <div class="pebble-stage" id="pebble-stage">
-                                <img class="pebble-img" src="prototype.png" alt="Respira pebble hardware prototype" width="800" height="800" draggable="false">
+                                <div class="pebble-device-wrap">
+                                    <img class="pebble-img" src="prototype.png" alt="Respira pebble hardware prototype" width="800" height="800" draggable="false">
+                                    <div class="pebble-logo-lockup" aria-hidden="true">
+                                        <img class="pebble-logo-img" src="favicon.svg" alt="" width="64" height="64" draggable="false">
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <p class="pebble-hint" id="pebble-hint">Drag to rotate</p>

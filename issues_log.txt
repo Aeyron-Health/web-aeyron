@@ -1,5 +1,10 @@
 AEYRON Health — issues log (project root)
 
+2026-03-28 — Device section: wider callout span + brand logo on pebble
+- Problem: Feature callouts (dots) sat too close vertically; prototype PNG showed baked-in device lettering instead of current brand mark; render looked soft.
+- Root cause: Inline `top` values 19–63% compressed the stack; raster included old logo art.
+- Solution: Spread six annotations to 10% / 42% / 74% with 60px connector lines and slightly larger dots; wrapped pebble image in `.pebble-device-wrap` with centered `favicon.svg` lockup + light radial backing to cover old print; added contrast/saturation to pebble `filter` (including keyframes).
+
 2026-03-28 — How It Works timeline + Clinical intelligence polish
 - Problem: Vertical step rail felt thin and small; clinical gallery screenshots looked slightly soft and compact.
 - Root cause: 1px s7 connector line and 32px step badges; plat-grid capped at 980px / 520px tall with minimal border depth.
