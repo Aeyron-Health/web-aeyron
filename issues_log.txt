@@ -1,5 +1,10 @@
 AEYRON Health — issues log (project root)
 
+2026-03-28 — Landing: team logo cleanup, founders section, pebble viewer, cursor
+- Problem: Duplicate L'Oréal row misused amd.png; product section needed founder bios; mirror mockup replaced by prototype asset; custom cursor felt sluggish.
+- Root cause: Legacy logo HTML error; no founders block on index; mirror UI was illustrative only; cursor ring used 0.1 lerp.
+- Solution: Removed the erroneous steam-logo-item (amd.png / L'Oréal). Added #s-founders with three cards (.sf-card.rv + stagger). Replaced mirror inner DOM with prototype.png + pointer-driven rotateX/rotateY (±25° clamp on X), hint fade on drag; removed old mirror/HUD CSS and keyframes. Cursor lerp 0.1 → 0.2.
+
 2026-03-25 — Remove “Co-Founder” from titles
 - Problem: User wanted no “Co-Founder” wording on team roles.
 - Solution: In founders.html, changed CEO/CTO/COO lines to drop “& Co-Founder” (Pingash, Vansh, Siddharth). CMO line unchanged.
@@ -7,6 +12,11 @@ AEYRON Health — issues log (project root)
 2026-03-25 — Local git repo for Vercel deploy
 - Problem: User wanted GitHub + Vercel setup automated.
 - Solution: Initialized a dedicated git repo in this folder only (separate from home-directory git). Initial commit includes index.html, founders.html, logos/, vercel.json, netlify.toml, issues_log, .gitignore. User must create an empty GitHub repo, add remote, and push (requires their credentials).
+
+2026-03-25 — Vercel production deploy (CLI)
+- Deployed via `npx vercel deploy --prod`; project name `aeyron-health-web` (folder name with space is invalid on Vercel).
+- Production URL: https://aeyron-health-web.vercel.app — founders: /founders.html
+- GitHub link from CLI failed until Vercel account has GitHub “Login Connection”; user can connect repo in dashboard for auto-deploy on push.
 
 Path: /Users/pingashvohra/Desktop/aeyron health/ (Finder: Desktop → aeyron health). Open this folder in Cursor if the file tree looks empty elsewhere.
 
