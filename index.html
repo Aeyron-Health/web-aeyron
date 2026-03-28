@@ -1028,9 +1028,9 @@
 
     .mirror-frame {
         position: relative;
-        width: 380px;
-        height: 500px;
-        max-width: min(94vw, 380px);
+        width: 250px;
+        height: 370px;
+        max-width: min(94vw, 250px);
         padding: 0 0 10px;
         background: transparent;
         border: none;
@@ -1068,17 +1068,17 @@
         justify-content: center;
         width: 100%;
         transform-style: preserve-3d;
-        animation: pebbleFloat 5.2s ease-in-out infinite;
+        animation: pebble-float 5s ease-in-out infinite;
         will-change: transform
     }
 
-    @keyframes pebbleFloat {
+    @keyframes pebble-float {
         0%, 100% {
-            transform: translateY(0) rotateX(3deg) rotateY(-8deg)
+            transform: translateY(0)
         }
 
         50% {
-            transform: translateY(-7px) rotateX(5deg) rotateY(8deg)
+            transform: translateY(-14px)
         }
     }
 
@@ -1106,21 +1106,11 @@
         user-select: none;
         -webkit-user-drag: none;
         vertical-align: middle;
-        animation: pebbleShadow 5.2s ease-in-out infinite;
-        filter: contrast(1.08) saturate(1.05) drop-shadow(0 28px 44px rgba(0, 0, 0, .55)) drop-shadow(0 12px 24px rgba(0, 0, 0, .35)) drop-shadow(0 0 28px rgba(0, 191, 165, .12))
-    }
-
-    @keyframes pebbleShadow {
-        0%, 100% {
-            filter: contrast(1.08) saturate(1.05) drop-shadow(0 22px 36px rgba(0, 0, 0, .5)) drop-shadow(0 10px 18px rgba(0, 0, 0, .32)) drop-shadow(0 0 22px rgba(0, 191, 165, .09))
-        }
-
-        50% {
-            filter: contrast(1.08) saturate(1.05) drop-shadow(0 34px 52px rgba(0, 0, 0, .58)) drop-shadow(0 16px 28px rgba(0, 0, 0, .38)) drop-shadow(0 0 34px rgba(0, 229, 200, .13))
-        }
+        filter: drop-shadow(0 30px 60px rgba(0, 0, 0, .5))
     }
 
     .pebble-hint {
+        display: block;
         margin-top: 14px;
         font-family: 'Space Mono', monospace;
         font-size: .55rem;
@@ -2665,8 +2655,8 @@
 
         .mirror-frame {
             width: min(100%, 100vw - 32px);
-            max-width: 380px;
-            height: min(500px, 58vh);
+            max-width: 250px;
+            height: min(370px, 58vh);
             padding: 0 0 8px
         }
 
@@ -3295,7 +3285,7 @@
                                 <img class="pebble-img" src="prototype.png" alt="Respira pebble hardware prototype" width="800" height="800" draggable="false">
                             </div>
                         </div>
-                        <p class="pebble-hint" id="pebble-hint">Drag to rotate</p>
+                        <span class="pebble-hint" id="pebble-hint">Drag to rotate</span>
                     </div>
                 </div>
             </div>
