@@ -1,5 +1,9 @@
 AEYRON Health — issues log (project root)
 
+2026-03-28 — Favicon brand: navy dark theme, logo asset, pebble crop
+- Problem: User wanted product photo cropped to device only; nav to use favicon; dark mode palette to match favicon navy (#152238); light mode unchanged.
+- Solution: Replaced inline SVG logo with `favicon.svg` in `.logo-mark`. `[data-theme="dark"]` tokens use #152238 / #1a2a4a / #1e2f52; nav.sc and #s-platform / #s-founders backgrounds aligned. Added `.pebble-crop` with overflow hidden and scaled `.pebble-img` (138% width, negative margins) to trim studio floor/edges without re-exporting PNG.
+
 2026-03-28 — Pebble: wide horizontal capsule frame
 - Problem: Device viewer felt narrow vs reference; user wanted extended horizontal “pill” presentation.
 - Solution: `.mirror-frame` set to max ~580px with `border-radius: 999px`, horizontal padding, subtle gradient + teal border/shadow; `.pebble-img` max-width up to 480px with wider silhouette radius; mobile tighter padding.
