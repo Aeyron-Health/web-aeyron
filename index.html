@@ -5445,8 +5445,15 @@
                 /* Blink — CARD_MIN_DISP enforces 60s between display updates */
                 const blink=getBlinkRate();
                 if (blink!==null) {
-                    setVal('blink',blink);
-                    setQuality('blink',blink>=12&&blink<=20?'good':'warn');
+                    if (blink>30) {
+                        /* above physiological max — noise/artifact, hold last good */
+                    } else if (blink<1) {
+                        /* below minimum after calibration — show "—" */
+                        setVal('blink',null);
+                    } else {
+                        setVal('blink',blink);
+                        setQuality('blink',blink>=12&&blink<=20?'good':'warn');
+                    }
                 } else if (elapsed>=30&&blinkTimes.length===0) {
                     setVal('blink',null);
                 } else if (elapsed<30) {
