@@ -5331,7 +5331,9 @@
             } else if (faceRoi) {
                 faceCtx.drawImage(videoEl, faceRoi.x, faceRoi.y, faceRoi.w, faceRoi.h, 0, 0, 160, 120);
             } else {
-                faceCtx.drawImage(videoEl, 40, 8, 80, 60, 0, 0, 160, 120);
+                /* No face ROI yet — crop center 50%×60% of frame where face typically is */
+                const vW=videoEl.videoWidth||640, vH=videoEl.videoHeight||480;
+                faceCtx.drawImage(videoEl, vW*0.25, vH*0.05, vW*0.5, vH*0.6, 0, 0, 160, 120);
             }
             const d=faceCtx.getImageData(0,0,160,120).data;
             let r=0, g=0, b=0, n=0;
@@ -5473,7 +5475,7 @@
 
         function initFaceMesh() {
             if (typeof FaceMesh==='undefined') return;
-            faceMesh=new FaceMesh({locateFile:f=>`https://cdn.jsdelivr.net/npm/@mediapipe/face_mesh@0.4.1633559619/${f}`});
+            faceMesh=new FaceMesh({locateFile:f=>`https://unpkg.com/@mediapipe/face_mesh@0.4.1633559619/${f}`});
             faceMesh.setOptions({maxNumFaces:1,refineLandmarks:true,minDetectionConfidence:0.5,minTrackingConfidence:0.5});
             faceMesh.onResults(r=>{
                 if (!r.multiFaceLandmarks?.length) { prevEAR=null; return; }
@@ -5741,7 +5743,7 @@
             await new Promise(resolve=>{
                 if (typeof FaceMesh!=='undefined'){resolve();return;}
                 const s=document.createElement('script');
-                s.src='https://cdn.jsdelivr.net/npm/@mediapipe/face_mesh@0.4.1633559619/face_mesh.js';
+                s.src='https://unpkg.com/@mediapipe/face_mesh@0.4.1633559619/face_mesh.js';
                 s.crossOrigin='anonymous'; s.onload=resolve; s.onerror=resolve;
                 document.head.appendChild(s);
             });
