@@ -5452,9 +5452,9 @@
         }
 
         function estimateBR() {
-            if (!brBreathStart||brBreathTimes.length<3) return null;
+            if (!brBreathStart||brBreathTimes.length<2) return null;
             const elapsed=(performance.now()-brBreathStart)/1000;
-            if (elapsed<20) return null;
+            if (elapsed<12) return null;
             const rate=brBreathTimes.length/Math.min(elapsed,30)*60;
             return (rate>=8&&rate<=25)?Math.round(rate):null;
         }
@@ -5503,15 +5503,24 @@
                 faceRoi={x:fMinX+fw*0.1, y:fMinY+fhf*0.1, w:fw*0.8, h:fhf*0.5};
                 /* Breath fallback: chin landmark y oscillates subtly with breathing */
                 if (!poseShoulderActive) updateBreathFilter(lm[152].y);
-                /* Distance via iris diameter (refineLandmarks provides lm[469–477]) */
+                /* Distance — iris diameter (preferred) with face-width fallback */
                 const now=performance.now();
-                if (now-distUpdAt>2000&&lm.length>477&&lm[469]&&lm[471]&&lm[474]&&lm[476]) {
-                    const irisL=ed(lm[469],lm[471])*(videoEl.videoWidth||640);
-                    const irisR=ed(lm[474],lm[476])*(videoEl.videoWidth||640);
-                    const irisPx=(irisL+irisR)/2;
-                    if (irisPx>2) {
-                        /* f≈600px typical webcam; iris diameter 11.7mm → 600×1.17/irisPx cm */
-                        lastDistCm=Math.round(Math.max(20,Math.min(200,702/irisPx)));
+                if (now-distUpdAt>2000) {
+                    let distSet=false;
+                    /* Primary: iris landmarks (refineLandmarks:true gives lm[469–477]) */
+                    if (lm.length>477&&lm[469]&&lm[471]&&lm[474]&&lm[476]) {
+                        const irisL=ed(lm[469],lm[471])*(videoEl.videoWidth||640);
+                        const irisR=ed(lm[474],lm[476])*(videoEl.videoWidth||640);
+                        const irisPx=(irisL+irisR)/2;
+                        if (irisPx>2) {
+                            lastDistCm=Math.round(Math.max(20,Math.min(200,702/irisPx)));
+                            distUpdAt=now; distSet=true;
+                        }
+                    }
+                    /* Fallback: face bounding-box width (iris model absent or not loaded yet)
+                       Face ≈15cm wide; for a 640px stream with ~60° FOV: dist≈9000/faceWidthPx */
+                    if (!distSet&&fw>20) {
+                        lastDistCm=Math.round(Math.max(20,Math.min(200,9000/fw)));
                         distUpdAt=now;
                     }
                 }
@@ -5629,9 +5638,9 @@
                         if (!hrLastGood) setStatus('hr','Calibrating…'); else setVal('hr',null);
                     }
                 } else {
-                    /* POS fallback (SNR-gated) */
+                    /* POS fallback */
                     const {bpm:raw,snr}=computeHR(rgbBuf);
-                    if (raw&&snr>=1.5) {
+                    if (raw&&snr>=1.0) {
                         if (hrLastGood===null||Math.abs(raw-hrLastGood)<=15) {
                             const sm=Math.round(hrKalman.update(raw));
                             hrLastGood=sm; hrLastGoodAt=now;
@@ -5640,7 +5649,8 @@
                     } else if (hrLastGood!==null&&now-hrLastGoodAt<10000) {
                         const el=document.getElementById('dval-hr');
                         if(el&&el.textContent!==String(hrLastGood))el.textContent=String(hrLastGood);
-                    } else if (!raw||snr<1.0) {
+                    } else {
+                        /* Dead zone (SNR<1.0 or no signal yet) — always show status, never silent */
                         if (!hrLastGood) setStatus('hr','Calibrating…'); else setVal('hr',null);
                     }
                 }
@@ -5661,7 +5671,7 @@
                             breathRing.classList.add('breathing');
                         }
                     }
-                } else if (elapsed>=20) { setVal('br',null); }
+                } else if (elapsed>=45) { setVal('br',null); }
                 else { setStatus('br','Calibrating…'); }
 
                 /* Blink — CARD_MIN_DISP enforces 60s between display updates */
