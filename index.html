@@ -5095,14 +5095,23 @@
             if (dot) dot.className = 'demo-sq-dot sq-' + level;
         }
 
-        /* Smooth transitions: hold last value 10s, then fade out over 3s */
-        function setVal(id, v) {
+        /* setVal — smooth transitions + per-card minimum display intervals
+           minDisp: minimum ms between display updates (prevents flickering)
+           Null value: held for 10s then fades to "—" over 3s */
+        const CARD_MIN_DISP = { hr:5000, br:10000, dist:5000, blink:60000, tremor:5000, voice:1000, cough:0 };
+
+        function setVal(id, v, _fromSignal) {
             const el = document.getElementById('dval-' + id);
             if (!el) return;
-            if (!valStates[id]) valStates[id] = { lastGoodAt: 0 };
+            if (!valStates[id]) valStates[id] = { lastGoodAt: 0, lastDispAt: 0 };
             const now = performance.now();
+            const minDisp = CARD_MIN_DISP[id] || 0;
+
             if (v !== null && v !== undefined) {
+                /* Enforce minimum display interval to prevent flickering */
+                if (now - valStates[id].lastDispAt < minDisp) return;
                 valStates[id].lastGoodAt = now;
+                valStates[id].lastDispAt = now;
                 el.style.transition = '';
                 el.style.opacity = '1';
                 el.textContent = String(v);
@@ -5111,6 +5120,19 @@
                 el.style.opacity = '0.3';
                 el.textContent = '—';
             }
+        }
+
+        /* setStatus — updates display text without resetting the signal hold timer
+           (used for "Calibrating…", "Speak to calibrate" etc.) */
+        function setStatus(id, text) {
+            const el = document.getElementById('dval-' + id);
+            if (!el) return;
+            if (!valStates[id]) valStates[id] = { lastGoodAt: 0, lastDispAt: 0 };
+            /* Only show status if no real value has been shown yet */
+            if (valStates[id].lastGoodAt > 0) return;
+            el.style.transition = '';
+            el.style.opacity = '0.55';
+            el.textContent = text;
         }
 
         /* ── Signal processing utilities ── */
@@ -5263,7 +5285,6 @@
         let brBuf=[], lastBR=null;
         const BR_BUF=900;
         const brKalman=makeKalman(10,0.1);
-        let brLastDispAt=0;
 
         function extractBreathSignal() {
             if (!faceCtx || videoEl.readyState<2) return null;
@@ -5388,7 +5409,7 @@
             if (frameCount%FPS===0) {
                 /* Heart Rate */
                 if (elapsed<15) {
-                    setVal('hr','Calibrating…');
+                    setStatus('hr','Calibrating…');
                 } else {
                     const {bpm:raw,snr}=computeHR(rgbBuf);
                     if (raw && snr>=1.5) {
@@ -5398,7 +5419,9 @@
                             if (now-hrLastDispAt>=5000) { setVal('hr',sm); hrLastDispAt=now; }
                         }
                     } else if (hrLastGood!==null&&now-hrLastGoodAt<10000) {
-                        setVal('hr',hrLastGood);
+                        /* hold stale value — bypass min-disp by writing directly */
+                        const el=document.getElementById('dval-hr');
+                        if (el&&el.textContent!==String(hrLastGood)) el.textContent=String(hrLastGood);
                     } else {
                         setVal('hr',null);
                     }
@@ -5409,27 +5432,33 @@
                 if (brRaw!==null&&elapsed>=30) {
                     const sm=Math.round(brKalman.update(brRaw));
                     if (lastBR===null||Math.abs(brRaw-lastBR)<=5) {
-                        if (now-brLastDispAt>=10000||lastBR===null) {
-                            setVal('br',sm); lastBR=sm; brLastDispAt=now;
+                        setVal('br',sm);   /* CARD_MIN_DISP enforces 10s */
+                        if (lastBR!==sm) {
+                            lastBR=sm;
                             setQuality('br','good');
                             breathRing.style.animation=`breathe-idle ${(60/sm).toFixed(2)}s ease-in-out infinite`;
                             breathRing.classList.add('breathing');
                         }
                     }
                 } else if (elapsed>=30) { setVal('br',null); }
+                else { setStatus('br','Calibrating…'); }
 
-                /* Blink */
+                /* Blink — CARD_MIN_DISP enforces 60s between display updates */
                 const blink=getBlinkRate();
                 if (blink!==null) {
                     setVal('blink',blink);
                     setQuality('blink',blink>=12&&blink<=20?'good':'warn');
-                } else if (elapsed>=30&&blinkTimes.length===0) { setVal('blink',null); }
+                } else if (elapsed>=30&&blinkTimes.length===0) {
+                    setVal('blink',null);
+                } else if (elapsed<30) {
+                    setStatus('blink','Calibrating…');
+                }
 
                 /* Tremor */
-                if (elapsed>=5) { setVal('tremor','Place hands in frame'); }
+                if (elapsed>=5) { setStatus('tremor','Place hands in frame'); }
 
                 /* Voice */
-                if (!voiceReady) setVal('voice','Speak to calibrate');
+                if (!voiceReady) setStatus('voice','Speak to calibrate');
             }
 
             /* Distance (every 2s via FaceMesh callback; update display here) */
@@ -5496,7 +5525,7 @@
 
             /* Reset state */
             frameCount=0; startTime=null; hrLastGood=null; hrLastGoodAt=0; hrLastDispAt=0; hrMode='face';
-            rgbBuf=[]; brBuf=[]; lastBR=null; brLastDispAt=0;
+            rgbBuf=[]; brBuf=[]; lastBR=null;
             blinkTimes.length=0; earCalibBuf=[]; earCalibDone=false;
             blinkStart=null; prevEAR=null; lastDistCm=null; distUpdAt=0;
             coughCooldown=0; ambientRMS=null; ambientN=0; voiceReady=false;
