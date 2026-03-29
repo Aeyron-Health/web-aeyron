@@ -5047,6 +5047,13 @@
         let brBreathTimes=[], brLastPeakAt=0, brBreathStart=0;
         /* MediaPipe Pose (shoulder-based breath signal) */
         let poseModel=null, posePending=false, poseTick=0, poseShoulderActive=false;
+        /* Neural rPPG (ME-rPPG ONNX — loaded once, reused across sessions) */
+        let nnSession=null, nnWelchSession=null, nnHrSession=null;
+        let nnState=null, nnStateData=null, nnReady=false, nnFailed=false;
+        let nnBvpBuf=[], nnLastTs=null, nnFrameTs=[];
+        let nnCanvas=null, nnCtx=null, nnHrCache=null, nnHrCacheAt=0, nnRunning=false;
+        const NN_BASE='https://cdn.jsdelivr.net/gh/Health-HCI-Group/ME-rPPG-demo@main/';
+        const NN_LAMBDA=33.33; /* normalize Δt → ~1.0 at 30fps (ms units) */
 
         /* ── DOM refs ── */
         const overlay    = document.getElementById('demo-overlay');
@@ -5228,6 +5235,88 @@
             faceCanvas = document.createElement('canvas');
             faceCanvas.width=160; faceCanvas.height=120;
             faceCtx = faceCanvas.getContext('2d', {willReadFrequently:true});
+        }
+
+        /* ── Neural rPPG functions ── */
+        function initNNCanvas() {
+            nnCanvas=document.createElement('canvas'); nnCanvas.width=36; nnCanvas.height=36;
+            nnCtx=nnCanvas.getContext('2d',{willReadFrequently:true});
+        }
+
+        function extractNN36() {
+            if (!nnCtx||videoEl.readyState<2) return null;
+            if (faceRoi) nnCtx.drawImage(videoEl,faceRoi.x,faceRoi.y,faceRoi.w,faceRoi.h,0,0,36,36);
+            else { const vW=videoEl.videoWidth||640,vH=videoEl.videoHeight||480; nnCtx.drawImage(videoEl,vW*.25,vH*.1,vW*.5,vH*.8,0,0,36,36); }
+            return nnCtx.getImageData(0,0,36,36).data;
+        }
+
+        function buildNNState() {
+            if (!nnStateData||typeof ort==='undefined') return null;
+            const shapeOf=v=>{const s=[];let c=v;while(Array.isArray(c)){s.push(c.length);c=c[0];}return s;};
+            const st={};
+            for (const [k,v] of Object.entries(nnStateData))
+                st[k]=new ort.Tensor('float32',new Float32Array([v].flat(Infinity)),shapeOf(v));
+            return st;
+        }
+
+        async function loadNeuralRPPG(onProg) {
+            try {
+                if (typeof ort==='undefined') {
+                    await new Promise((res,rej)=>{
+                        const s=document.createElement('script');
+                        s.src='https://fastly.jsdelivr.net/npm/onnxruntime-web@1.18.0/dist/ort.min.js';
+                        s.crossOrigin='anonymous'; s.onload=res; s.onerror=rej;
+                        document.head.appendChild(s);
+                    });
+                }
+                ort.env.wasm.wasmPaths='https://fastly.jsdelivr.net/npm/onnxruntime-web@1.18.0/dist/';
+                onProg?.(0.2);
+                [nnSession,nnWelchSession,nnHrSession]=await Promise.all([
+                    ort.InferenceSession.create(NN_BASE+'model.onnx',{executionProviders:['wasm']}),
+                    ort.InferenceSession.create(NN_BASE+'welch_psd.onnx',{executionProviders:['wasm']}),
+                    ort.InferenceSession.create(NN_BASE+'get_hr.onnx',{executionProviders:['wasm']}),
+                ]);
+                onProg?.(0.55);
+                nnStateData=await fetch(NN_BASE+'state.json').then(r=>r.json());
+                onProg?.(0.85);
+                nnState=buildNNState();
+                nnReady=true;
+                /* Update HR card subtitle once model is confirmed loaded */
+                METRICS[0].hwWarn='Neural rPPG — Respira hardware achieves ±2 BPM';
+                const wl=document.getElementById('dcard-hr')?.querySelector('.demo-hw-warn-label');
+                if (wl) wl.textContent=METRICS[0].hwWarn;
+            } catch(e) { nnFailed=true; /* silent — POS fallback takes over */ }
+        }
+
+        async function inferNeuralFrame(pixels,ts) {
+            if (!nnSession||!nnState||nnRunning) return;
+            nnRunning=true;
+            try {
+                const rgb=new Float32Array(36*36*3);
+                for (let i=0,j=0;i<pixels.length;i+=4,j+=3){rgb[j]=pixels[i]/255;rgb[j+1]=pixels[i+1]/255;rgb[j+2]=pixels[i+2]/255;}
+                const dt=Math.max(nnLastTs?(ts-nnLastTs)/NN_LAMBDA:1.0,1/90);
+                nnLastTs=ts; nnFrameTs.push(ts); if(nnFrameTs.length>300) nnFrameTs.shift();
+                const feeds={};
+                feeds[nnSession.inputNames[0]]=new ort.Tensor('float32',rgb,[1,1,36,36,3]);
+                for (const [k,v] of Object.entries(nnState)) feeds[k]=v;
+                feeds[nnSession.inputNames[37]]=new ort.Tensor('float32',[dt],[]);
+                const out=await nnSession.run(feeds);
+                for (let i=1;i<nnSession.outputNames.length;i++) nnState[nnSession.inputNames[i]]=out[nnSession.outputNames[i]];
+                const bvp=out[nnSession.outputNames[0]].cpuData[0];
+                nnBvpBuf.push(bvp); if(nnBvpBuf.length>300) nnBvpBuf.shift();
+            } catch(e) { nnFailed=true; nnReady=false; }
+            nnRunning=false;
+        }
+
+        async function computeNeuralHR() {
+            if (!nnWelchSession||!nnHrSession||nnBvpBuf.length<300) return null;
+            try {
+                const wOut=await nnWelchSession.run({input:new ort.Tensor('float32',new Float32Array(nnBvpBuf),[1,1,300])});
+                let hr=(await nnHrSession.run({freqs:wOut.freqs,psd:wOut.psd}))['hr'].cpuData[0];
+                /* FPS correction: model calibrated at 30fps */
+                if (nnFrameTs.length>=300){const dur=(nnFrameTs[nnFrameTs.length-1]-nnFrameTs[0])/1000;if(dur>0)hr=(hr/30)*(nnFrameTs.length/dur);}
+                return (hr>=48&&hr<=115)?Math.round(hr):null;
+            } catch(e){return null;}
         }
 
         function extractRGB() {
@@ -5511,27 +5600,46 @@
             if (rgb) { rgbBuf.push(rgb); if(rgbBuf.length>CHROM_BUF) rgbBuf.shift(); }
             sendFaceMesh();
             sendPose();
+            /* Neural rPPG — feed current frame (nnRunning gate prevents queue pile-up) */
+            if (nnReady&&!nnFailed&&hrMode==='face'&&!nnRunning) {
+                const pxls=extractNN36(); if(pxls) inferNeuralFrame(pxls,now);
+            }
 
             if (frameCount%FPS===0) {
-                /* Heart Rate — SNR gating: ≥2.0 update, ≥1.0 hold, <1.0 calibrating */
+                /* Trigger neural HR computation every 5s once BVP buffer is full */
+                if (nnReady&&!nnFailed&&frameCount%(FPS*5)===0) {
+                    computeNeuralHR().then(hr=>{if(hr!==null){nnHrCache=hr;nnHrCacheAt=performance.now();}});
+                }
+                /* Heart Rate — neural path when loaded, POS fallback otherwise */
                 if (elapsed<15) {
                     setStatus('hr','Calibrating…');
+                } else if (nnReady&&!nnFailed) {
+                    /* Neural path */
+                    const raw=nnHrCacheAt&&now-nnHrCacheAt<15000?nnHrCache:null;
+                    if (raw&&(hrLastGood===null||Math.abs(raw-hrLastGood)<=15)) {
+                        const sm=Math.round(hrKalman.update(raw));
+                        hrLastGood=sm; hrLastGoodAt=now;
+                        if (now-hrLastDispAt>=5000){setVal('hr',sm);hrLastDispAt=now;}
+                    } else if (hrLastGood!==null&&now-hrLastGoodAt<10000) {
+                        const el=document.getElementById('dval-hr');
+                        if(el&&el.textContent!==String(hrLastGood))el.textContent=String(hrLastGood);
+                    } else if (!nnHrCacheAt||now-nnHrCacheAt>15000) {
+                        if (!hrLastGood) setStatus('hr','Calibrating…'); else setVal('hr',null);
+                    }
                 } else {
+                    /* POS fallback (SNR-gated) */
                     const {bpm:raw,snr}=computeHR(rgbBuf);
                     if (raw&&snr>=2.0) {
                         if (hrLastGood===null||Math.abs(raw-hrLastGood)<=15) {
                             const sm=Math.round(hrKalman.update(raw));
                             hrLastGood=sm; hrLastGoodAt=now;
-                            if (now-hrLastDispAt>=5000) { setVal('hr',sm); hrLastDispAt=now; }
+                            if (now-hrLastDispAt>=5000){setVal('hr',sm);hrLastDispAt=now;}
                         }
                     } else if (hrLastGood!==null&&now-hrLastGoodAt<10000) {
-                        /* Weak or noisy signal — hold last good value without resetting timer */
                         const el=document.getElementById('dval-hr');
-                        if (el&&el.textContent!==String(hrLastGood)) el.textContent=String(hrLastGood);
+                        if(el&&el.textContent!==String(hrLastGood))el.textContent=String(hrLastGood);
                     } else if (!raw||snr<1.0) {
-                        /* No plausible signal at all */
-                        if (!hrLastGood) setStatus('hr','Calibrating…');
-                        else setVal('hr',null);
+                        if (!hrLastGood) setStatus('hr','Calibrating…'); else setVal('hr',null);
                     }
                 }
                 /* Chest-visible positioning hint — show when Pose can't find shoulders after 20s */
@@ -5609,23 +5717,33 @@
 
         async function startCamera() {
             showScreen('loading');
-            loadBar.style.width='5%';
-            loadStatus.textContent='Loading face detection model…';
+            const isMobile=/iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+            loadBar.style.width='5%'; loadStatus.textContent='Loading face detection model…';
+
+            /* Load FaceMesh script first (needed before initFaceMesh call) */
             await new Promise(resolve=>{
-                if (typeof FaceMesh!=='undefined') { resolve(); return; }
+                if (typeof FaceMesh!=='undefined'){resolve();return;}
                 const s=document.createElement('script');
                 s.src='https://cdn.jsdelivr.net/npm/@mediapipe/face_mesh@0.4.1633559619/face_mesh.js';
                 s.crossOrigin='anonymous'; s.onload=resolve; s.onerror=resolve;
                 document.head.appendChild(s);
             });
-            loadBar.style.width='40%'; loadStatus.textContent='Requesting camera access…';
-            const isMobile=/iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+
+            /* Load neural rPPG model AND request camera in parallel — camera permission
+               dialog gives users something to do while the 9 MB model downloads */
+            loadBar.style.width='15%'; loadStatus.textContent='Loading heart rate model…';
             let camErr=null;
-            await navigator.mediaDevices.getUserMedia({
-                video:isMobile?{facingMode:{ideal:'user'},width:640,height:480}:{width:640,height:480},
-                audio:true
-            }).then(s=>{ stream=s; loadBar.style.width='85%'; loadStatus.textContent='Starting sensors…'; })
-              .catch(e=>{ camErr=e; });
+            await Promise.all([
+                loadNeuralRPPG(pct=>{
+                    loadBar.style.width=Math.max(15,Math.min(75,15+pct*60))+'%';
+                    loadStatus.textContent=pct<0.5?'Loading heart rate model…':'Loading heart rate calibration…';
+                }),
+                navigator.mediaDevices.getUserMedia({
+                    video:isMobile?{facingMode:{ideal:'user'},width:640,height:480}:{width:640,height:480},
+                    audio:true
+                }).then(s=>{stream=s;}).catch(e=>{camErr=e;})
+            ]);
+
             if (camErr) {
                 const map={
                     NotAllowedError:['Camera access denied','Allow camera and microphone access in your browser settings, then try again.'],
@@ -5635,6 +5753,8 @@
                 const [t,m]=map[camErr.name]||['Camera error','Could not access your camera. '+camErr.message];
                 errH.textContent=t; errMsg.textContent=m; showScreen('error'); return;
             }
+
+            loadBar.style.width='85%'; loadStatus.textContent='Starting sensors…';
             videoEl.srcObject=stream;
             const audioTrack=stream.getAudioTracks()[0];
             if (audioTrack) setupAudio(audioTrack);
@@ -5649,7 +5769,7 @@
             loadBar.style.width='100%';
             await new Promise(r=>setTimeout(r,350));
 
-            /* Reset state */
+            /* Reset session state (NN sessions survive — expensive to reload) */
             frameCount=0; startTime=null; hrLastGood=null; hrLastGoodAt=0; hrLastDispAt=0; hrMode='face';
             rgbBuf=[]; lastBR=null; faceRoi=null;
             brHpPrev=0; brHpOut=0; brLpOut=0; brPrevFilt=null;
@@ -5659,11 +5779,13 @@
             blinkStart=null; prevEAR=null; lastDistCm=null; distUpdAt=0;
             coughCooldown=0; ambientRMS=null; ambientN=0; voiceReady=false;
             fmTick=0; fmPending=false;
+            nnBvpBuf=[]; nnLastTs=null; nnFrameTs=[]; nnHrCache=null; nnHrCacheAt=0; nnRunning=false;
+            if (nnReady&&nnStateData) nnState=buildNNState(); /* fresh state for new session */
             hrKalman.reset(); brKalman.reset();
             Object.keys(valStates).forEach(k=>delete valStates[k]);
 
             showScreen('running');
-            buildCards(); initFaceCanvas(); revealCards();
+            buildCards(); initFaceCanvas(); initNNCanvas(); revealCards();
             METRICS.forEach(m=>{
                 if (m.warmupSec>0) runWarmup(m.id,m.warmupSec);
                 else setQuality(m.id,'good');
