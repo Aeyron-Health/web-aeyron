@@ -3,6 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
     <link rel="icon" type="image/png" href="favicon.png?v=4" sizes="32x32">
     <link rel="icon" type="image/svg+xml" href="favicon.svg?v=4">
     <link rel="apple-touch-icon" href="favicon.png?v=4">
@@ -5385,7 +5388,7 @@
                 }
                 const snrW=peakPow/(totalPow/(maxBin-minBin+1)+1e-8);
                 const bpm=Math.round(peakBin*freqRes*60);
-                if (bpm>=48&&bpm<=115&&snrW>1.0) candidates.push({bpm,snr:snrW});
+                if (bpm>=48&&bpm<=115&&snrW>0.3) candidates.push({bpm,snr:snrW});
             }
             if (!candidates.length) return {bpm:null,snr:0};
             candidates.sort((a,b)=>b.snr-a.snr);
@@ -5640,7 +5643,7 @@
                 } else {
                     /* POS fallback */
                     const {bpm:raw,snr}=computeHR(rgbBuf);
-                    if (raw&&snr>=1.0) {
+                    if (raw&&snr>=0.5) {
                         if (hrLastGood===null||Math.abs(raw-hrLastGood)<=15) {
                             const sm=Math.round(hrKalman.update(raw));
                             hrLastGood=sm; hrLastGoodAt=now;
