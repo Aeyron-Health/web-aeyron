@@ -5720,7 +5720,7 @@
         async function startCamera() {
             showScreen('loading');
             const isMobile=/iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-            loadBar.style.width='5%'; loadStatus.textContent='Loading face detection model…';
+            loadBar.style.width='10%'; loadStatus.textContent='Loading face detection model…';
 
             /* Load FaceMesh script first (needed before initFaceMesh call) */
             await new Promise(resolve=>{
@@ -5731,24 +5731,13 @@
                 document.head.appendChild(s);
             });
 
-            /* Load neural rPPG model AND request camera in parallel — camera permission
-               dialog gives users something to do while the 9 MB model downloads */
-            loadBar.style.width='15%'; loadStatus.textContent='Loading heart rate model…';
+            /* Request camera permission — only blocking step */
+            loadBar.style.width='40%'; loadStatus.textContent='Requesting camera access…';
             let camErr=null;
-            await Promise.all([
-                /* 25s timeout — if neural model is slow/unavailable, proceed with POS */
-                Promise.race([
-                    loadNeuralRPPG(pct=>{
-                        loadBar.style.width=Math.max(15,Math.min(75,15+pct*60))+'%';
-                        loadStatus.textContent=pct<0.5?'Loading heart rate model…':'Loading heart rate calibration…';
-                    }),
-                    new Promise(res=>setTimeout(()=>{nnFailed=true;res();},25000))
-                ]),
-                navigator.mediaDevices.getUserMedia({
-                    video:isMobile?{facingMode:{ideal:'user'},width:640,height:480}:{width:640,height:480},
-                    audio:true
-                }).then(s=>{stream=s;}).catch(e=>{camErr=e;})
-            ]);
+            await navigator.mediaDevices.getUserMedia({
+                video:isMobile?{facingMode:{ideal:'user'},width:640,height:480}:{width:640,height:480},
+                audio:true
+            }).then(s=>{stream=s;}).catch(e=>{camErr=e;});
 
             if (camErr) {
                 const map={
@@ -5772,8 +5761,13 @@
                 ps.crossOrigin='anonymous'; ps.onload=()=>initPose(); ps.onerror=()=>{};
                 document.head.appendChild(ps);
             } else { initPose(); }
+            /* Load neural rPPG in background — does NOT block demo startup.
+               POS fallback runs immediately; neural path activates once model is ready. */
+            if (!nnReady&&!nnFailed) {
+                loadNeuralRPPG().catch(()=>{nnFailed=true;});
+            }
             loadBar.style.width='100%';
-            await new Promise(r=>setTimeout(r,350));
+            await new Promise(r=>setTimeout(r,300));
 
             /* Reset session state (NN sessions survive — expensive to reload) */
             frameCount=0; startTime=null; hrLastGood=null; hrLastGoodAt=0; hrLastDispAt=0; hrMode='face';
