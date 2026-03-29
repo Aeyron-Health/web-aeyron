@@ -3050,8 +3050,13 @@
         inset: 0;
         z-index: 9100;
         background: rgba(10, 16, 30, 0.97);
-        overflow-y: auto
+        overflow-y: auto;
+        cursor: auto
     }
+    #demo-overlay * { cursor: auto }
+    #demo-overlay button,
+    #demo-overlay a,
+    #demo-overlay [role="button"] { cursor: pointer }
     #demo-overlay.demo-open { display: flex; flex-direction: column }
     .demo-privacy-banner {
         background: rgba(0, 191, 165, 0.08);
@@ -3477,6 +3482,9 @@
                 <li>
                     <a href="#s-founders">Founders</a>
                 </li>
+                <li>
+                    <a href="#s-demo">Try Demo</a>
+                </li>
             </ul>
             <button type="button" class="theme-toggle" id="themeToggle" aria-label="Toggle dark/light mode" title="Toggle theme">☀</button>
             <a href="#s9" class="nav-cta">Early Access</a>
@@ -3489,6 +3497,7 @@
                 <a href="#s-team">The Team</a>
                 <a href="#s8">Traction</a>
                 <a href="#s-founders">Founders</a>
+                <a href="#s-demo">Try Demo</a>
             </div>
         </div>
     </nav>
@@ -4996,7 +5005,7 @@
 
         const FPS = 30;
         const METRICS = [
-            { id: 'hr',     name: 'Heart Rate',       unit: 'BPM',   warmupSec: 15, hwWarn: 'Browser estimate — switch to Finger Mode for ±3 BPM accuracy' },
+            { id: 'hr',     name: 'Heart Rate',       unit: 'BPM',   warmupSec: 15, hwWarn: 'Browser estimate — Respira hardware achieves ±2 BPM' },
             { id: 'br',     name: 'Breath Rate',       unit: 'BrPM',  warmupSec: 30, hwWarn: 'Browser estimate — hardware achieves ±0.5 BrPM' },
             { id: 'dist',   name: 'Distance',          unit: 'cm',    warmupSec: 2,  hwWarn: '' },
             { id: 'blink',  name: 'Blink Rate',        unit: '/min',  warmupSec: 30, hwWarn: 'Ensure face is well lit for best results' },
@@ -5010,6 +5019,12 @@
         let audioCtx = null, analyserAudio = null, animRaf = null;
         let startTime = null, frameCount = 0, hrMode = 'face';
         const cardEls = {}, warmupTimers = {}, valStates = {};
+        let faceRoi = null;
+        /* Breath rate HP/LP filter state (fed at ~10fps from pose/facemesh) */
+        let brHpPrev=0, brHpOut=0, brLpOut=0, brPrevFilt=null;
+        let brBreathTimes=[], brLastPeakAt=0, brBreathStart=0;
+        /* MediaPipe Pose (shoulder-based breath signal) */
+        let poseModel=null, posePending=false, poseTick=0, poseShoulderActive=false;
 
         /* ── DOM refs ── */
         const overlay    = document.getElementById('demo-overlay');
@@ -5197,13 +5212,19 @@
             if (!faceCtx || videoEl.readyState<2) return null;
             if (hrMode==='finger') {
                 faceCtx.drawImage(videoEl, 0, 0, 160, 120);
+            } else if (faceRoi) {
+                faceCtx.drawImage(videoEl, faceRoi.x, faceRoi.y, faceRoi.w, faceRoi.h, 0, 0, 160, 120);
             } else {
                 faceCtx.drawImage(videoEl, 40, 8, 80, 60, 0, 0, 160, 120);
             }
             const d=faceCtx.getImageData(0,0,160,120).data;
             let r=0, g=0, b=0, n=0;
-            for (let i=0; i<d.length; i+=4) { r+=d[i]; g+=d[i+1]; b+=d[i+2]; n++; }
-            return n ? [r/n,g/n,b/n] : null;
+            for (let i=0; i<d.length; i+=4) {
+                /* Exclude very dark (shadow) and very bright (specular) pixels */
+                const lum=0.299*d[i]+0.587*d[i+1]+0.114*d[i+2];
+                if (lum>30&&lum<240) { r+=d[i]; g+=d[i+1]; b+=d[i+2]; n++; }
+            }
+            return n>200 ? [r/n,g/n,b/n] : null;
         }
 
         function computeHR(buf) {
@@ -5280,31 +5301,37 @@
             }
         }
 
-        /* ── Breath rate ── */
-        let brBuf=[], lastBR=null;
-        const BR_BUF=900;
+        /* ── Breath rate: HP/LP filter + zero-crossing peak detection ──
+           Effective sample rate ~10fps (FaceMesh/Pose fire every 3 frames).
+           HP α=0.941 → cutoff ~0.1 Hz;  LP α=0.239 → cutoff ~0.5 Hz (6–30 BrPM passband) */
+        let lastBR=null;
         const brKalman=makeKalman(10,0.1);
+        const BR_HP_A=0.941, BR_LP_A=0.239;
 
-        function extractBreathSignal() {
-            if (!faceCtx || videoEl.readyState<2) return null;
-            faceCtx.drawImage(videoEl, 0, 80, 160, 20, 0, 0, 160, 20);
-            const d=faceCtx.getImageData(0,0,160,20).data;
-            let s=0, n=0;
-            for (let i=1; i<d.length; i+=4) { s+=d[i]; n++; }
-            return n ? s/n : null;
+        function updateBreathFilter(rawY) {
+            brHpOut=BR_HP_A*(brHpOut+rawY-brHpPrev); brHpPrev=rawY;
+            brLpOut+=BR_LP_A*(brHpOut-brLpOut);
+            const now=performance.now();
+            /* Upward zero-cross = end of breath exhale = one breath event */
+            if (brPrevFilt!==null&&brPrevFilt<0&&brLpOut>=0) {
+                if (now-brLastPeakAt>2000) { /* min 2s inter-breath = max 30 BrPM */
+                    if (!brBreathStart) brBreathStart=now;
+                    brBreathTimes.push(now); brLastPeakAt=now;
+                    while(brBreathTimes.length&&brBreathTimes[0]<now-30000) brBreathTimes.shift();
+                }
+            }
+            brPrevFilt=brLpOut;
         }
 
-        function estimateBR(buf) {
-            if (buf.length<FPS*30) return null;
-            const mn=a=>a.reduce((s,v)=>s+v,0)/a.length;
-            const m=mn(buf), c=buf.map(v=>v-m);
-            let zc=0;
-            for (let i=1; i<c.length; i++) if (c[i-1]*c[i]<0) zc++;
-            const br=(zc/2)/(buf.length/FPS)*60;
-            return (br>=8&&br<=25)?br:null;
+        function estimateBR() {
+            if (!brBreathStart||brBreathTimes.length<3) return null;
+            const elapsed=(performance.now()-brBreathStart)/1000;
+            if (elapsed<20) return null;
+            const rate=brBreathTimes.length/Math.min(elapsed,30)*60;
+            return (rate>=8&&rate<=25)?Math.round(rate):null;
         }
 
-        /* ── MediaPipe Face Mesh (blink + distance) ── */
+        /* ── MediaPipe Face Mesh (blink + distance + breath fallback signal) ── */
         let faceMesh=null, fmPending=false, fmTick=0;
         const blinkTimes=[];
         let prevEAR=null, earThresh=0.2, earCalibBuf=[], earCalibDone=false, blinkStart=null;
@@ -5329,18 +5356,36 @@
                         earCalibDone=true;
                     }
                 }
-                if (prevEAR!==null && prevEAR>=earThresh && e<earThresh) {
-                    const now=performance.now();
-                    if (!blinkStart) blinkStart=now;
-                    blinkTimes.push(now);
-                    while(blinkTimes.length&&blinkTimes[0]<now-60000) blinkTimes.shift();
+                if (prevEAR!==null&&prevEAR>=earThresh&&e<earThresh) {
+                    const ts=performance.now();
+                    if (!blinkStart) blinkStart=ts;
+                    blinkTimes.push(ts);
+                    while(blinkTimes.length&&blinkTimes[0]<ts-60000) blinkTimes.shift();
                 }
                 prevEAR=e;
-                /* Distance via eye-separation heuristic */
+                /* Face bounding box → better rPPG crop (forehead/cheeks only) */
+                const vW=videoEl.videoWidth||640, vH=videoEl.videoHeight||480;
+                let fMinX=Infinity, fMaxX=-Infinity, fMinY=Infinity, fMaxY=-Infinity;
+                for (let i=0;i<468;i++) {
+                    const px=lm[i].x*vW, py=lm[i].y*vH;
+                    if(px<fMinX)fMinX=px; if(px>fMaxX)fMaxX=px;
+                    if(py<fMinY)fMinY=py; if(py>fMaxY)fMaxY=py;
+                }
+                const fw=fMaxX-fMinX, fhf=fMaxY-fMinY;
+                faceRoi={x:fMinX+fw*0.1, y:fMinY+fhf*0.1, w:fw*0.8, h:fhf*0.5};
+                /* Breath fallback: chin landmark y oscillates subtly with breathing */
+                if (!poseShoulderActive) updateBreathFilter(lm[152].y);
+                /* Distance via iris diameter (refineLandmarks provides lm[469–477]) */
                 const now=performance.now();
-                if (now-distUpdAt>2000) {
-                    const eyeW=ed(lm[33],lm[263])*(videoEl.videoWidth||640);
-                    if (eyeW>8) { lastDistCm=Math.round(Math.max(20,Math.min(200,4000/eyeW))); distUpdAt=now; }
+                if (now-distUpdAt>2000&&lm.length>477) {
+                    const irisL=ed(lm[469],lm[471])*(videoEl.videoWidth||640);
+                    const irisR=ed(lm[474],lm[476])*(videoEl.videoWidth||640);
+                    const irisPx=(irisL+irisR)/2;
+                    if (irisPx>2) {
+                        /* f≈600px typical webcam; iris diameter 11.7mm → 600×1.17/irisPx cm */
+                        lastDistCm=Math.round(Math.max(20,Math.min(200,702/irisPx)));
+                        distUpdAt=now;
+                    }
                 }
             });
         }
@@ -5350,6 +5395,30 @@
             if (++fmTick%3!==0) return;
             fmPending=true;
             faceMesh.send({image:videoEl}).then(()=>{fmPending=false;}).catch(()=>{fmPending=false;});
+        }
+
+        /* ── MediaPipe Pose (shoulder-based breath rate — primary signal when visible) ── */
+        function initPose() {
+            if (typeof Pose==='undefined') return;
+            poseModel=new Pose({locateFile:f=>`https://cdn.jsdelivr.net/npm/@mediapipe/pose@0.5.1675469404/${f}`});
+            poseModel.setOptions({modelComplexity:0,smoothLandmarks:true,minDetectionConfidence:0.5,minTrackingConfidence:0.5});
+            poseModel.onResults(r=>{
+                if (!r.poseLandmarks) { poseShoulderActive=false; return; }
+                const L=r.poseLandmarks[11], R=r.poseLandmarks[12];
+                if (L&&R&&(L.visibility||0)>0.5&&(R.visibility||0)>0.5) {
+                    poseShoulderActive=true;
+                    updateBreathFilter((L.y+R.y)/2);
+                } else {
+                    poseShoulderActive=false;
+                }
+            });
+        }
+
+        function sendPose() {
+            if (!poseModel||videoEl.readyState<2||posePending) return;
+            if (++poseTick%3!==0) return;
+            posePending=true;
+            poseModel.send({image:videoEl}).then(()=>{posePending=false;}).catch(()=>{posePending=false;});
         }
 
         function getBlinkRate() {
@@ -5373,7 +5442,7 @@
         }
 
         function readAudio() {
-            if (!analyserAudio) return {db:null,cough:false};
+            if (!analyserAudio) return {db:null,cough:false,rms:0};
             const d=new Float32Array(analyserAudio.frequencyBinCount);
             analyserAudio.getFloatTimeDomainData(d);
             let sq=0;
@@ -5385,10 +5454,12 @@
                 ambientRMS=ambientRMS===null?rms:ambientRMS*0.95+rms*0.05;
                 if (ambientN>=150) voiceReady=true;
             }
-            const cough=rms>0.15&&coughCooldown<=0;
+            /* Adaptive cough threshold: 5× ambient floor, hard minimum 0.08 */
+            const coughThresh=Math.max(0.08,(ambientRMS||0.01)*5);
+            const cough=rms>coughThresh&&coughCooldown<=0;
             if (cough) coughCooldown=60;
             if (coughCooldown>0) coughCooldown--;
-            return {db,cough};
+            return {db,cough,rms};
         }
 
         /* ── Render loop ── */
@@ -5401,9 +5472,8 @@
 
             const rgb=extractRGB();
             if (rgb) { rgbBuf.push(rgb); if(rgbBuf.length>CHROM_BUF) rgbBuf.shift(); }
-            const bs=extractBreathSignal();
-            if (bs!==null) { brBuf.push(bs); if(brBuf.length>BR_BUF) brBuf.shift(); }
             sendFaceMesh();
+            sendPose();
 
             if (frameCount%FPS===0) {
                 /* Heart Rate */
@@ -5427,10 +5497,10 @@
                 }
 
                 /* Breath Rate */
-                const brRaw=estimateBR(brBuf);
-                if (brRaw!==null&&elapsed>=30) {
+                const brRaw=estimateBR();
+                if (brRaw!==null) {
                     const sm=Math.round(brKalman.update(brRaw));
-                    if (lastBR===null||Math.abs(brRaw-lastBR)<=5) {
+                    if (lastBR===null||Math.abs(brRaw-lastBR)<=4) {
                         setVal('br',sm);   /* CARD_MIN_DISP enforces 10s */
                         if (lastBR!==sm) {
                             lastBR=sm;
@@ -5439,7 +5509,7 @@
                             breathRing.classList.add('breathing');
                         }
                     }
-                } else if (elapsed>=30) { setVal('br',null); }
+                } else if (elapsed>=20) { setVal('br',null); }
                 else { setStatus('br','Calibrating…'); }
 
                 /* Blink — CARD_MIN_DISP enforces 60s between display updates */
@@ -5472,8 +5542,12 @@
 
             /* Audio 5fps */
             if (frameCount%6===0) {
-                const {db,cough}=readAudio();
-                if (db!==null&&voiceReady) { setVal('voice',db+' dB'); setQuality('voice','good'); }
+                const {db,cough,rms}=readAudio();
+                if (voiceReady&&ambientRMS!==null) {
+                    const lv=rms>ambientRMS*3?'Elevated':rms>ambientRMS*0.5?'Normal':'Low';
+                    const qual=lv==='Normal'?'good':'warn';
+                    setVal('voice',db!==null?lv+' ('+db+' dB)':lv); setQuality('voice',qual);
+                }
                 if (cough) {
                     setVal('cough','1'); setQuality('cough','warn');
                     setTimeout(()=>{ setVal('cough','0'); setQuality('cough','good'); },1500);
@@ -5523,12 +5597,22 @@
             const audioTrack=stream.getAudioTracks()[0];
             if (audioTrack) setupAudio(audioTrack);
             initFaceMesh();
+            /* Load MediaPipe Pose for shoulder-based breath rate (lazy, best-effort) */
+            if (typeof Pose==='undefined') {
+                const ps=document.createElement('script');
+                ps.src='https://cdn.jsdelivr.net/npm/@mediapipe/pose@0.5.1675469404/pose.js';
+                ps.crossOrigin='anonymous'; ps.onload=()=>initPose(); ps.onerror=()=>{};
+                document.head.appendChild(ps);
+            } else { initPose(); }
             loadBar.style.width='100%';
             await new Promise(r=>setTimeout(r,350));
 
             /* Reset state */
             frameCount=0; startTime=null; hrLastGood=null; hrLastGoodAt=0; hrLastDispAt=0; hrMode='face';
-            rgbBuf=[]; brBuf=[]; lastBR=null;
+            rgbBuf=[]; lastBR=null; faceRoi=null;
+            brHpPrev=0; brHpOut=0; brLpOut=0; brPrevFilt=null;
+            brBreathTimes=[]; brLastPeakAt=0; brBreathStart=0;
+            poseShoulderActive=false; poseTick=0; posePending=false;
             blinkTimes.length=0; earCalibBuf=[]; earCalibDone=false;
             blinkStart=null; prevEAR=null; lastDistCm=null; distUpdAt=0;
             coughCooldown=0; ambientRMS=null; ambientN=0; voiceReady=false;
@@ -5552,6 +5636,7 @@
             if (fingerStream) { fingerStream.getTracks().forEach(t=>t.stop()); fingerStream=null; }
             if (audioCtx) { try{audioCtx.close();}catch(e){} audioCtx=null; analyserAudio=null; }
             if (faceMesh) { try{faceMesh.close();}catch(e){} faceMesh=null; }
+            if (poseModel) { try{poseModel.close();}catch(e){} poseModel=null; }
             videoEl.srcObject=null;
             overlay.classList.remove('demo-open');
             document.body.style.overflow='';
