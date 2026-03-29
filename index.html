@@ -5000,11 +5000,10 @@
             { id: 'br',     name: 'Breath Rate',       unit: 'BrPM',  warmupSec: 30, hwWarn: 'Browser estimate — hardware achieves ±0.5 BrPM' },
             { id: 'dist',   name: 'Distance',          unit: 'cm',    warmupSec: 2,  hwWarn: '' },
             { id: 'blink',  name: 'Blink Rate',        unit: '/min',  warmupSec: 30, hwWarn: 'Ensure face is well lit for best results' },
-            { id: 'tremor', name: 'Tremor Detection',  unit: 'power', warmupSec: 5,  hwWarn: 'Browser estimate — hardware achieves ±0.1 Hz' },
             { id: 'voice',  name: 'Voice Strength',    unit: 'dB',    warmupSec: 10, hwWarn: 'Speak naturally for 10 seconds to calibrate' },
             { id: 'cough',  name: 'Cough Detection',   unit: 'event', warmupSec: 0,  hwWarn: '' },
         ];
-        const HW_WARN_IDS = new Set(['hr', 'br', 'tremor', 'voice']);
+        const HW_WARN_IDS = new Set(['hr', 'br', 'voice']);
 
         /* ── State ── */
         let stream = null, fingerStream = null;
@@ -5098,7 +5097,7 @@
         /* setVal — smooth transitions + per-card minimum display intervals
            minDisp: minimum ms between display updates (prevents flickering)
            Null value: held for 10s then fades to "—" over 3s */
-        const CARD_MIN_DISP = { hr:5000, br:10000, dist:5000, blink:60000, tremor:5000, voice:1000, cough:0 };
+        const CARD_MIN_DISP = { hr:5000, br:10000, dist:5000, blink:60000, voice:1000, cough:0 };
 
         function setVal(id, v, _fromSignal) {
             const el = document.getElementById('dval-' + id);
@@ -5453,9 +5452,6 @@
                 } else if (elapsed<30) {
                     setStatus('blink','Calibrating…');
                 }
-
-                /* Tremor */
-                if (elapsed>=5) { setStatus('tremor','Place hands in frame'); }
 
                 /* Voice */
                 if (!voiceReady) setStatus('voice','Speak to calibrate');
