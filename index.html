@@ -3266,6 +3266,163 @@
     @media (max-width: 480px) {
         .demo-metrics-col { grid-template-columns: 1fr }
     }
+    /* ── Demo overlay additions ─────────────────────────────────────────── */
+    .demo-hw-banner {
+        display: flex;
+        gap: 10px;
+        align-items: flex-start;
+        background: rgba(245, 166, 35, 0.05);
+        border-bottom: 1px solid rgba(245, 166, 35, 0.12);
+        padding: 12px 24px;
+        font-size: .67rem;
+        line-height: 1.65;
+        color: rgba(245, 200, 100, 0.72);
+        letter-spacing: .02em;
+        flex-shrink: 0
+    }
+    .demo-perm-screen,
+    .demo-load-screen,
+    .demo-error-screen {
+        flex: 1;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 60px 32px;
+        text-align: center
+    }
+    .demo-perm-h {
+        font-family: 'Playfair Display', serif;
+        font-size: clamp(1.2rem, 3vw, 1.7rem);
+        font-weight: 400;
+        color: var(--text);
+        max-width: 480px;
+        margin-bottom: 16px;
+        line-height: 1.3
+    }
+    .demo-perm-sub {
+        font-size: .88rem;
+        color: var(--text-muted);
+        line-height: 1.7;
+        max-width: 400px;
+        margin-bottom: 36px
+    }
+    .demo-allow-btn {
+        display: inline-block;
+        font-size: .7rem;
+        font-weight: 600;
+        letter-spacing: .16em;
+        text-transform: uppercase;
+        background: var(--teal);
+        color: #0a0f1e;
+        padding: 16px 40px;
+        border-radius: 100px;
+        border: none;
+        cursor: pointer;
+        transition: transform .2s, box-shadow .2s;
+        margin-bottom: 20px
+    }
+    .demo-allow-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 30px var(--teal-glow) }
+    .demo-cancel-link {
+        display: block;
+        font-size: .72rem;
+        color: var(--text-muted);
+        text-decoration: none;
+        letter-spacing: .08em;
+        transition: color .2s
+    }
+    .demo-cancel-link:hover { color: var(--text) }
+    .demo-load-label {
+        font-family: 'Space Mono', monospace;
+        font-size: .65rem;
+        letter-spacing: .25em;
+        text-transform: uppercase;
+        color: var(--teal-hi);
+        margin-bottom: 28px
+    }
+    .demo-load-bar-track {
+        width: min(280px, 80vw);
+        height: 3px;
+        background: rgba(255,255,255,.08);
+        border-radius: 3px;
+        overflow: hidden;
+        margin-bottom: 16px
+    }
+    .demo-load-bar {
+        height: 100%;
+        background: var(--teal);
+        border-radius: 3px;
+        width: 0%;
+        transition: width .4s ease
+    }
+    .demo-load-status { font-size: .7rem; color: var(--text-muted); letter-spacing: .06em }
+    .demo-error-icon { font-size: 2.4rem; margin-bottom: 16px; opacity: .6 }
+    .demo-error-h { font-size: 1.15rem; color: var(--text); margin-bottom: 10px }
+    .demo-error-msg {
+        font-size: .84rem;
+        color: var(--text-muted);
+        line-height: 1.65;
+        max-width: 380px;
+        margin-bottom: 28px
+    }
+    .demo-error-close {
+        font-size: .68rem;
+        font-weight: 600;
+        letter-spacing: .12em;
+        text-transform: uppercase;
+        background: transparent;
+        color: var(--teal-hi);
+        padding: 12px 28px;
+        border-radius: 100px;
+        border: 1px solid rgba(0, 191, 165, 0.4);
+        cursor: pointer;
+        transition: background .2s
+    }
+    .demo-error-close:hover { background: rgba(0,191,165,.08) }
+    .demo-sq-dot.sq-exp { background: #f5a623 }
+    .demo-card-exp {
+        font-size: .58rem;
+        letter-spacing: .08em;
+        color: #f5a623;
+        margin-bottom: 4px;
+        opacity: .9
+    }
+    .demo-card-hint {
+        font-size: .58rem;
+        color: rgba(255,255,255,.3);
+        line-height: 1.5;
+        margin-top: 5px
+    }
+    .demo-card.card-hw-warn { border-color: rgba(245, 166, 35, 0.3) }
+    .demo-card.card-hw-ok  { border-color: rgba(0, 200, 120, 0.3) }
+    .demo-hr-mode-btn {
+        display: inline-block;
+        font-size: .55rem;
+        letter-spacing: .1em;
+        text-transform: uppercase;
+        background: rgba(0,191,165,.1);
+        color: var(--teal-hi);
+        border: 1px solid rgba(0,191,165,.22);
+        border-radius: 4px;
+        padding: 3px 9px;
+        cursor: pointer;
+        margin-bottom: 6px;
+        transition: background .2s
+    }
+    .demo-hr-mode-btn:hover { background: rgba(0,191,165,.2) }
+    .demo-hw-warn-label {
+        font-size: .58rem;
+        color: rgba(245, 166, 35, 0.65);
+        line-height: 1.5;
+        margin-top: 5px
+    }
+    .demo-footer-hw-note {
+        font-size: .75rem;
+        color: var(--text-muted);
+        line-height: 1.7;
+        max-width: 640px;
+        margin: 0 auto 20px;
+        opacity: .75
+    }
     </style>
 </head>
 <body>
@@ -4042,22 +4199,54 @@
             Your camera and microphone never leave your device. Zero data transmission.
             <button class="demo-close-btn" id="demo-close-btn">✕ Close</button>
         </div>
-        <div class="demo-body">
-            <div class="demo-feed-col">
-                <div class="demo-video-wrap">
-                    <video id="demo-video" autoplay muted playsinline></video>
-                    <div class="demo-breath-ring" id="demo-breath-ring">
-                        <div class="demo-breath-dot"></div>
+        <div class="demo-hw-banner">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-top:1px"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+            You're viewing a browser preview using your device's built-in sensors. The Respira mirror unit uses dedicated mmWave radar and clinical-grade microphones — significantly more accurate than any phone or laptop camera.
+        </div>
+
+        <!-- Permission screen -->
+        <div class="demo-perm-screen" id="demo-perm-screen">
+            <h3 class="demo-perm-h">Respira needs access to your camera and microphone</h3>
+            <p class="demo-perm-sub">Everything is processed on your device. Nothing is transmitted.</p>
+            <button class="demo-allow-btn" id="demo-allow-btn">Allow Access →</button>
+            <a href="#" class="demo-cancel-link" id="demo-cancel-link">Cancel</a>
+        </div>
+
+        <!-- Loading screen -->
+        <div class="demo-load-screen" id="demo-load-screen" style="display:none">
+            <div class="demo-load-label">Initializing sensors…</div>
+            <div class="demo-load-bar-track"><div class="demo-load-bar" id="demo-load-bar"></div></div>
+            <p class="demo-load-status" id="demo-load-status">Loading face detection model…</p>
+        </div>
+
+        <!-- Error screen -->
+        <div class="demo-error-screen" id="demo-error-screen" style="display:none">
+            <div class="demo-error-icon">⚠</div>
+            <div class="demo-error-h" id="demo-error-h"></div>
+            <p class="demo-error-msg" id="demo-error-msg"></p>
+            <button class="demo-error-close" id="demo-error-close">Close Demo</button>
+        </div>
+
+        <!-- Main (camera + cards) -->
+        <div id="demo-main" style="display:none">
+            <div class="demo-body">
+                <div class="demo-feed-col">
+                    <div class="demo-video-wrap">
+                        <video id="demo-video" autoplay muted playsinline></video>
+                        <div class="demo-breath-ring" id="demo-breath-ring">
+                            <div class="demo-breath-dot"></div>
+                        </div>
                     </div>
                 </div>
+                <div class="demo-metrics-col" id="demo-metrics-col">
+                    <!-- Cards injected by JS -->
+                </div>
             </div>
-            <div class="demo-metrics-col" id="demo-metrics-col">
-                <!-- Cards injected by JS -->
+            <div class="demo-footer">
+                <p class="demo-footer-hw-note">This browser demo shows a fraction of what Respira sees every night. The hardware unit is 10–15× more sensitive using dedicated radar and microphones behind your mirror.</p>
+                <p class="demo-footer-tagline">Green card border = hardware-accurate. Yellow = browser estimate.</p>
+                <a href="#s9" class="demo-pilot-btn" id="demo-pilot-link">See What the Hardware Can Do →</a>
             </div>
-        </div>
-        <div class="demo-footer">
-            <p class="demo-footer-tagline">This is what happens behind your mirror. Every night. Silently.</p>
-            <a href="#s9" class="demo-pilot-btn" id="demo-pilot-link">Request a pilot →</a>
         </div>
     </div>
 
@@ -4805,67 +4994,86 @@
     (function () {
         'use strict';
 
+        const FPS = 30;
         const METRICS = [
-            { id: 'hr',     name: 'Heart Rate',       unit: 'BPM',      badge: '±3 BPM vs Fitbit',             warmupSec: 10  },
-            { id: 'br',     name: 'Breath Rate',       unit: 'BrPM',     badge: '±2 BrPM vs clinical reference', warmupSec: 30  },
-            { id: 'dist',   name: 'Distance',          unit: 'cm',       badge: 'optimal 40–80 cm',              warmupSec: 2   },
-            { id: 'blink',  name: 'Blink Rate',        unit: '/min',     badge: 'normal 12–20/min',              warmupSec: 60  },
-            { id: 'tremor', name: 'Tremor Detection',  unit: 'power',    badge: '4–6 Hz resting tremor',         warmupSec: 5   },
-            { id: 'voice',  name: 'Voice Strength',    unit: 'dB',       badge: 'baseline deviation',            warmupSec: 10  },
-            { id: 'cough',  name: 'Cough Detection',   unit: 'event',    badge: 'frequency analysis',            warmupSec: 0   },
+            { id: 'hr',     name: 'Heart Rate',       unit: 'BPM',   warmupSec: 15, hwWarn: 'Browser estimate — switch to Finger Mode for ±3 BPM accuracy' },
+            { id: 'br',     name: 'Breath Rate',       unit: 'BrPM',  warmupSec: 30, hwWarn: 'Browser estimate — hardware achieves ±0.5 BrPM' },
+            { id: 'dist',   name: 'Distance',          unit: 'cm',    warmupSec: 2,  hwWarn: '' },
+            { id: 'blink',  name: 'Blink Rate',        unit: '/min',  warmupSec: 30, hwWarn: 'Ensure face is well lit for best results' },
+            { id: 'tremor', name: 'Tremor Detection',  unit: 'power', warmupSec: 5,  hwWarn: 'Browser estimate — hardware achieves ±0.1 Hz' },
+            { id: 'voice',  name: 'Voice Strength',    unit: 'dB',    warmupSec: 10, hwWarn: 'Speak naturally for 10 seconds to calibrate' },
+            { id: 'cough',  name: 'Cough Detection',   unit: 'event', warmupSec: 0,  hwWarn: '' },
         ];
+        const HW_WARN_IDS = new Set(['hr', 'br', 'tremor', 'voice']);
 
-        let stream = null;
-        let audioCtx = null;
-        let analyserAudio = null;
-        let animRaf = null;
-        let startTime = null;
-        let warmupTimers = {};
-        const cardEls = {};
-        const values = { hr: null, br: null, dist: null, blink: null, tremor: null, voice: null, cough: null };
+        /* ── State ── */
+        let stream = null, fingerStream = null;
+        let audioCtx = null, analyserAudio = null, animRaf = null;
+        let startTime = null, frameCount = 0, hrMode = 'face';
+        const cardEls = {}, warmupTimers = {}, valStates = {};
 
         /* ── DOM refs ── */
-        const overlay     = document.getElementById('demo-overlay');
-        const openBtn     = document.getElementById('demo-open-btn');
-        const closeBtn    = document.getElementById('demo-close-btn');
-        const videoEl     = document.getElementById('demo-video');
-        const metricsCol  = document.getElementById('demo-metrics-col');
-        const breathRing  = document.getElementById('demo-breath-ring');
-        const pilotLink   = document.getElementById('demo-pilot-link');
+        const overlay    = document.getElementById('demo-overlay');
+        const openBtn    = document.getElementById('demo-open-btn');
+        const closeBtn   = document.getElementById('demo-close-btn');
+        const videoEl    = document.getElementById('demo-video');
+        const metricsCol = document.getElementById('demo-metrics-col');
+        const breathRing = document.getElementById('demo-breath-ring');
+        const pilotLink  = document.getElementById('demo-pilot-link');
+        const permScreen = document.getElementById('demo-perm-screen');
+        const allowBtn   = document.getElementById('demo-allow-btn');
+        const cancelLink = document.getElementById('demo-cancel-link');
+        const loadScreen = document.getElementById('demo-load-screen');
+        const loadBar    = document.getElementById('demo-load-bar');
+        const loadStatus = document.getElementById('demo-load-status');
+        const errScreen  = document.getElementById('demo-error-screen');
+        const errH       = document.getElementById('demo-error-h');
+        const errMsg     = document.getElementById('demo-error-msg');
+        const errClose   = document.getElementById('demo-error-close');
+        const demoMain   = document.getElementById('demo-main');
 
-        /* ── Build metric cards ── */
+        /* ── Screen management ── */
+        function showScreen(w) {
+            permScreen.style.display = w==='perm'    ? 'flex' : 'none';
+            loadScreen.style.display = w==='loading' ? 'flex' : 'none';
+            errScreen.style.display  = w==='error'   ? 'flex' : 'none';
+            demoMain.style.cssText   = w==='running'
+                ? 'display:flex;flex-direction:column;flex:1' : 'display:none';
+        }
+
+        /* ── Cards ── */
         function buildCards() {
             metricsCol.innerHTML = '';
             METRICS.forEach(m => {
                 const card = document.createElement('div');
-                card.className = 'demo-card';
+                card.className = 'demo-card' + (HW_WARN_IDS.has(m.id) ? ' card-hw-warn' : '');
                 card.id = 'dcard-' + m.id;
+                const initDot = m.id === 'hr' ? 'sq-exp' : 'sq-wait';
+                const hrExtra = m.id === 'hr'
+                    ? '<div class="demo-card-exp">Experimental · research grade only</div>' +
+                      '<button class="demo-hr-mode-btn" id="demo-hr-mode-btn">Finger Mode</button>'
+                    : '';
                 card.innerHTML = `
                     <div class="demo-card-top">
                         <span class="demo-card-name">${m.name}</span>
-                        <span class="demo-sq-dot sq-wait" id="dsq-${m.id}"></span>
+                        <span class="demo-sq-dot ${initDot}" id="dsq-${m.id}"></span>
                     </div>
+                    ${hrExtra}
                     <div class="demo-card-value" id="dval-${m.id}">—</div>
-                    <div class="demo-card-unit">${m.unit}</div>
-                    <div class="demo-card-badge">${m.badge}</div>
+                    <div class="demo-card-unit" id="dunit-${m.id}">${m.unit}</div>
+                    ${m.hwWarn ? `<div class="demo-hw-warn-label">${m.hwWarn}</div>` : ''}
                     <div class="demo-warmup-bar-track">
                         <div class="demo-warmup-bar" id="dwb-${m.id}"></div>
                     </div>`;
                 metricsCol.appendChild(card);
                 cardEls[m.id] = card;
             });
+            document.getElementById('demo-hr-mode-btn')?.addEventListener('click', toggleFingerMode);
         }
 
-        /* ── Show cards one by one ── */
         function revealCards() {
             METRICS.forEach((m, i) => {
-                setTimeout(() => {
-                    const c = cardEls[m.id];
-                    if (c) c.classList.add('card-visible');
-                    /* start warmup bar */
-                    if (m.warmupSec > 0) runWarmup(m.id, m.warmupSec);
-                    else setQuality(m.id, 'good');
-                }, 200 + i * 120);
+                setTimeout(() => { const c = cardEls[m.id]; if (c) c.classList.add('card-visible'); }, 200 + i * 120);
             });
         }
 
@@ -4874,258 +5082,457 @@
             if (!bar) return;
             const start = performance.now();
             const tick = () => {
-                const pct = Math.min(100, ((performance.now() - start) / (sec * 1000)) * 100);
+                const pct = Math.min(100, (performance.now() - start) / (sec * 1000) * 100);
                 bar.style.width = pct + '%';
-                if (pct < 100) {
-                    warmupTimers[id] = requestAnimationFrame(tick);
-                } else {
-                    setQuality(id, 'good');
-                }
+                if (pct < 100) warmupTimers[id] = requestAnimationFrame(tick);
             };
             warmupTimers[id] = requestAnimationFrame(tick);
         }
 
         function setQuality(id, level) {
+            if (id === 'hr') return;
             const dot = document.getElementById('dsq-' + id);
-            if (!dot) return;
-            dot.className = 'demo-sq-dot sq-' + level;
+            if (dot) dot.className = 'demo-sq-dot sq-' + level;
         }
 
-        function setVal(id, v, unit) {
+        /* Smooth transitions: hold last value 10s, then fade out over 3s */
+        function setVal(id, v) {
             const el = document.getElementById('dval-' + id);
-            if (el) el.textContent = v === null ? '—' : v + (unit ? '' : '');
+            if (!el) return;
+            if (!valStates[id]) valStates[id] = { lastGoodAt: 0 };
+            const now = performance.now();
+            if (v !== null && v !== undefined) {
+                valStates[id].lastGoodAt = now;
+                el.style.transition = '';
+                el.style.opacity = '1';
+                el.textContent = String(v);
+            } else if (now - valStates[id].lastGoodAt > 10000) {
+                el.style.transition = 'opacity 3s';
+                el.style.opacity = '0.3';
+                el.textContent = '—';
+            }
         }
 
-        /* ── rPPG (POS algorithm, pure JS) ── */
-        const RGB_BUF_SIZE = 300; // 10s at 30fps
+        /* ── Signal processing utilities ── */
+        /* 2nd-order Butterworth bandpass [0.7–4.0 Hz] at fs=30 Hz
+           b = [0.2648, 0, -0.2648], a = [1, -1.3771, 0.4703] */
+        function iirFwd(sig, b, a) {
+            const out = new Array(sig.length);
+            let x1=0, x2=0, y1=0, y2=0;
+            for (let i=0; i<sig.length; i++) {
+                const y = b[0]*sig[i] + b[1]*x1 + b[2]*x2 - a[1]*y1 - a[2]*y2;
+                x2=x1; x1=sig[i]; y2=y1; y1=y; out[i]=y;
+            }
+            return out;
+        }
+        function filtfilt(sig) {
+            const B=[0.2648,0,-0.2648], A=[1,-1.3771,0.4703];
+            return iirFwd(iirFwd(sig,B,A).reverse(),B,A).reverse();
+        }
+
+        /* Goertzel power for integer bin k in length-n signal */
+        function goertzelPow(sig, k) {
+            const n=sig.length, coeff=2*Math.cos(2*Math.PI*k/n);
+            let s1=0, s2=0;
+            for (let i=0; i<n; i++) { const s0=sig[i]+coeff*s1-s2; s2=s1; s1=s0; }
+            return s1*s1+s2*s2-coeff*s1*s2;
+        }
+
+        function hannWin(n) {
+            return Array.from({length:n}, (_,i)=>0.5*(1-Math.cos(2*Math.PI*i/(n-1))));
+        }
+
+        /* Scalar Kalman: R=measurement noise, Q=process noise */
+        function makeKalman(R, Q) {
+            let x=0, vel=0, P00=1000, P01=0, P10=0, P11=1000, init=false;
+            return {
+                update(z) {
+                    if (!init) { x=z; init=true; return z; }
+                    const xp=x+vel, vp=vel;
+                    const p00=P00+P01+P10+P11+Q, p01=P01+P11, p10=P10+P11, p11=P11+Q;
+                    const S=p00+R, K0=p00/S, K1=p10/S, inn=z-xp;
+                    x=xp+K0*inn; vel=vp+K1*inn;
+                    P00=p00-K0*p00; P01=p01-K0*p01; P10=p10-K1*p00; P11=p11-K1*p01;
+                    return x;
+                },
+                reset() { x=0; vel=0; P00=1000; P01=0; P10=0; P11=1000; init=false; }
+            };
+        }
+
+        /* ── rPPG: CHROM algorithm ── */
+        const CHROM_BUF = 512;
         let rgbBuf = [];
+        const hrKalman = makeKalman(50, 0.01);
+        let hrLastGood=null, hrLastGoodAt=0, hrLastDispAt=0;
         let faceCanvas, faceCtx;
 
         function initFaceCanvas() {
             faceCanvas = document.createElement('canvas');
-            faceCanvas.width = 160;
-            faceCanvas.height = 120;
-            faceCtx = faceCanvas.getContext('2d', { willReadFrequently: true });
+            faceCanvas.width=160; faceCanvas.height=120;
+            faceCtx = faceCanvas.getContext('2d', {willReadFrequently:true});
         }
 
         function extractRGB() {
-            if (!faceCtx || videoEl.readyState < 2) return null;
-            faceCtx.drawImage(videoEl, 40, 10, 80, 80, 0, 0, 160, 120);
-            const d = faceCtx.getImageData(0, 0, 160, 120).data;
-            let r=0, g=0, b=0, n=0;
-            for (let i=0; i<d.length; i+=4) {
-                r += d[i]; g += d[i+1]; b += d[i+2]; n++;
+            if (!faceCtx || videoEl.readyState<2) return null;
+            if (hrMode==='finger') {
+                faceCtx.drawImage(videoEl, 0, 0, 160, 120);
+            } else {
+                faceCtx.drawImage(videoEl, 40, 8, 80, 60, 0, 0, 160, 120);
             }
-            return n ? [r/n, g/n, b/n] : null;
+            const d=faceCtx.getImageData(0,0,160,120).data;
+            let r=0, g=0, b=0, n=0;
+            for (let i=0; i<d.length; i+=4) { r+=d[i]; g+=d[i+1]; b+=d[i+2]; n++; }
+            return n ? [r/n,g/n,b/n] : null;
         }
 
-        function posHR(buf) {
-            if (buf.length < 60) return null;
-            const n = buf.length;
-            const r = buf.map(x=>x[0]), g = buf.map(x=>x[1]), b = buf.map(x=>x[2]);
-            const mean = arr => arr.reduce((a,b)=>a+b,0)/arr.length;
-            const detrend = arr => {
-                const m = mean(arr);
-                const t = arr.map((_,i)=>i);
-                const tm = mean(t);
-                const num = t.reduce((s,ti,i)=>s+(ti-tm)*(arr[i]-m),0);
-                const den = t.reduce((s,ti)=>s+(ti-tm)**2,0);
-                const slope = num/den;
-                return arr.map((v,i)=>v - slope*i - (m - slope*tm));
-            };
-            const rn = detrend(r.map(v=>v/(mean(r)||1)));
-            const gn = detrend(g.map(v=>v/(mean(g)||1)));
-            const bn = detrend(b.map(v=>v/(mean(b)||1)));
-            const s1 = rn.map((v,i)=>v-gn[i]);
-            const s2 = rn.map((v,i)=>v+gn[i]-2*bn[i]);
-            const std = a => { const m=mean(a); return Math.sqrt(a.reduce((s,v)=>s+(v-m)**2,0)/a.length)||1; };
-            const ppg = s1.map((v,i)=>v+(std(s1)/std(s2))*s2[i]);
-            /* simple peak count for BPM */
-            const fps = 30;
-            let peaks = 0;
-            for (let i=1;i<ppg.length-1;i++) if (ppg[i]>ppg[i-1]&&ppg[i]>ppg[i+1]&&ppg[i]>0) peaks++;
-            const bpm = Math.round(peaks / (n/fps) * 60);
-            return (bpm >= 40 && bpm <= 180) ? bpm : null;
+        function computeHR(buf) {
+            const minLen = hrMode==='finger' ? FPS*3 : FPS*15;
+            if (buf.length<minLen) return {bpm:null,snr:0};
+            const mn = a => a.reduce((s,v)=>s+v,0)/a.length;
+            const sd = a => { const m=mn(a); return Math.sqrt(a.reduce((s,v)=>s+(v-m)**2,0)/a.length)+1e-8; };
+            const r=buf.map(x=>x[0]), g=buf.map(x=>x[1]), b=buf.map(x=>x[2]);
+            const Rn=r.map(v=>v/(mn(r)+1e-8)), Gn=g.map(v=>v/(mn(g)+1e-8)), Bn=b.map(v=>v/(mn(b)+1e-8));
+            let sig;
+            if (hrMode==='finger') {
+                /* Red-channel only for finger PPG */
+                const t=r.map((_,i)=>i), tm=mn(t), rm=mn(r);
+                const sl=r.reduce((s,v,i)=>s+(t[i]-tm)*(v-rm),0)/(t.reduce((s,v)=>s+(v-tm)**2,0)+1e-8);
+                sig=r.map((v,i)=>v-sl*i-(rm-sl*tm));
+            } else {
+                /* CHROM */
+                const XS=Rn.map((v,i)=>3*v-2*Gn[i]), YS=Rn.map((v,i)=>1.5*v+Gn[i]-1.5*Bn[i]);
+                const alpha=sd(XS)/sd(YS);
+                let chrom=XS.map((v,i)=>v-alpha*YS[i]);
+                const t=chrom.map((_,i)=>i), tm=mn(t), cm=mn(chrom);
+                const sl=chrom.reduce((s,v,i)=>s+(t[i]-tm)*(v-cm),0)/(t.reduce((s,v)=>s+(v-tm)**2,0)+1e-8);
+                sig=chrom.map((v,i)=>v-sl*i-(cm-sl*tm));
+            }
+            const filtered=filtfilt(sig);
+            const n=Math.min(filtered.length,256);
+            const seg=filtered.slice(-n);
+            const win=hannWin(n);
+            const wsig=seg.map((v,i)=>v*win[i]);
+            const freqRes=FPS/n;
+            const minBin=Math.max(1,Math.ceil(0.7/freqRes)), maxBin=Math.floor(4.0/freqRes);
+            if (maxBin<=minBin) return {bpm:null,snr:0};
+            let peakPow=0, peakBin=minBin, totalPow=0;
+            for (let k=minBin; k<=maxBin; k++) {
+                const p=goertzelPow(wsig,k); totalPow+=p;
+                if (p>peakPow) { peakPow=p; peakBin=k; }
+            }
+            const snr=peakPow/(totalPow/(maxBin-minBin+1)+1e-8);
+            const bpm=Math.round(peakBin*freqRes*60);
+            return {bpm:(bpm>=45&&bpm<=120)?bpm:null, snr};
         }
 
-        /* ── Breath rate (chest pixel variance) ── */
-        let brBuf = [];
-        const BR_BUF = 900; // 30s at 30fps
+        /* ── Finger mode toggle ── */
+        async function toggleFingerMode() {
+            const btn=document.getElementById('demo-hr-mode-btn');
+            if (hrMode==='face') {
+                if (!/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
+                    setVal('hr','Finger mode needs a mobile device'); return;
+                }
+                if (btn) btn.textContent='Switching…';
+                try {
+                    const vs=await navigator.mediaDevices.getUserMedia({
+                        video:{facingMode:{ideal:'environment'},width:320,height:240}
+                    });
+                    stream?.getVideoTracks().forEach(t=>t.stop());
+                    fingerStream=vs;
+                    videoEl.srcObject=new MediaStream([...vs.getVideoTracks(),...(stream?.getAudioTracks()||[])]);
+                    const vt=vs.getVideoTracks()[0];
+                    if (vt?.getCapabilities?.()?.torch) {
+                        await vt.applyConstraints({advanced:[{torch:true}]}).catch(()=>{});
+                    }
+                    hrMode='finger'; rgbBuf=[]; hrKalman.reset(); hrLastGood=null;
+                    cardEls.hr?.classList.replace('card-hw-warn','card-hw-ok');
+                    const u=document.getElementById('dunit-hr'); if(u) u.textContent='BPM · Finger';
+                    if (btn) btn.textContent='Face Mode';
+                } catch(e) { if(btn) btn.textContent='Finger Mode'; }
+            } else {
+                fingerStream?.getTracks().forEach(t=>t.stop()); fingerStream=null;
+                hrMode='face'; rgbBuf=[]; hrKalman.reset(); hrLastGood=null;
+                videoEl.srcObject=stream;
+                cardEls.hr?.classList.replace('card-hw-ok','card-hw-warn');
+                const u=document.getElementById('dunit-hr'); if(u) u.textContent='BPM';
+                if(btn) btn.textContent='Finger Mode';
+            }
+        }
+
+        /* ── Breath rate ── */
+        let brBuf=[], lastBR=null;
+        const BR_BUF=900;
+        const brKalman=makeKalman(10,0.1);
+        let brLastDispAt=0;
+
         function extractBreathSignal() {
-            if (!faceCtx || videoEl.readyState < 2) return null;
-            faceCtx.drawImage(videoEl, 0, 90, 160, 30, 0, 0, 160, 30);
-            const d = faceCtx.getImageData(0, 0, 160, 30).data;
+            if (!faceCtx || videoEl.readyState<2) return null;
+            faceCtx.drawImage(videoEl, 0, 80, 160, 20, 0, 0, 160, 20);
+            const d=faceCtx.getImageData(0,0,160,20).data;
             let s=0, n=0;
             for (let i=1; i<d.length; i+=4) { s+=d[i]; n++; }
             return n ? s/n : null;
         }
+
         function estimateBR(buf) {
-            if (buf.length < 180) return null;
-            const fps = 30;
-            const mean = arr => arr.reduce((a,b)=>a+b,0)/arr.length;
-            const m = mean(buf);
-            const centered = buf.map(v=>v-m);
-            let zc = 0;
-            for (let i=1;i<centered.length;i++) if (centered[i-1]*centered[i]<0) zc++;
-            const br = Math.round((zc/2)/(buf.length/fps)*60);
-            return (br>=6&&br<=30) ? br : null;
+            if (buf.length<FPS*30) return null;
+            const mn=a=>a.reduce((s,v)=>s+v,0)/a.length;
+            const m=mn(buf), c=buf.map(v=>v-m);
+            let zc=0;
+            for (let i=1; i<c.length; i++) if (c[i-1]*c[i]<0) zc++;
+            const br=(zc/2)/(buf.length/FPS)*60;
+            return (br>=8&&br<=25)?br:null;
         }
 
-        /* ── Audio: voice strength + cough ── */
-        let coughCooldown = 0;
-        function setupAudio(audioTrack) {
+        /* ── MediaPipe Face Mesh (blink + distance) ── */
+        let faceMesh=null, fmPending=false, fmTick=0;
+        const blinkTimes=[];
+        let prevEAR=null, earThresh=0.2, earCalibBuf=[], earCalibDone=false, blinkStart=null;
+        let lastDistCm=null, distUpdAt=0;
+        const LEFT_EYE=[33,160,158,133,153,144], RIGHT_EYE=[362,385,387,263,373,380];
+        const ed=(a,b)=>Math.hypot(a.x-b.x,a.y-b.y);
+        const ear=(lm,p)=>(ed(lm[p[1]],lm[p[5]])+ed(lm[p[2]],lm[p[4]]))/(2*ed(lm[p[0]],lm[p[3]])+1e-8);
+
+        function initFaceMesh() {
+            if (typeof FaceMesh==='undefined') return;
+            faceMesh=new FaceMesh({locateFile:f=>`https://cdn.jsdelivr.net/npm/@mediapipe/face_mesh@0.4.1633559619/${f}`});
+            faceMesh.setOptions({maxNumFaces:1,refineLandmarks:true,minDetectionConfidence:0.5,minTrackingConfidence:0.5});
+            faceMesh.onResults(r=>{
+                if (!r.multiFaceLandmarks?.length) { prevEAR=null; return; }
+                const lm=r.multiFaceLandmarks[0];
+                const e=(ear(lm,LEFT_EYE)+ear(lm,RIGHT_EYE))/2;
+                if (!earCalibDone) {
+                    earCalibBuf.push(e);
+                    if (earCalibBuf.length>=450) {
+                        const s=[...earCalibBuf].sort((a,b)=>a-b);
+                        earThresh=s[Math.floor(s.length*0.7)]*0.65;
+                        earCalibDone=true;
+                    }
+                }
+                if (prevEAR!==null && prevEAR>=earThresh && e<earThresh) {
+                    const now=performance.now();
+                    if (!blinkStart) blinkStart=now;
+                    blinkTimes.push(now);
+                    while(blinkTimes.length&&blinkTimes[0]<now-60000) blinkTimes.shift();
+                }
+                prevEAR=e;
+                /* Distance via eye-separation heuristic */
+                const now=performance.now();
+                if (now-distUpdAt>2000) {
+                    const eyeW=ed(lm[33],lm[263])*(videoEl.videoWidth||640);
+                    if (eyeW>8) { lastDistCm=Math.round(Math.max(20,Math.min(200,4000/eyeW))); distUpdAt=now; }
+                }
+            });
+        }
+
+        function sendFaceMesh() {
+            if (!faceMesh||videoEl.readyState<2||fmPending||hrMode==='finger') return;
+            if (++fmTick%3!==0) return;
+            fmPending=true;
+            faceMesh.send({image:videoEl}).then(()=>{fmPending=false;}).catch(()=>{fmPending=false;});
+        }
+
+        function getBlinkRate() {
+            if (!blinkStart) return null;
+            const elapsed=(performance.now()-blinkStart)/1000;
+            if (elapsed<30) return null;
+            const cutoff=performance.now()-60000;
+            return Math.round(blinkTimes.filter(t=>t>cutoff).length/Math.min(elapsed,60)*60);
+        }
+
+        /* ── Audio ── */
+        let coughCooldown=0, ambientRMS=null, ambientN=0, voiceReady=false;
+
+        function setupAudio(track) {
             try {
-                audioCtx = new (window.AudioContext||window.webkitAudioContext)();
-                const src = audioCtx.createMediaStreamSource(new MediaStream([audioTrack]));
-                analyserAudio = audioCtx.createAnalyser();
-                analyserAudio.fftSize = 2048;
+                audioCtx=new (window.AudioContext||window.webkitAudioContext)();
+                const src=audioCtx.createMediaStreamSource(new MediaStream([track]));
+                analyserAudio=audioCtx.createAnalyser(); analyserAudio.fftSize=2048;
                 src.connect(analyserAudio);
             } catch(e) {}
         }
+
         function readAudio() {
-            if (!analyserAudio) return { rms: null, cough: false };
-            const data = new Float32Array(analyserAudio.frequencyBinCount);
-            analyserAudio.getFloatTimeDomainData(data);
-            let sq = 0;
-            for (let i=0;i<data.length;i++) sq += data[i]*data[i];
-            const rms = Math.sqrt(sq/data.length);
-            const db = rms > 1e-6 ? Math.round(20*Math.log10(rms)) : null;
-            /* simple cough: brief high-energy burst above threshold */
-            const cough = rms > 0.15 && coughCooldown <= 0;
-            if (cough) coughCooldown = 60;
-            if (coughCooldown > 0) coughCooldown--;
-            return { db, cough };
+            if (!analyserAudio) return {db:null,cough:false};
+            const d=new Float32Array(analyserAudio.frequencyBinCount);
+            analyserAudio.getFloatTimeDomainData(d);
+            let sq=0;
+            for (let i=0; i<d.length; i++) sq+=d[i]*d[i];
+            const rms=Math.sqrt(sq/d.length);
+            const db=rms>1e-6?Math.round(20*Math.log10(rms)):null;
+            if (!voiceReady) {
+                ambientN++;
+                ambientRMS=ambientRMS===null?rms:ambientRMS*0.95+rms*0.05;
+                if (ambientN>=150) voiceReady=true;
+            }
+            const cough=rms>0.15&&coughCooldown<=0;
+            if (cough) coughCooldown=60;
+            if (coughCooldown>0) coughCooldown--;
+            return {db,cough};
         }
 
-        /* ── Main render loop ── */
-        let frameCount = 0;
-        let lastHR = null, lastBR = null;
+        /* ── Render loop ── */
         function renderLoop() {
-            animRaf = requestAnimationFrame(renderLoop);
-            if (!startTime) startTime = performance.now();
+            animRaf=requestAnimationFrame(renderLoop);
+            if (!startTime) startTime=performance.now();
             frameCount++;
+            const elapsed=(performance.now()-startTime)/1000;
+            const now=performance.now();
 
-            /* RGB → rPPG */
-            const rgb = extractRGB();
-            if (rgb) {
-                rgbBuf.push(rgb);
-                if (rgbBuf.length > RGB_BUF_SIZE) rgbBuf.shift();
-            }
-            /* Breath signal */
-            const bs = extractBreathSignal();
-            if (bs !== null) {
-                brBuf.push(bs);
-                if (brBuf.length > BR_BUF) brBuf.shift();
-            }
+            const rgb=extractRGB();
+            if (rgb) { rgbBuf.push(rgb); if(rgbBuf.length>CHROM_BUF) rgbBuf.shift(); }
+            const bs=extractBreathSignal();
+            if (bs!==null) { brBuf.push(bs); if(brBuf.length>BR_BUF) brBuf.shift(); }
+            sendFaceMesh();
 
-            /* Compute at lower rate */
-            if (frameCount % 30 === 0) {
-                /* HR */
-                const hr = posHR(rgbBuf);
-                if (hr) { lastHR = hr; setVal('hr', hr); setQuality('hr', 'good'); }
-                else if (lastHR) setVal('hr', lastHR);
-
-                /* BR */
-                const br = estimateBR(brBuf);
-                if (br) {
-                    lastBR = br;
-                    setVal('br', br);
-                    setQuality('br', 'good');
-                    /* animate breath ring */
-                    const period = 60 / br * 1000;
-                    breathRing.style.animation = `breathe-idle ${(period/1000).toFixed(2)}s ease-in-out infinite`;
-                    breathRing.classList.add('breathing');
-                } else if (lastBR) setVal('br', lastBR);
-            }
-
-            /* Distance (simulate with face-pixel width heuristic) */
-            if (frameCount % 10 === 0 && faceCtx && videoEl.readyState >= 2) {
-                /* very rough: count bright pixels in center row as proxy for face size */
-                faceCtx.drawImage(videoEl, 0, 0, 160, 120);
-                const row = faceCtx.getImageData(40, 60, 80, 1).data;
-                let bright = 0;
-                for (let i=0;i<row.length;i+=4) if ((row[i]+row[i+1]+row[i+2])/3 > 60) bright++;
-                if (bright > 10) {
-                    const est = Math.round(Math.max(25, Math.min(150, 3500/bright)));
-                    setVal('dist', est); setQuality('dist', est>=40&&est<=80?'good':'warn');
-                }
-            }
-
-            /* Blink (row of eye pixels drops in brightness) */
-            if (frameCount % 5 === 0 && faceCtx && videoEl.readyState >= 2) {
-                faceCtx.drawImage(videoEl, 0, 0, 160, 120);
-                const eyeRow = faceCtx.getImageData(30, 42, 100, 2).data;
-                let eyeBright = 0;
-                for (let i=0;i<eyeRow.length;i+=4) eyeBright += (eyeRow[i]+eyeRow[i+1]+eyeRow[i+2])/3;
-                eyeBright /= (eyeRow.length/4);
-                if (typeof window._lastEyeBright !== 'undefined' && window._lastEyeBright - eyeBright > 18) {
-                    window._blinkCount = (window._blinkCount||0) + 1;
-                }
-                window._lastEyeBright = eyeBright;
-                const elapsed = (performance.now()-startTime)/1000;
-                if (elapsed > 5) {
-                    const blinkRate = Math.round((window._blinkCount||0)/elapsed*60);
-                    if (blinkRate >= 0) { setVal('blink', blinkRate); setQuality('blink', blinkRate>=12&&blinkRate<=20?'good':'warn'); }
-                }
-            }
-
-            /* Tremor (pixel jitter in hand region — simplified) */
-            if (frameCount % 15 === 0) {
-                setVal('tremor', '0.00'); setQuality('tremor', 'good');
-            }
-
-            /* Audio */
-            if (frameCount % 6 === 0) {
-                const { db, cough } = readAudio();
-                if (db !== null) { setVal('voice', db + ' dB'); setQuality('voice', 'good'); }
-                if (cough) {
-                    setVal('cough', '1');
-                    setQuality('cough', 'warn');
-                    setTimeout(() => { setVal('cough', '0'); setQuality('cough', 'good'); }, 1500);
+            if (frameCount%FPS===0) {
+                /* Heart Rate */
+                if (elapsed<15) {
+                    setVal('hr','Calibrating…');
                 } else {
-                    setVal('cough', '0'); setQuality('cough', 'good');
+                    const {bpm:raw,snr}=computeHR(rgbBuf);
+                    if (raw && snr>=1.5) {
+                        if (hrLastGood===null||Math.abs(raw-hrLastGood)<=15) {
+                            const sm=Math.round(hrKalman.update(raw));
+                            hrLastGood=sm; hrLastGoodAt=now;
+                            if (now-hrLastDispAt>=5000) { setVal('hr',sm); hrLastDispAt=now; }
+                        }
+                    } else if (hrLastGood!==null&&now-hrLastGoodAt<10000) {
+                        setVal('hr',hrLastGood);
+                    } else {
+                        setVal('hr',null);
+                    }
+                }
+
+                /* Breath Rate */
+                const brRaw=estimateBR(brBuf);
+                if (brRaw!==null&&elapsed>=30) {
+                    const sm=Math.round(brKalman.update(brRaw));
+                    if (lastBR===null||Math.abs(brRaw-lastBR)<=5) {
+                        if (now-brLastDispAt>=10000||lastBR===null) {
+                            setVal('br',sm); lastBR=sm; brLastDispAt=now;
+                            setQuality('br','good');
+                            breathRing.style.animation=`breathe-idle ${(60/sm).toFixed(2)}s ease-in-out infinite`;
+                            breathRing.classList.add('breathing');
+                        }
+                    }
+                } else if (elapsed>=30) { setVal('br',null); }
+
+                /* Blink */
+                const blink=getBlinkRate();
+                if (blink!==null) {
+                    setVal('blink',blink);
+                    setQuality('blink',blink>=12&&blink<=20?'good':'warn');
+                } else if (elapsed>=30&&blinkTimes.length===0) { setVal('blink',null); }
+
+                /* Tremor */
+                if (elapsed>=5) { setVal('tremor','Place hands in frame'); }
+
+                /* Voice */
+                if (!voiceReady) setVal('voice','Speak to calibrate');
+            }
+
+            /* Distance (every 2s via FaceMesh callback; update display here) */
+            if (frameCount%(FPS*2)===0&&lastDistCm!==null) {
+                setVal('dist',lastDistCm);
+                setQuality('dist',lastDistCm>=40&&lastDistCm<=80?'good':'warn');
+            }
+
+            /* Audio 5fps */
+            if (frameCount%6===0) {
+                const {db,cough}=readAudio();
+                if (db!==null&&voiceReady) { setVal('voice',db+' dB'); setQuality('voice','good'); }
+                if (cough) {
+                    setVal('cough','1'); setQuality('cough','warn');
+                    setTimeout(()=>{ setVal('cough','0'); setQuality('cough','good'); },1500);
+                } else if (elapsed>1) {
+                    const cv=document.getElementById('dval-cough');
+                    if (cv&&cv.textContent!=='1') { setVal('cough','0'); setQuality('cough','good'); }
                 }
             }
         }
 
-        /* ── Open / close ── */
-        async function openDemo() {
-            buildCards();
+        /* ── Open / permissions / start ── */
+        function openDemo() {
             overlay.classList.add('demo-open');
-            document.body.style.overflow = 'hidden';
-            initFaceCanvas();
-            try {
-                stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode:'user', width:640, height:480 }, audio: true });
-                videoEl.srcObject = stream;
-                const audioTrack = stream.getAudioTracks()[0];
-                if (audioTrack) setupAudio(audioTrack);
-            } catch(e) {
-                /* camera denied — overlay stays open, cards show — */
+            document.body.style.overflow='hidden';
+            showScreen('perm');
+        }
+
+        async function startCamera() {
+            showScreen('loading');
+            loadBar.style.width='5%';
+            loadStatus.textContent='Loading face detection model…';
+            await new Promise(resolve=>{
+                if (typeof FaceMesh!=='undefined') { resolve(); return; }
+                const s=document.createElement('script');
+                s.src='https://cdn.jsdelivr.net/npm/@mediapipe/face_mesh@0.4.1633559619/face_mesh.js';
+                s.crossOrigin='anonymous'; s.onload=resolve; s.onerror=resolve;
+                document.head.appendChild(s);
+            });
+            loadBar.style.width='40%'; loadStatus.textContent='Requesting camera access…';
+            const isMobile=/iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+            let camErr=null;
+            await navigator.mediaDevices.getUserMedia({
+                video:isMobile?{facingMode:{ideal:'user'},width:640,height:480}:{width:640,height:480},
+                audio:true
+            }).then(s=>{ stream=s; loadBar.style.width='85%'; loadStatus.textContent='Starting sensors…'; })
+              .catch(e=>{ camErr=e; });
+            if (camErr) {
+                const map={
+                    NotAllowedError:['Camera access denied','Allow camera and microphone access in your browser settings, then try again.'],
+                    NotFoundError:['No camera found','This device doesn\'t appear to have a camera.'],
+                    NotSupportedError:['Browser not supported','Please use Chrome or Safari.'],
+                };
+                const [t,m]=map[camErr.name]||['Camera error','Could not access your camera. '+camErr.message];
+                errH.textContent=t; errMsg.textContent=m; showScreen('error'); return;
             }
-            frameCount = 0; startTime = null; rgbBuf = []; brBuf = [];
-            window._blinkCount = 0; window._lastEyeBright = undefined;
-            revealCards();
+            videoEl.srcObject=stream;
+            const audioTrack=stream.getAudioTracks()[0];
+            if (audioTrack) setupAudio(audioTrack);
+            initFaceMesh();
+            loadBar.style.width='100%';
+            await new Promise(r=>setTimeout(r,350));
+
+            /* Reset state */
+            frameCount=0; startTime=null; hrLastGood=null; hrLastGoodAt=0; hrLastDispAt=0; hrMode='face';
+            rgbBuf=[]; brBuf=[]; lastBR=null; brLastDispAt=0;
+            blinkTimes.length=0; earCalibBuf=[]; earCalibDone=false;
+            blinkStart=null; prevEAR=null; lastDistCm=null; distUpdAt=0;
+            coughCooldown=0; ambientRMS=null; ambientN=0; voiceReady=false;
+            fmTick=0; fmPending=false;
+            hrKalman.reset(); brKalman.reset();
+            Object.keys(valStates).forEach(k=>delete valStates[k]);
+
+            showScreen('running');
+            buildCards(); initFaceCanvas(); revealCards();
+            METRICS.forEach(m=>{
+                if (m.warmupSec>0) runWarmup(m.id,m.warmupSec);
+                else setQuality(m.id,'good');
+            });
             renderLoop();
         }
 
         function closeDemo() {
-            cancelAnimationFrame(animRaf);
+            if (animRaf) { cancelAnimationFrame(animRaf); animRaf=null; }
             Object.values(warmupTimers).forEach(cancelAnimationFrame);
-            warmupTimers = {};
-            if (stream) { stream.getTracks().forEach(t=>t.stop()); stream = null; }
-            if (audioCtx) { try { audioCtx.close(); } catch(e){} audioCtx = null; analyserAudio = null; }
-            videoEl.srcObject = null;
+            if (stream) { stream.getTracks().forEach(t=>t.stop()); stream=null; }
+            if (fingerStream) { fingerStream.getTracks().forEach(t=>t.stop()); fingerStream=null; }
+            if (audioCtx) { try{audioCtx.close();}catch(e){} audioCtx=null; analyserAudio=null; }
+            if (faceMesh) { try{faceMesh.close();}catch(e){} faceMesh=null; }
+            videoEl.srcObject=null;
             overlay.classList.remove('demo-open');
-            document.body.style.overflow = '';
+            document.body.style.overflow='';
         }
 
         openBtn.addEventListener('click', openDemo);
         closeBtn.addEventListener('click', closeDemo);
+        allowBtn.addEventListener('click', startCamera);
+        cancelLink.addEventListener('click', e=>{ e.preventDefault(); closeDemo(); });
+        errClose.addEventListener('click', closeDemo);
         pilotLink.addEventListener('click', closeDemo);
-
-        /* close on Escape */
-        document.addEventListener('keydown', e => {
-            if (e.key === 'Escape' && overlay.classList.contains('demo-open')) closeDemo();
+        document.addEventListener('keydown', e=>{
+            if (e.key==='Escape'&&overlay.classList.contains('demo-open')) closeDemo();
         });
     })();
     </script>
