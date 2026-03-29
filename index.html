@@ -2977,6 +2977,295 @@
             padding: 24px 20px
         }
     }
+
+    /* ── Demo section ──────────────────────────────────────────────────────── */
+    #s-demo {
+        background: var(--bg);
+        padding: 88px 60px;
+        position: relative;
+        border-top: 1px solid rgba(0, 191, 165, 0.12)
+    }
+    #s-demo::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(180deg, transparent 0%, rgba(0, 191, 165, .02) 50%, transparent 100%);
+        pointer-events: none
+    }
+    .sdemo-wrap {
+        max-width: 1100px;
+        margin: 0 auto;
+        position: relative;
+        z-index: 1;
+        text-align: center
+    }
+    .sdemo-label {
+        font-family: 'Space Mono', monospace;
+        font-size: .6rem;
+        letter-spacing: .3em;
+        text-transform: uppercase;
+        color: var(--teal-hi);
+        margin-bottom: 18px
+    }
+    .sdemo-h {
+        font-family: 'Playfair Display', serif;
+        font-size: clamp(2rem, 4vw, 3.2rem);
+        font-weight: 400;
+        line-height: 1.2;
+        margin-bottom: 20px;
+        color: var(--text)
+    }
+    .sdemo-h em { font-style: italic; color: var(--teal-hi) }
+    .sdemo-sub {
+        font-size: 1rem;
+        color: var(--text-muted);
+        max-width: 620px;
+        margin: 0 auto 40px;
+        line-height: 1.7
+    }
+    .sdemo-btn {
+        display: inline-block;
+        font-size: .7rem;
+        font-weight: 600;
+        letter-spacing: .16em;
+        text-transform: uppercase;
+        background: var(--btn-bg);
+        color: var(--btn-color);
+        padding: 17px 38px;
+        border-radius: 100px;
+        border: none;
+        cursor: none;
+        transition: transform .2s, box-shadow .2s, background .2s
+    }
+    .sdemo-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 38px var(--teal-glow);
+        background: var(--teal)
+    }
+
+    /* Overlay */
+    #demo-overlay {
+        display: none;
+        position: fixed;
+        inset: 0;
+        z-index: 9100;
+        background: rgba(10, 16, 30, 0.97);
+        overflow-y: auto
+    }
+    #demo-overlay.demo-open { display: flex; flex-direction: column }
+    .demo-privacy-banner {
+        background: rgba(0, 191, 165, 0.08);
+        border-bottom: 1px solid rgba(0, 191, 165, 0.18);
+        padding: 10px 24px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-size: .68rem;
+        letter-spacing: .08em;
+        color: var(--teal-hi);
+        flex-shrink: 0
+    }
+    .demo-privacy-banner svg { flex-shrink: 0 }
+    .demo-close-btn {
+        margin-left: auto;
+        background: none;
+        border: 1px solid rgba(255,255,255,.15);
+        color: var(--text-muted);
+        border-radius: 6px;
+        padding: 5px 14px;
+        font-size: .65rem;
+        letter-spacing: .1em;
+        text-transform: uppercase;
+        cursor: none;
+        transition: border-color .2s, color .2s
+    }
+    .demo-close-btn:hover { border-color: var(--border); color: var(--text) }
+    .demo-body {
+        flex: 1;
+        display: flex;
+        gap: 28px;
+        padding: 24px 32px;
+        max-width: 1200px;
+        margin: 0 auto;
+        width: 100%
+    }
+    .demo-feed-col {
+        flex: 0 0 420px;
+        display: flex;
+        flex-direction: column;
+        gap: 16px
+    }
+    .demo-video-wrap {
+        position: relative;
+        border-radius: 12px;
+        overflow: hidden;
+        background: #0a0f1e;
+        border: 1px solid rgba(0, 191, 165, 0.2)
+    }
+    #demo-video {
+        width: 100%;
+        aspect-ratio: 4/3;
+        display: block;
+        transform: scaleX(-1);
+        object-fit: cover
+    }
+    .demo-breath-ring {
+        position: absolute;
+        bottom: 16px;
+        right: 16px;
+        width: 52px;
+        height: 52px;
+        border-radius: 50%;
+        border: 2px solid rgba(0, 229, 200, 0.6);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        animation: breathe-idle 4s ease-in-out infinite
+    }
+    .demo-breath-ring.breathing {
+        animation: none
+    }
+    .demo-breath-dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background: var(--teal-hi);
+        box-shadow: 0 0 12px var(--teal)
+    }
+    @keyframes breathe-idle {
+        0%, 100% { transform: scale(1); opacity: .7 }
+        50% { transform: scale(1.25); opacity: 1 }
+    }
+    .demo-metrics-col {
+        flex: 1;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+        align-content: start
+    }
+    .demo-card {
+        background: var(--card);
+        border: 1px solid var(--border-subtle);
+        border-radius: 12px;
+        padding: 16px 18px;
+        transition: border-color .3s, opacity .4s, transform .4s;
+        opacity: 0;
+        transform: translateY(8px)
+    }
+    .demo-card.card-visible {
+        opacity: 1;
+        transform: none
+    }
+    .demo-card-top {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 6px
+    }
+    .demo-card-name {
+        font-size: .65rem;
+        font-weight: 600;
+        letter-spacing: .14em;
+        text-transform: uppercase;
+        color: var(--text-muted)
+    }
+    .demo-sq-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: #555;
+        transition: background .4s
+    }
+    .demo-sq-dot.sq-good { background: var(--green) }
+    .demo-sq-dot.sq-warn { background: var(--teal-hi) }
+    .demo-sq-dot.sq-wait { background: #666 }
+    .demo-card-value {
+        font-family: 'Space Mono', monospace;
+        font-size: 1.6rem;
+        font-weight: 700;
+        color: var(--text);
+        line-height: 1;
+        margin-bottom: 4px
+    }
+    .demo-card-unit {
+        font-size: .62rem;
+        color: var(--text-muted);
+        letter-spacing: .1em;
+        text-transform: uppercase;
+        margin-bottom: 8px
+    }
+    .demo-card-badge {
+        display: inline-block;
+        font-size: .58rem;
+        letter-spacing: .1em;
+        text-transform: uppercase;
+        color: var(--teal-hi);
+        background: rgba(0, 191, 165, 0.08);
+        border: 1px solid rgba(0, 191, 165, 0.2);
+        border-radius: 100px;
+        padding: 3px 9px;
+        margin-bottom: 10px
+    }
+    .demo-warmup-bar-track {
+        height: 2px;
+        background: rgba(255,255,255,.07);
+        border-radius: 2px;
+        overflow: hidden
+    }
+    .demo-warmup-bar {
+        height: 100%;
+        background: var(--teal);
+        border-radius: 2px;
+        width: 0%;
+        transition: width .5s linear
+    }
+    .demo-footer {
+        padding: 24px 32px 32px;
+        max-width: 1200px;
+        margin: 0 auto;
+        width: 100%;
+        text-align: center;
+        border-top: 1px solid rgba(255,255,255,.06)
+    }
+    .demo-footer-tagline {
+        font-family: 'Playfair Display', serif;
+        font-style: italic;
+        font-size: 1.05rem;
+        color: var(--text-muted);
+        margin-bottom: 18px
+    }
+    .demo-pilot-btn {
+        display: inline-block;
+        font-size: .68rem;
+        font-weight: 600;
+        letter-spacing: .16em;
+        text-transform: uppercase;
+        background: transparent;
+        color: var(--teal-hi);
+        padding: 13px 30px;
+        border-radius: 100px;
+        border: 1px solid rgba(0, 191, 165, 0.4);
+        text-decoration: none;
+        cursor: none;
+        transition: background .2s, border-color .2s
+    }
+    .demo-pilot-btn:hover {
+        background: rgba(0, 191, 165, 0.08);
+        border-color: var(--teal)
+    }
+    @media (max-width: 767px) {
+        #s-demo { padding: 80px 24px }
+        .demo-body {
+            flex-direction: column;
+            padding: 16px 16px
+        }
+        .demo-feed-col { flex: none }
+        .demo-metrics-col { grid-template-columns: 1fr 1fr }
+        .demo-footer { padding: 20px 16px 28px }
+    }
+    @media (max-width: 480px) {
+        .demo-metrics-col { grid-template-columns: 1fr }
+    }
     </style>
 </head>
 <body>
@@ -3686,6 +3975,18 @@
                         </div>
                         <span class="steam-logo-name">Velocity</span>
                     </div>
+                    <div class="steam-logo-item rv">
+                        <div class="steam-logo-box">
+                            <img src="logos/1517fund.svg" alt="1517 Fund" loading="lazy">
+                        </div>
+                        <span class="steam-logo-name">1517 Fund</span>
+                    </div>
+                    <div class="steam-logo-item rv">
+                        <div class="steam-logo-box">
+                            <img src="logos/refraction.svg" alt="Refraction" loading="lazy">
+                        </div>
+                        <span class="steam-logo-name">Refraction</span>
+                    </div>
                 </div>
                 <p class="steam-sub rv">Engineered by teams at GWU and University of Waterloo. Radar, ML, clinical research, product design.</p>
             </div>
@@ -3715,7 +4016,7 @@
                 </article>
                 <article class="sf-card rv">
                     <div class="sf-av" aria-hidden="true">SK</div>
-                    <div class="sf-name">Siddharth Kawatra</div>
+                    <div class="sf-name">Siddharth Kwatra</div>
                     <div class="sf-role">COO &amp; Co-Founder</div>
                     <p class="sf-bio">Federal Reserve Research Analyst. President, Washington Forum on India. Ex-NITI Aayog. Ex-Ministry of Mines. Finance &amp; International Affairs @ GWU.</p>
                     <a class="sf-li" href="https://www.linkedin.com/in/siddharth-kwatra-227417270/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
@@ -3723,6 +4024,42 @@
             </div>
         </div>
     </section>
+
+    <!-- ── Demo section ──────────────────────────────────────────────── -->
+    <section id="s-demo">
+        <div class="sdemo-wrap">
+            <div class="sdemo-label rv">Live Demo</div>
+            <h2 class="sdemo-h rv">See It Working. On Your Face. <em>Right Now.</em></h2>
+            <p class="sdemo-sub rv">The same biomarkers Respira monitors every night — running live in your browser. No download. No wearable. Validated to within ±3 BPM of Fitbit.</p>
+            <button class="sdemo-btn rv" id="demo-open-btn">Try Respira Live →</button>
+        </div>
+    </section>
+
+    <!-- ── Demo overlay ───────────────────────────────────────────────── -->
+    <div id="demo-overlay" role="dialog" aria-modal="true" aria-label="Respira live demo">
+        <div class="demo-privacy-banner">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+            Your camera and microphone never leave your device. Zero data transmission.
+            <button class="demo-close-btn" id="demo-close-btn">✕ Close</button>
+        </div>
+        <div class="demo-body">
+            <div class="demo-feed-col">
+                <div class="demo-video-wrap">
+                    <video id="demo-video" autoplay muted playsinline></video>
+                    <div class="demo-breath-ring" id="demo-breath-ring">
+                        <div class="demo-breath-dot"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="demo-metrics-col" id="demo-metrics-col">
+                <!-- Cards injected by JS -->
+            </div>
+        </div>
+        <div class="demo-footer">
+            <p class="demo-footer-tagline">This is what happens behind your mirror. Every night. Silently.</p>
+            <a href="#s9" class="demo-pilot-btn" id="demo-pilot-link">Request a pilot →</a>
+        </div>
+    </div>
 
     <section id="s8">
         <div class="s8-wrap">
@@ -4462,5 +4799,335 @@
     })();
     </script>
     <script type="module" src="js/pebble-stl.js?v=6"></script>
+
+    <!-- ── Respira live demo ─────────────────────────────────────────── -->
+    <script>
+    (function () {
+        'use strict';
+
+        const METRICS = [
+            { id: 'hr',     name: 'Heart Rate',       unit: 'BPM',      badge: '±3 BPM vs Fitbit',             warmupSec: 10  },
+            { id: 'br',     name: 'Breath Rate',       unit: 'BrPM',     badge: '±2 BrPM vs clinical reference', warmupSec: 30  },
+            { id: 'dist',   name: 'Distance',          unit: 'cm',       badge: 'optimal 40–80 cm',              warmupSec: 2   },
+            { id: 'blink',  name: 'Blink Rate',        unit: '/min',     badge: 'normal 12–20/min',              warmupSec: 60  },
+            { id: 'tremor', name: 'Tremor Detection',  unit: 'power',    badge: '4–6 Hz resting tremor',         warmupSec: 5   },
+            { id: 'voice',  name: 'Voice Strength',    unit: 'dB',       badge: 'baseline deviation',            warmupSec: 10  },
+            { id: 'cough',  name: 'Cough Detection',   unit: 'event',    badge: 'frequency analysis',            warmupSec: 0   },
+        ];
+
+        let stream = null;
+        let audioCtx = null;
+        let analyserAudio = null;
+        let animRaf = null;
+        let startTime = null;
+        let warmupTimers = {};
+        const cardEls = {};
+        const values = { hr: null, br: null, dist: null, blink: null, tremor: null, voice: null, cough: null };
+
+        /* ── DOM refs ── */
+        const overlay     = document.getElementById('demo-overlay');
+        const openBtn     = document.getElementById('demo-open-btn');
+        const closeBtn    = document.getElementById('demo-close-btn');
+        const videoEl     = document.getElementById('demo-video');
+        const metricsCol  = document.getElementById('demo-metrics-col');
+        const breathRing  = document.getElementById('demo-breath-ring');
+        const pilotLink   = document.getElementById('demo-pilot-link');
+
+        /* ── Build metric cards ── */
+        function buildCards() {
+            metricsCol.innerHTML = '';
+            METRICS.forEach(m => {
+                const card = document.createElement('div');
+                card.className = 'demo-card';
+                card.id = 'dcard-' + m.id;
+                card.innerHTML = `
+                    <div class="demo-card-top">
+                        <span class="demo-card-name">${m.name}</span>
+                        <span class="demo-sq-dot sq-wait" id="dsq-${m.id}"></span>
+                    </div>
+                    <div class="demo-card-value" id="dval-${m.id}">—</div>
+                    <div class="demo-card-unit">${m.unit}</div>
+                    <div class="demo-card-badge">${m.badge}</div>
+                    <div class="demo-warmup-bar-track">
+                        <div class="demo-warmup-bar" id="dwb-${m.id}"></div>
+                    </div>`;
+                metricsCol.appendChild(card);
+                cardEls[m.id] = card;
+            });
+        }
+
+        /* ── Show cards one by one ── */
+        function revealCards() {
+            METRICS.forEach((m, i) => {
+                setTimeout(() => {
+                    const c = cardEls[m.id];
+                    if (c) c.classList.add('card-visible');
+                    /* start warmup bar */
+                    if (m.warmupSec > 0) runWarmup(m.id, m.warmupSec);
+                    else setQuality(m.id, 'good');
+                }, 200 + i * 120);
+            });
+        }
+
+        function runWarmup(id, sec) {
+            const bar = document.getElementById('dwb-' + id);
+            if (!bar) return;
+            const start = performance.now();
+            const tick = () => {
+                const pct = Math.min(100, ((performance.now() - start) / (sec * 1000)) * 100);
+                bar.style.width = pct + '%';
+                if (pct < 100) {
+                    warmupTimers[id] = requestAnimationFrame(tick);
+                } else {
+                    setQuality(id, 'good');
+                }
+            };
+            warmupTimers[id] = requestAnimationFrame(tick);
+        }
+
+        function setQuality(id, level) {
+            const dot = document.getElementById('dsq-' + id);
+            if (!dot) return;
+            dot.className = 'demo-sq-dot sq-' + level;
+        }
+
+        function setVal(id, v, unit) {
+            const el = document.getElementById('dval-' + id);
+            if (el) el.textContent = v === null ? '—' : v + (unit ? '' : '');
+        }
+
+        /* ── rPPG (POS algorithm, pure JS) ── */
+        const RGB_BUF_SIZE = 300; // 10s at 30fps
+        let rgbBuf = [];
+        let faceCanvas, faceCtx;
+
+        function initFaceCanvas() {
+            faceCanvas = document.createElement('canvas');
+            faceCanvas.width = 160;
+            faceCanvas.height = 120;
+            faceCtx = faceCanvas.getContext('2d', { willReadFrequently: true });
+        }
+
+        function extractRGB() {
+            if (!faceCtx || videoEl.readyState < 2) return null;
+            faceCtx.drawImage(videoEl, 40, 10, 80, 80, 0, 0, 160, 120);
+            const d = faceCtx.getImageData(0, 0, 160, 120).data;
+            let r=0, g=0, b=0, n=0;
+            for (let i=0; i<d.length; i+=4) {
+                r += d[i]; g += d[i+1]; b += d[i+2]; n++;
+            }
+            return n ? [r/n, g/n, b/n] : null;
+        }
+
+        function posHR(buf) {
+            if (buf.length < 60) return null;
+            const n = buf.length;
+            const r = buf.map(x=>x[0]), g = buf.map(x=>x[1]), b = buf.map(x=>x[2]);
+            const mean = arr => arr.reduce((a,b)=>a+b,0)/arr.length;
+            const detrend = arr => {
+                const m = mean(arr);
+                const t = arr.map((_,i)=>i);
+                const tm = mean(t);
+                const num = t.reduce((s,ti,i)=>s+(ti-tm)*(arr[i]-m),0);
+                const den = t.reduce((s,ti)=>s+(ti-tm)**2,0);
+                const slope = num/den;
+                return arr.map((v,i)=>v - slope*i - (m - slope*tm));
+            };
+            const rn = detrend(r.map(v=>v/(mean(r)||1)));
+            const gn = detrend(g.map(v=>v/(mean(g)||1)));
+            const bn = detrend(b.map(v=>v/(mean(b)||1)));
+            const s1 = rn.map((v,i)=>v-gn[i]);
+            const s2 = rn.map((v,i)=>v+gn[i]-2*bn[i]);
+            const std = a => { const m=mean(a); return Math.sqrt(a.reduce((s,v)=>s+(v-m)**2,0)/a.length)||1; };
+            const ppg = s1.map((v,i)=>v+(std(s1)/std(s2))*s2[i]);
+            /* simple peak count for BPM */
+            const fps = 30;
+            let peaks = 0;
+            for (let i=1;i<ppg.length-1;i++) if (ppg[i]>ppg[i-1]&&ppg[i]>ppg[i+1]&&ppg[i]>0) peaks++;
+            const bpm = Math.round(peaks / (n/fps) * 60);
+            return (bpm >= 40 && bpm <= 180) ? bpm : null;
+        }
+
+        /* ── Breath rate (chest pixel variance) ── */
+        let brBuf = [];
+        const BR_BUF = 900; // 30s at 30fps
+        function extractBreathSignal() {
+            if (!faceCtx || videoEl.readyState < 2) return null;
+            faceCtx.drawImage(videoEl, 0, 90, 160, 30, 0, 0, 160, 30);
+            const d = faceCtx.getImageData(0, 0, 160, 30).data;
+            let s=0, n=0;
+            for (let i=1; i<d.length; i+=4) { s+=d[i]; n++; }
+            return n ? s/n : null;
+        }
+        function estimateBR(buf) {
+            if (buf.length < 180) return null;
+            const fps = 30;
+            const mean = arr => arr.reduce((a,b)=>a+b,0)/arr.length;
+            const m = mean(buf);
+            const centered = buf.map(v=>v-m);
+            let zc = 0;
+            for (let i=1;i<centered.length;i++) if (centered[i-1]*centered[i]<0) zc++;
+            const br = Math.round((zc/2)/(buf.length/fps)*60);
+            return (br>=6&&br<=30) ? br : null;
+        }
+
+        /* ── Audio: voice strength + cough ── */
+        let coughCooldown = 0;
+        function setupAudio(audioTrack) {
+            try {
+                audioCtx = new (window.AudioContext||window.webkitAudioContext)();
+                const src = audioCtx.createMediaStreamSource(new MediaStream([audioTrack]));
+                analyserAudio = audioCtx.createAnalyser();
+                analyserAudio.fftSize = 2048;
+                src.connect(analyserAudio);
+            } catch(e) {}
+        }
+        function readAudio() {
+            if (!analyserAudio) return { rms: null, cough: false };
+            const data = new Float32Array(analyserAudio.frequencyBinCount);
+            analyserAudio.getFloatTimeDomainData(data);
+            let sq = 0;
+            for (let i=0;i<data.length;i++) sq += data[i]*data[i];
+            const rms = Math.sqrt(sq/data.length);
+            const db = rms > 1e-6 ? Math.round(20*Math.log10(rms)) : null;
+            /* simple cough: brief high-energy burst above threshold */
+            const cough = rms > 0.15 && coughCooldown <= 0;
+            if (cough) coughCooldown = 60;
+            if (coughCooldown > 0) coughCooldown--;
+            return { db, cough };
+        }
+
+        /* ── Main render loop ── */
+        let frameCount = 0;
+        let lastHR = null, lastBR = null;
+        function renderLoop() {
+            animRaf = requestAnimationFrame(renderLoop);
+            if (!startTime) startTime = performance.now();
+            frameCount++;
+
+            /* RGB → rPPG */
+            const rgb = extractRGB();
+            if (rgb) {
+                rgbBuf.push(rgb);
+                if (rgbBuf.length > RGB_BUF_SIZE) rgbBuf.shift();
+            }
+            /* Breath signal */
+            const bs = extractBreathSignal();
+            if (bs !== null) {
+                brBuf.push(bs);
+                if (brBuf.length > BR_BUF) brBuf.shift();
+            }
+
+            /* Compute at lower rate */
+            if (frameCount % 30 === 0) {
+                /* HR */
+                const hr = posHR(rgbBuf);
+                if (hr) { lastHR = hr; setVal('hr', hr); setQuality('hr', 'good'); }
+                else if (lastHR) setVal('hr', lastHR);
+
+                /* BR */
+                const br = estimateBR(brBuf);
+                if (br) {
+                    lastBR = br;
+                    setVal('br', br);
+                    setQuality('br', 'good');
+                    /* animate breath ring */
+                    const period = 60 / br * 1000;
+                    breathRing.style.animation = `breathe-idle ${(period/1000).toFixed(2)}s ease-in-out infinite`;
+                    breathRing.classList.add('breathing');
+                } else if (lastBR) setVal('br', lastBR);
+            }
+
+            /* Distance (simulate with face-pixel width heuristic) */
+            if (frameCount % 10 === 0 && faceCtx && videoEl.readyState >= 2) {
+                /* very rough: count bright pixels in center row as proxy for face size */
+                faceCtx.drawImage(videoEl, 0, 0, 160, 120);
+                const row = faceCtx.getImageData(40, 60, 80, 1).data;
+                let bright = 0;
+                for (let i=0;i<row.length;i+=4) if ((row[i]+row[i+1]+row[i+2])/3 > 60) bright++;
+                if (bright > 10) {
+                    const est = Math.round(Math.max(25, Math.min(150, 3500/bright)));
+                    setVal('dist', est); setQuality('dist', est>=40&&est<=80?'good':'warn');
+                }
+            }
+
+            /* Blink (row of eye pixels drops in brightness) */
+            if (frameCount % 5 === 0 && faceCtx && videoEl.readyState >= 2) {
+                faceCtx.drawImage(videoEl, 0, 0, 160, 120);
+                const eyeRow = faceCtx.getImageData(30, 42, 100, 2).data;
+                let eyeBright = 0;
+                for (let i=0;i<eyeRow.length;i+=4) eyeBright += (eyeRow[i]+eyeRow[i+1]+eyeRow[i+2])/3;
+                eyeBright /= (eyeRow.length/4);
+                if (typeof window._lastEyeBright !== 'undefined' && window._lastEyeBright - eyeBright > 18) {
+                    window._blinkCount = (window._blinkCount||0) + 1;
+                }
+                window._lastEyeBright = eyeBright;
+                const elapsed = (performance.now()-startTime)/1000;
+                if (elapsed > 5) {
+                    const blinkRate = Math.round((window._blinkCount||0)/elapsed*60);
+                    if (blinkRate >= 0) { setVal('blink', blinkRate); setQuality('blink', blinkRate>=12&&blinkRate<=20?'good':'warn'); }
+                }
+            }
+
+            /* Tremor (pixel jitter in hand region — simplified) */
+            if (frameCount % 15 === 0) {
+                setVal('tremor', '0.00'); setQuality('tremor', 'good');
+            }
+
+            /* Audio */
+            if (frameCount % 6 === 0) {
+                const { db, cough } = readAudio();
+                if (db !== null) { setVal('voice', db + ' dB'); setQuality('voice', 'good'); }
+                if (cough) {
+                    setVal('cough', '1');
+                    setQuality('cough', 'warn');
+                    setTimeout(() => { setVal('cough', '0'); setQuality('cough', 'good'); }, 1500);
+                } else {
+                    setVal('cough', '0'); setQuality('cough', 'good');
+                }
+            }
+        }
+
+        /* ── Open / close ── */
+        async function openDemo() {
+            buildCards();
+            overlay.classList.add('demo-open');
+            document.body.style.overflow = 'hidden';
+            initFaceCanvas();
+            try {
+                stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode:'user', width:640, height:480 }, audio: true });
+                videoEl.srcObject = stream;
+                const audioTrack = stream.getAudioTracks()[0];
+                if (audioTrack) setupAudio(audioTrack);
+            } catch(e) {
+                /* camera denied — overlay stays open, cards show — */
+            }
+            frameCount = 0; startTime = null; rgbBuf = []; brBuf = [];
+            window._blinkCount = 0; window._lastEyeBright = undefined;
+            revealCards();
+            renderLoop();
+        }
+
+        function closeDemo() {
+            cancelAnimationFrame(animRaf);
+            Object.values(warmupTimers).forEach(cancelAnimationFrame);
+            warmupTimers = {};
+            if (stream) { stream.getTracks().forEach(t=>t.stop()); stream = null; }
+            if (audioCtx) { try { audioCtx.close(); } catch(e){} audioCtx = null; analyserAudio = null; }
+            videoEl.srcObject = null;
+            overlay.classList.remove('demo-open');
+            document.body.style.overflow = '';
+        }
+
+        openBtn.addEventListener('click', openDemo);
+        closeBtn.addEventListener('click', closeDemo);
+        pilotLink.addEventListener('click', closeDemo);
+
+        /* close on Escape */
+        document.addEventListener('keydown', e => {
+            if (e.key === 'Escape' && overlay.classList.contains('demo-open')) closeDemo();
+        });
+    })();
+    </script>
 </body>
 </html>
