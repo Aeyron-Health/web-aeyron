@@ -5629,7 +5629,7 @@
                 } else {
                     /* POS fallback (SNR-gated) */
                     const {bpm:raw,snr}=computeHR(rgbBuf);
-                    if (raw&&snr>=2.0) {
+                    if (raw&&snr>=1.5) {
                         if (hrLastGood===null||Math.abs(raw-hrLastGood)<=15) {
                             const sm=Math.round(hrKalman.update(raw));
                             hrLastGood=sm; hrLastGoodAt=now;
@@ -5734,10 +5734,14 @@
             loadBar.style.width='15%'; loadStatus.textContent='Loading heart rate model…';
             let camErr=null;
             await Promise.all([
-                loadNeuralRPPG(pct=>{
-                    loadBar.style.width=Math.max(15,Math.min(75,15+pct*60))+'%';
-                    loadStatus.textContent=pct<0.5?'Loading heart rate model…':'Loading heart rate calibration…';
-                }),
+                /* 25s timeout — if neural model is slow/unavailable, proceed with POS */
+                Promise.race([
+                    loadNeuralRPPG(pct=>{
+                        loadBar.style.width=Math.max(15,Math.min(75,15+pct*60))+'%';
+                        loadStatus.textContent=pct<0.5?'Loading heart rate model…':'Loading heart rate calibration…';
+                    }),
+                    new Promise(res=>setTimeout(()=>{nnFailed=true;res();},25000))
+                ]),
                 navigator.mediaDevices.getUserMedia({
                     video:isMobile?{facingMode:{ideal:'user'},width:640,height:480}:{width:640,height:480},
                     audio:true
