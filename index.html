@@ -3428,6 +3428,26 @@
         margin: 0 auto 20px;
         opacity: .75
     }
+    /* Chest-visible positioning hint */
+    .demo-pos-hint {
+        display: none;
+        position: absolute;
+        bottom: 10px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: rgba(0,0,0,.7);
+        border: 1px solid rgba(245,166,35,.5);
+        color: rgba(245,166,35,.95);
+        font-size: .62rem;
+        font-family: 'Inter', sans-serif;
+        letter-spacing: .04em;
+        padding: 5px 12px;
+        border-radius: 4px;
+        white-space: nowrap;
+        pointer-events: none;
+        z-index: 2
+    }
+    .demo-pos-hint.visible { display: block }
     </style>
 </head>
 <body>
@@ -4226,6 +4246,7 @@
             <div class="demo-load-label">Initializing sensors…</div>
             <div class="demo-load-bar-track"><div class="demo-load-bar" id="demo-load-bar"></div></div>
             <p class="demo-load-status" id="demo-load-status">Loading face detection model…</p>
+            <p style="font-size:.65rem;color:rgba(255,255,255,.35);margin-top:16px;text-align:center">Tip: sit back so your shoulders are visible for best breath rate accuracy</p>
         </div>
 
         <!-- Error screen -->
@@ -4245,6 +4266,7 @@
                         <div class="demo-breath-ring" id="demo-breath-ring">
                             <div class="demo-breath-dot"></div>
                         </div>
+                        <div class="demo-pos-hint" id="demo-pos-hint">← Sit back — show shoulders for breath rate →</div>
                     </div>
                 </div>
                 <div class="demo-metrics-col" id="demo-metrics-col">
@@ -5228,43 +5250,58 @@
         }
 
         function computeHR(buf) {
+            /* POS (Plane-Orthogonal-to-Skin, Wang et al. 2017) — outperforms CHROM
+               per 2024-2025 benchmarks on UBFC/PURE datasets under realistic webcam conditions */
             const minLen = hrMode==='finger' ? FPS*3 : FPS*15;
             if (buf.length<minLen) return {bpm:null,snr:0};
             const mn = a => a.reduce((s,v)=>s+v,0)/a.length;
             const sd = a => { const m=mn(a); return Math.sqrt(a.reduce((s,v)=>s+(v-m)**2,0)/a.length)+1e-8; };
             const r=buf.map(x=>x[0]), g=buf.map(x=>x[1]), b=buf.map(x=>x[2]);
-            const Rn=r.map(v=>v/(mn(r)+1e-8)), Gn=g.map(v=>v/(mn(g)+1e-8)), Bn=b.map(v=>v/(mn(b)+1e-8));
             let sig;
             if (hrMode==='finger') {
-                /* Red-channel only for finger PPG */
+                /* Finger: red-channel linear detrend */
                 const t=r.map((_,i)=>i), tm=mn(t), rm=mn(r);
                 const sl=r.reduce((s,v,i)=>s+(t[i]-tm)*(v-rm),0)/(t.reduce((s,v)=>s+(v-tm)**2,0)+1e-8);
                 sig=r.map((v,i)=>v-sl*i-(rm-sl*tm));
             } else {
-                /* CHROM */
-                const XS=Rn.map((v,i)=>3*v-2*Gn[i]), YS=Rn.map((v,i)=>1.5*v+Gn[i]-1.5*Bn[i]);
-                const alpha=sd(XS)/sd(YS);
-                let chrom=XS.map((v,i)=>v-alpha*YS[i]);
-                const t=chrom.map((_,i)=>i), tm=mn(t), cm=mn(chrom);
-                const sl=chrom.reduce((s,v,i)=>s+(t[i]-tm)*(v-cm),0)/(t.reduce((s,v)=>s+(v-tm)**2,0)+1e-8);
-                sig=chrom.map((v,i)=>v-sl*i-(cm-sl*tm));
+                /* POS: normalize by temporal mean, project onto skin-orthogonal plane */
+                const Rn=r.map(v=>v/(mn(r)+1e-8)), Gn=g.map(v=>v/(mn(g)+1e-8)), Bn=b.map(v=>v/(mn(b)+1e-8));
+                const S1=Rn.map((_,i)=>Gn[i]-Bn[i]);           /* P row [0, 1,-1] */
+                const S2=Rn.map((_,i)=>-2*Rn[i]+Gn[i]+Bn[i]); /* P row [-2,1, 1] */
+                const alpha=sd(S1)/sd(S2);
+                const ppg=S1.map((v,i)=>v-alpha*S2[i]);
+                /* Linear detrend */
+                const t=ppg.map((_,i)=>i), tm=mn(t), pm=mn(ppg);
+                const sl=ppg.reduce((s,v,i)=>s+(t[i]-tm)*(v-pm),0)/(t.reduce((s,v)=>s+(v-tm)**2,0)+1e-8);
+                sig=ppg.map((v,i)=>v-sl*i-(pm-sl*tm));
             }
             const filtered=filtfilt(sig);
-            const n=Math.min(filtered.length,256);
-            const seg=filtered.slice(-n);
-            const win=hannWin(n);
-            const wsig=seg.map((v,i)=>v*win[i]);
-            const freqRes=FPS/n;
-            const minBin=Math.max(1,Math.ceil(0.7/freqRes)), maxBin=Math.floor(4.0/freqRes);
-            if (maxBin<=minBin) return {bpm:null,snr:0};
-            let peakPow=0, peakBin=minBin, totalPow=0;
-            for (let k=minBin; k<=maxBin; k++) {
-                const p=goertzelPow(wsig,k); totalPow+=p;
-                if (p>peakPow) { peakPow=p; peakBin=k; }
+            /* Multi-window spectral voting: estimate HR at 3 window sizes,
+               pick the candidate with highest SNR — reduces single-window artifacts */
+            const candidates=[];
+            for (const wlen of [128,192,256]) {
+                if (filtered.length<wlen) continue;
+                const seg=filtered.slice(-wlen);
+                const win=hannWin(wlen);
+                const wsig=seg.map((v,i)=>v*win[i]);
+                const freqRes=FPS/wlen;
+                const minBin=Math.max(1,Math.ceil(0.75/freqRes)), maxBin=Math.floor(3.5/freqRes);
+                if (maxBin<=minBin) continue;
+                let peakPow=0, peakBin=minBin, totalPow=0;
+                for (let k=minBin; k<=maxBin; k++) {
+                    const p=goertzelPow(wsig,k); totalPow+=p;
+                    if (p>peakPow) { peakPow=p; peakBin=k; }
+                }
+                const snrW=peakPow/(totalPow/(maxBin-minBin+1)+1e-8);
+                const bpm=Math.round(peakBin*freqRes*60);
+                if (bpm>=48&&bpm<=115&&snrW>1.0) candidates.push({bpm,snr:snrW});
             }
-            const snr=peakPow/(totalPow/(maxBin-minBin+1)+1e-8);
-            const bpm=Math.round(peakBin*freqRes*60);
-            return {bpm:(bpm>=45&&bpm<=120)?bpm:null, snr};
+            if (!candidates.length) return {bpm:null,snr:0};
+            candidates.sort((a,b)=>b.snr-a.snr);
+            /* Boost confidence if two windows agree within 6 BPM */
+            const agreedSnr=candidates.length>=2&&Math.abs(candidates[0].bpm-candidates[1].bpm)<=6
+                ? candidates[0].snr*1.4 : candidates[0].snr;
+            return {bpm:candidates[0].bpm, snr:agreedSnr};
         }
 
         /* ── Finger mode toggle ── */
@@ -5476,25 +5513,30 @@
             sendPose();
 
             if (frameCount%FPS===0) {
-                /* Heart Rate */
+                /* Heart Rate — SNR gating: ≥2.0 update, ≥1.0 hold, <1.0 calibrating */
                 if (elapsed<15) {
                     setStatus('hr','Calibrating…');
                 } else {
                     const {bpm:raw,snr}=computeHR(rgbBuf);
-                    if (raw && snr>=1.5) {
+                    if (raw&&snr>=2.0) {
                         if (hrLastGood===null||Math.abs(raw-hrLastGood)<=15) {
                             const sm=Math.round(hrKalman.update(raw));
                             hrLastGood=sm; hrLastGoodAt=now;
                             if (now-hrLastDispAt>=5000) { setVal('hr',sm); hrLastDispAt=now; }
                         }
                     } else if (hrLastGood!==null&&now-hrLastGoodAt<10000) {
-                        /* hold stale value — bypass min-disp by writing directly */
+                        /* Weak or noisy signal — hold last good value without resetting timer */
                         const el=document.getElementById('dval-hr');
                         if (el&&el.textContent!==String(hrLastGood)) el.textContent=String(hrLastGood);
-                    } else {
-                        setVal('hr',null);
+                    } else if (!raw||snr<1.0) {
+                        /* No plausible signal at all */
+                        if (!hrLastGood) setStatus('hr','Calibrating…');
+                        else setVal('hr',null);
                     }
                 }
+                /* Chest-visible positioning hint — show when Pose can't find shoulders after 20s */
+                const posHintEl=document.getElementById('demo-pos-hint');
+                if (posHintEl) posHintEl.classList.toggle('visible',!poseShoulderActive&&elapsed>20);
 
                 /* Breath Rate */
                 const brRaw=estimateBR();
