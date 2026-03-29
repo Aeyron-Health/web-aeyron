@@ -5151,8 +5151,10 @@
             const minDisp = CARD_MIN_DISP[id] || 0;
 
             if (v !== null && v !== undefined) {
-                /* Enforce minimum display interval to prevent flickering */
-                if (now - valStates[id].lastDispAt < minDisp) return;
+                /* Enforce minimum display interval to prevent flickering.
+                   Skip on first display (lastDispAt===0) so the very first value
+                   always shows regardless of how soon after page-load it arrives. */
+                if (valStates[id].lastDispAt > 0 && now - valStates[id].lastDispAt < minDisp) return;
                 valStates[id].lastGoodAt = now;
                 valStates[id].lastDispAt = now;
                 el.style.transition = '';
@@ -5476,7 +5478,7 @@
                 const e=(ear(lm,LEFT_EYE)+ear(lm,RIGHT_EYE))/2;
                 if (!earCalibDone) {
                     earCalibBuf.push(e);
-                    if (earCalibBuf.length>=450) {
+                    if (earCalibBuf.length>=150) {
                         const s=[...earCalibBuf].sort((a,b)=>a-b);
                         earThresh=s[Math.floor(s.length*0.7)]*0.65;
                         earCalibDone=true;
@@ -5503,7 +5505,7 @@
                 if (!poseShoulderActive) updateBreathFilter(lm[152].y);
                 /* Distance via iris diameter (refineLandmarks provides lm[469–477]) */
                 const now=performance.now();
-                if (now-distUpdAt>2000&&lm.length>477) {
+                if (now-distUpdAt>2000&&lm.length>477&&lm[469]&&lm[471]&&lm[474]&&lm[476]) {
                     const irisL=ed(lm[469],lm[471])*(videoEl.videoWidth||640);
                     const irisR=ed(lm[474],lm[476])*(videoEl.videoWidth||640);
                     const irisPx=(irisL+irisR)/2;
@@ -5550,7 +5552,7 @@
         function getBlinkRate() {
             if (!blinkStart) return null;
             const elapsed=(performance.now()-blinkStart)/1000;
-            if (elapsed<30) return null;
+            if (elapsed<15) return null;
             const cutoff=performance.now()-60000;
             return Math.round(blinkTimes.filter(t=>t>cutoff).length/Math.min(elapsed,60)*60);
         }
@@ -5674,10 +5676,10 @@
                         setVal('blink',blink);
                         setQuality('blink',blink>=12&&blink<=20?'good':'warn');
                     }
-                } else if (elapsed>=30&&blinkTimes.length===0) {
-                    setVal('blink',null);
-                } else if (elapsed<30) {
+                } else if (!earCalibDone || elapsed<15) {
                     setStatus('blink','Calibrating…');
+                } else if (elapsed>=45&&blinkTimes.length===0) {
+                    setVal('blink',null);
                 }
 
                 /* Voice */
