@@ -47,6 +47,7 @@ export function SignalThreadBackground() {
   const reduced = useReducedMotion();
   const [ready, setReady] = useState(false);
   const [webgl, setWebgl] = useState(false);
+  const [isLarge, setIsLarge] = useState(false);
 
   useEffect(() => {
     setWebgl(hasWebGL());
@@ -54,7 +55,17 @@ export function SignalThreadBackground() {
     return () => window.clearTimeout(id);
   }, []);
 
-  const show = !reduced && webgl && ready;
+  // Only run the continuous 3D on large screens. Phones/tablets get the calm
+  // dark base instead, avoiding the battery/GPU cost of an always-on canvas.
+  useEffect(() => {
+    const mq = window.matchMedia("(min-width: 1024px)");
+    const onChange = () => setIsLarge(mq.matches);
+    onChange();
+    mq.addEventListener("change", onChange);
+    return () => mq.removeEventListener("change", onChange);
+  }, []);
+
+  const show = !reduced && webgl && ready && isLarge;
 
   return (
     <div

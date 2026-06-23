@@ -83,9 +83,9 @@ function Thread({ cfg, energyRef }: { cfg: ThreadCfg; energyRef: React.MutableRe
 
   useFrame((state) => {
     writeThread(buffer, state.clock.elapsedTime, energyRef.current, cfg);
-    const flat = Array.from(buffer);
-    coreRef.current?.geometry.setPositions(flat);
-    haloRef.current?.geometry.setPositions(flat);
+    // pass the Float32Array directly (setPositions copies it) - no per-frame alloc
+    coreRef.current?.geometry.setPositions(buffer);
+    haloRef.current?.geometry.setPositions(buffer);
   });
 
   return (

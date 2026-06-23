@@ -18,7 +18,7 @@ export function NorthStar() {
       pad="none"
       aria-label="The North Star: ambient monitoring at home"
     >
-      <div className="relative isolate flex min-h-[88vh] items-center overflow-hidden">
+      <div className="relative isolate flex min-h-[88svh] items-center overflow-hidden">
         {/* The persistent Signal Thread (App background) carries through here.
             A soft mirror-light pool + a left scrim keep the close legible. */}
         <div

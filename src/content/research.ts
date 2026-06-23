@@ -57,7 +57,7 @@ export const research: ResearchTopic[] = [
         doi: "10.1371/journal.pone.0158852",
         n: "57 PD / 87 controls",
         finding:
-          "A smartphone tapping test distinguished people with Parkinson's from those without it with high accuracy (AUC 0.92).",
+          "In a research study, smartphone tapping patterns separated a Parkinson's group from a control group with high accuracy (AUC 0.92, case-control).",
       },
       {
         authors: "Omberg et al. (mPower)",
@@ -81,7 +81,7 @@ export const research: ResearchTopic[] = [
         doi: "10.1038/srep34468",
         n: "42 early-PD / 43 controls",
         finding:
-          "The timing of ordinary typing - never the words - separated early Parkinson's from controls about as well as in-clinic finger-tapping (AUC 0.81).",
+          "In a study, the timing of ordinary typing - never the words - separated an early-Parkinson's group from controls about as well as in-clinic finger-tapping (AUC 0.81, case-control).",
       },
       {
         authors: "Arroyo-Gallego et al.",
@@ -114,7 +114,7 @@ export const research: ResearchTopic[] = [
         doi: "10.2196/26305",
         n: "726 people, real-world",
         finding:
-          "From a single spoken sentence recorded at home, voice features flagged Parkinson's with roughly 75% accuracy.",
+          "In a research study, voice features from a single spoken sentence recorded at home matched Parkinson's status in about 75% of cases.",
       },
     ],
   },
@@ -129,7 +129,7 @@ export const research: ResearchTopic[] = [
         doi: "10.1002/mds.27376",
         n: "44 PD / 35 controls",
         finding:
-          "Passive smartphone gait monitoring detected Parkinson's-related changes, sometimes even when the in-clinic exam found none.",
+          "In one study, passive smartphone gait measures captured Parkinson's-related motor changes, in some cases not yet evident on the in-clinic exam.",
       },
       {
         authors: "WATCH-PD - Adams et al.",
@@ -153,7 +153,7 @@ export const research: ResearchTopic[] = [
         doi: "10.1126/scitranslmed.abd7865",
         n: "343 PD",
         finding:
-          "Apple's validated watch monitor tracked tremor severity in close agreement with neurologists (r = 0.80) and matched expected medication responses in 94% of patients.",
+          "In Apple's MM4PD study, a watch-based monitor tracked tremor severity in close agreement with neurologists (r = 0.80) and reflected expected medication on/off patterns. Aeyron is grounded in this published work.",
       },
     ],
   },

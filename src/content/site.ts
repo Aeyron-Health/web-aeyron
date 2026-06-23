@@ -8,7 +8,7 @@ export const brand = {
   wordmark: "Aeyron",
   // Mission, plain: most accessible passive Parkinson's monitoring platform.
   mission:
-    "The world's most accessible passive monitoring platform for Parkinson's disease.",
+    "Building the world's most accessible passive monitoring platform for Parkinson's disease.",
   // Brand tagline (revealed word-by-word on scroll). Easy to swap.
   tagline: "Care that never looks away.",
   taglineSub: "The hours between visits, finally seen.",
@@ -75,7 +75,7 @@ export const measurements: Measurement[] = [
     name: "Typing rhythm",
     what: "Key hold-times and cadence while typing - never the content.",
     how: "An optional Aeyron keyboard measures typing rhythm across the apps people already use.",
-    signal: "A validated early-PD signal, captured with zero extra effort.",
+    signal: "A research-backed early-PD signal, captured with zero extra effort.",
     viz: "typing",
     researchKey: "typing",
   },
@@ -129,7 +129,7 @@ export const audiences: Audience[] = [
   {
     id: "clinicians",
     who: "Neurologists & movement-disorder clinics",
-    headline: "Objective, frequent, UPDRS-aligned data.",
+    headline: "Frequent, UPDRS-aligned data between visits.",
     body: "See what happens between appointments. Aeyron surfaces motor and non-motor trends aligned to the measures you already use, so medication decisions rest on more than a single morning's exam.",
     points: [
       "A clinician dashboard with longitudinal trends",
