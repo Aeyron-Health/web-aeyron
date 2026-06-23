@@ -5,3 +5,10 @@
 .venv-img/
 .u2net/
 prototype_src.png
+node_modules
+dist
+dist-ssr
+*.local
+.vite
+.playwright-mcp
+*.tsbuildinfo

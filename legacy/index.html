@@ -1,0 +1,1792 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <link rel="icon" type="image/png" href="favicon.png?v=4" sizes="32x32">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg?v=4">
+    <link rel="apple-touch-icon" href="favicon.png?v=4">
+    <title>AEYRON Health — Parkinson's Respiratory Intelligence</title>
+    <meta name="description" content="AEYRON is a mirror-mounted passive respiratory monitor. It detects the silent 10–14 week respiratory decline that precedes pneumonia death in Parkinson's patients. No wearables. No friction.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://api.fontshare.com">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://api.fontshare.com/v2/css?f[]=general-sans@300,400,500,600&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore-compat.js"></script>
+    <script type="importmap">
+    {
+        "imports": {
+            "three": "https://unpkg.com/three@0.170.0/build/three.module.js",
+            "three/addons/": "https://unpkg.com/three@0.170.0/examples/jsm/"
+        }
+    }
+    </script>
+    <link rel="stylesheet" href="css/aeyron.css">
+</head>
+<body>
+
+    <div id="scroll-progress"></div>
+
+    <div id="loader">
+        <div class="loader-dot" id="ldot"></div>
+        <div class="loader-logo" id="llogo">
+            AEYRON
+            <span class="dot"> ●</span>
+             HEALTH
+        </div>
+        <div class="loader-bar" id="lbar"></div>
+    </div>
+
+    <div id="cur"></div>
+    <div id="cur-r"></div>
+
+    <nav id="nav">
+        <a href="#s1" class="logo">
+            <div class="logo-mark">
+                <img src="favicon.png?v=4" alt="" width="28" height="28" decoding="async">
+            </div>
+            <span class="logo-text">
+                AEYRON 
+                <span>Health</span>
+            </span>
+        </a>
+        <button type="button" class="nav-hamburger" id="navHam" aria-label="Menu">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+        <div class="nav-r">
+            <ul class="nav-links">
+                <li>
+                    <a href="#s5">The Crisis</a>
+                </li>
+                <li>
+                    <a href="#s6">The Device</a>
+                </li>
+                <li>
+                    <a href="#s7">How It Works</a>
+                </li>
+                <li>
+                    <a href="#s-team">The Team</a>
+                </li>
+                <li>
+                    <a href="#s8">Traction</a>
+                </li>
+                <li>
+                    <a href="#s-founders">Founders</a>
+                </li>
+            </ul>
+            <button type="button" class="theme-toggle" id="themeToggle" aria-label="Toggle dark/light mode" title="Toggle theme">☀</button>
+            <a href="#s9" class="nav-cta">Early Access</a>
+        </div>
+        <div class="nav-drawer" id="navDrawer">
+            <div class="nav-drawer-inner">
+                <a href="#s5">The Crisis</a>
+                <a href="#s6">The Device</a>
+                <a href="#s7">How It Works</a>
+                <a href="#s-team">The Team</a>
+                <a href="#s8">Traction</a>
+                <a href="#s-founders">Founders</a>
+            </div>
+        </div>
+    </nav>
+
+    <section id="s1">
+        <canvas id="s1cv">
+        </canvas>
+        <div class="s1-vignette"></div>
+        <div class="s1-bottom-fade"></div>
+        <div class="s1-grid">
+            <div class="s1-content">
+                <h1 class="s1-title">
+                    <span class="s1-line">
+                        <span class="s1-char" id="h1">
+                            <em>The First Warning.</em>
+                        </span>
+                    </span>
+                    <span class="s1-line">
+                        <span class="s1-char" id="h2">Before</span>
+                    </span>
+                    <span class="s1-line">
+                        <span class="s1-char" id="h3">the Last.</span>
+                    </span>
+                </h1>
+                <p class="s1-sub" id="s1sub">A mirror-mounted respiratory monitor that catches the silent decline before pneumonia kills 1 in 3 Parkinson's patients. No wearables.</p>
+                <div class="s1-actions" id="s1acts">
+                    <a href="#s9" class="btn-primary">Request Early Access</a>
+                    <a href="#s6" class="btn-ghost btn-ghost-equal">See the Device →</a>
+                </div>
+            </div>
+            <div class="s1-product" aria-hidden="true">
+                <div class="s1-product-frame">
+                    <div class="s1-product-mirror">
+                        <img src="prototype.png" alt="Respira mirror-mounted respiratory monitor" class="s1-product-img" draggable="false">
+                        <div class="s1-product-sensor"><span class="s1-sensor-pulse"></span> <span class="s1-sensor-label">Sensor active</span></div>
+                        <div class="s1-product-reflect"></div>
+                    </div>
+                    <div class="s1-product-spec">
+                        <div class="s1-spec-row"><span>MODEL</span><span>Respira / Mirror Unit</span></div>
+                        <div class="s1-spec-row"><span>SENSING</span><span>60GHz mmWave + voice</span></div>
+                        <div class="s1-spec-row"><span>POWER</span><span>USB-C · always-on</span></div>
+                        <div class="s1-spec-row"><span>PRIVACY</span><span>On-device · no camera</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="s1-scroll" id="s1sc" aria-hidden="true">
+            <svg class="s1-scroll-arrow" width="22" height="44" viewBox="0 0 22 44" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M11 4 C 7 12, 15 20, 11 28 S 7 36, 11 40" />
+                <polyline points="6 34 11 40 16 34" />
+            </svg>
+        </div>
+    </section>
+
+    <section id="s2">
+        <div class="s2-inner">
+            <div class="s2-pre rv">The reality · Parkinson's Disease in America</div>
+
+            <div class="s2-stat-block rv">
+                <div class="s2-num">
+                    <span id="s2n">0.0</span>
+                    <span>M</span>
+                </div>
+                <div class="s2-stat-side">
+                    <div class="s2-unit">Americans living with Parkinson's — right now</div>
+                    <div class="s2-comparable" id="s2cmp">≈ everyone in the city of Austin, Texas</div>
+                </div>
+            </div>
+
+            <div class="s2-grid-wrap rv" aria-hidden="true">
+                <div class="s2-grid-meta">
+                    <span>1 dot = 1,000 patients</span>
+                    <span id="s2gridcount">0 / 1,000</span>
+                </div>
+                <div class="s2-grid" id="s2grid"></div>
+            </div>
+
+            <div class="s2-callouts rv">
+                <div class="s2-callout">
+                    <div class="s2-callout-n">01</div>
+                    <div class="s2-callout-h">Swallowing fails.</div>
+                    <div class="s2-callout-p">Throat muscles lose coordination — small amounts of food and saliva slip into the lungs unnoticed.</div>
+                </div>
+                <div class="s2-callout">
+                    <div class="s2-callout-n">02</div>
+                    <div class="s2-callout-h">Breathing fails.</div>
+                    <div class="s2-callout-p">Respiratory rhythm degrades silently over 10–14 weeks. Standard checkups miss it.</div>
+                </div>
+                <div class="s2-callout danger">
+                    <div class="s2-callout-n">03</div>
+                    <div class="s2-callout-h">Pneumonia kills.</div>
+                    <div class="s2-callout-p">Aspiration pneumonia is the #1 cause of death in late-stage Parkinson's. The decline was visible — nobody was watching.</div>
+                </div>
+            </div>
+
+            <p class="s2-src rv">Parkinson's Foundation Statistics 2023 · Akbar et al., <em>Movement Disorders</em> 2015 · Pennington et al., <em>Parkinsonism &amp; Related Disorders</em> 2010</p>
+        </div>
+    </section>
+
+    <div id="s3">
+        <div class="s3-sticky">
+            <!-- Vital Signs HUD: respiratory rate climbs as scroll progresses -->
+            <div class="s3-hud" id="s3hud" aria-hidden="true">
+                <div class="s3-hud-row">
+                    <span class="s3-hud-k">RESPIRATORY RATE</span>
+                    <span class="s3-hud-stat"><span class="s3-hud-pulse"></span> LIVE</span>
+                </div>
+                <div class="s3-hud-bpm">
+                    <span id="s3bpm">12</span>
+                    <span class="s3-hud-unit">bpm</span>
+                </div>
+                <svg class="s3-hud-wave" viewBox="0 0 200 40" preserveAspectRatio="none">
+                    <path id="s3hudpath" d="M0 20 Q 25 8 50 20 T 100 20 T 150 20 T 200 20" fill="none" stroke="#00E5C8" stroke-width="1.4"/>
+                </svg>
+                <div class="s3-hud-row s3-hud-foot">
+                    <span class="s3-hud-k">SPO2</span>
+                    <span class="s3-hud-v" id="s3spo2">98</span>
+                    <span class="s3-hud-k">RISK</span>
+                    <span class="s3-hud-v" id="s3risk">low</span>
+                </div>
+            </div>
+
+            <!-- Weeks 1-14 timeline -->
+            <div class="s3-timeline" id="s3tl" aria-hidden="true">
+                <div class="s3-tl-track">
+                    <div class="s3-tl-fill" id="s3tlfill"></div>
+                </div>
+                <div class="s3-tl-marker" style="--p:0">
+                    <span class="s3-tl-w">W1</span>
+                    <span class="s3-tl-l">Onset</span>
+                </div>
+                <div class="s3-tl-marker" style="--p:0.33">
+                    <span class="s3-tl-w">W5</span>
+                    <span class="s3-tl-l">Strain</span>
+                </div>
+                <div class="s3-tl-marker" style="--p:0.7">
+                    <span class="s3-tl-w">W10</span>
+                    <span class="s3-tl-l">Decline</span>
+                </div>
+                <div class="s3-tl-marker s3-tl-end" style="--p:1">
+                    <span class="s3-tl-w">W14</span>
+                    <span class="s3-tl-l">Crisis</span>
+                </div>
+            </div>
+
+            <div class="s3-bg-num" id="s3bg">—</div>
+            <p class="s3-text" id="s3tx">
+                <span class="w">In</span>
+                <span class="w"></span>
+                <span class="w">Parkinson's</span>
+                <span class="w"></span>
+                <span class="w">Disease,</span>
+                <span class="w"></span>
+                <span class="w">the</span>
+                <span class="w"></span>
+                <span class="w">throat</span>
+                <span class="w"></span>
+                <span class="w">muscles</span>
+                <span class="w"></span>
+                <span class="w">weaken</span>
+                <span class="w"></span>
+                <span class="w">quietly.</span>
+                <span class="w"></span>
+                <span class="w">Swallowing</span>
+                <span class="w"></span>
+                <span class="w">fails.</span>
+                <span class="w"></span>
+                <span class="w">Food</span>
+                <span class="w"></span>
+                <span class="w">enters</span>
+                <span class="w"></span>
+                <span class="w">the</span>
+                <span class="w"></span>
+                <span class="w">lungs.</span>
+                <span class="w"></span>
+                <span class="w em">Pneumonia</span>
+                <span class="w"></span>
+                <span class="w em">follows.</span>
+                <span class="w"></span>
+                <span class="w">It</span>
+                <span class="w"></span>
+                <span class="w">takes</span>
+                <span class="w"></span>
+                <span class="w em">10–14</span>
+                <span class="w"></span>
+                <span class="w em">weeks</span>
+                <span class="w"></span>
+                <span class="w">to</span>
+                <span class="w"></span>
+                <span class="w">develop.</span>
+                <span class="w"></span>
+                <span class="w">No</span>
+                <span class="w"></span>
+                <span class="w">alarm.</span>
+                <span class="w"></span>
+                <span class="w">No</span>
+                <span class="w"></span>
+                <span class="w">device.</span>
+                <span class="w"></span>
+                <span class="w">No</span>
+                <span class="w"></span>
+                <span class="w">one</span>
+                <span class="w"></span>
+                <span class="w em">watching.</span>
+            </p>
+            <div class="s3-progress" id="s3pr">scroll to reveal · 0%</div>
+        </div>
+    </div>
+
+    <section id="s4">
+        <div class="s4-arc">
+            <span class="s4-arc-step">01 · Problem</span>
+            <span class="s4-arc-line"></span>
+            <span class="s4-arc-step">02 · Solution</span>
+            <span class="s4-arc-line"></span>
+            <span class="s4-arc-step">03 · Window</span>
+        </div>
+        <div class="s4-grid">
+
+            <div class="s4-card danger" data-i="0">
+                <div class="s4-card-tag">PROBLEM</div>
+                <div class="s4-card-head">
+                    <div class="s4-n">
+                        <span class="cu" data-t="1">0</span>
+                        <span class="s4-n-suf">-in-3</span>
+                    </div>
+                    <div class="s4-vis s4-vis-mortality" aria-hidden="true">
+                        <span class="s4-figure"></span>
+                        <span class="s4-figure"></span>
+                        <span class="s4-figure danger"></span>
+                    </div>
+                </div>
+                <div class="s4-l">PD patients die from pneumonia</div>
+                <div class="s4-s">Aspiration pneumonia is the #1 cause of death in Parkinson's. <em>Akbar et al., Movement Disorders 2015</em></div>
+            </div>
+
+            <div class="s4-card success" data-i="1">
+                <div class="s4-card-tag">SOLUTION</div>
+                <div class="s4-card-head">
+                    <div class="s4-n">
+                        <span class="cu" data-t="88">0</span>
+                        <span class="s4-n-suf">%</span>
+                    </div>
+                    <div class="s4-vis s4-vis-dial" aria-hidden="true">
+                        <svg viewBox="0 0 100 100" width="84" height="84">
+                            <circle cx="50" cy="50" r="42" fill="none" stroke="rgba(0,229,200,0.14)" stroke-width="6"/>
+                            <circle id="s4dial" cx="50" cy="50" r="42" fill="none" stroke="#00E5C8" stroke-width="6"
+                                stroke-linecap="round"
+                                stroke-dasharray="263.9"
+                                stroke-dashoffset="263.9"
+                                transform="rotate(-90 50 50)"/>
+                            <g stroke="rgba(255,255,255,0.18)" stroke-width="1">
+                                <line x1="50" y1="6" x2="50" y2="12"/>
+                                <line x1="94" y1="50" x2="88" y2="50"/>
+                                <line x1="50" y1="94" x2="50" y2="88"/>
+                                <line x1="6" y1="50" x2="12" y2="50"/>
+                            </g>
+                        </svg>
+                    </div>
+                </div>
+                <div class="s4-l">AEYRON detection sensitivity</div>
+                <div class="s4-s">Respiratory anomaly detection rate, controlled bench testing on the Respira sensor stack. <em>Internal validation, n=42 sessions, 2024</em></div>
+            </div>
+
+            <div class="s4-card success" data-i="2">
+                <div class="s4-card-tag">WINDOW</div>
+                <div class="s4-card-head">
+                    <div class="s4-n">
+                        <span class="cu" data-t="10">0</span>
+                        <span class="s4-n-suf">–14</span>
+                    </div>
+                    <div class="s4-vis s4-vis-weeks" aria-hidden="true">
+                        <div class="s4-week-bar">
+                            <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span class="hi"></span><span class="hi"></span><span class="hi"></span><span class="hi"></span><span class="hi"></span>
+                        </div>
+                        <div class="s4-week-axis"><span>1</span><span>7</span><span>14</span></div>
+                    </div>
+                </div>
+                <div class="s4-l">Weeks of detectable warning</div>
+                <div class="s4-s">Measurable respiratory decline precedes pneumonia hospitalization. <em>Pennington et al., Parkinsonism &amp; Related Disorders 2010</em></div>
+            </div>
+
+        </div>
+    </section>
+
+    <section id="s5">
+        <div class="s5-wrap">
+            <div>
+                <div class="sec-label rv">The Crisis · Parkinson's Disease Stages 2–4</div>
+                <h2 class="s5-h rv">
+                    Pneumonia doesn't strike suddenly. It
+                    <em>builds for months</em>
+                     — while no one is watching.
+                </h2>
+                <p class="s5-p rv">30,000+ senior living and memory-care facilities across North America have <em>zero</em> passive respiratory monitoring. The decline is visible weeks in advance. Nobody is looking.</p>
+                <div class="s5-quote danger-quote rv">
+                    "Aspiration pneumonia accounts for the majority of deaths in late-stage Parkinson's Disease — almost all preceded by weeks of measurable respiratory decline."
+                    <cite>Akbar et al., <em>Movement Disorders</em> 2015 · Pennington et al., <em>Parkinsonism &amp; Related Disorders</em> 2010</cite>
+                </div>
+            </div>
+            <div class="s5-vis rv">
+                <div class="lung-wrap">
+                    <div class="lung-glow"></div>
+                    <svg width="260" height="320" viewBox="0 0 260 320" fill="none" preserveAspectRatio="xMidYMid meet" style="display:block">
+                        <path d="M130 14 L130 68" stroke="rgba(0,191,165,.75)" stroke-width="7" stroke-linecap="round"/>
+                        <path d="M130 68 Q113 86 100 94" stroke="rgba(0,191,165,.6)" stroke-width="4" stroke-linecap="round"/>
+                        <path d="M130 68 Q147 86 160 94" stroke="rgba(0,191,165,.6)" stroke-width="4" stroke-linecap="round"/>
+                        <path d="M100 94 Q44 108 34 162 Q22 218 48 266 Q68 302 100 308 Q124 314 130 296 L130 94 Q116 90 100 94Z" fill="rgba(0,191,165,.07)" stroke="rgba(0,191,165,.38)" stroke-width="1.5"/>
+                        <path d="M160 94 Q216 108 226 162 Q238 218 212 266 Q192 302 160 308 Q136 314 130 296 L130 94 Q144 90 160 94Z" fill="rgba(0,191,165,.07)" stroke="rgba(0,191,165,.38)" stroke-width="1.5"/>
+                        <path d="M100 94 Q86 122 78 146 M78 146 Q66 172 62 196 M78 146 Q84 170 88 192" stroke="rgba(0,191,165,.2)" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+                        <path d="M160 94 Q174 122 182 146 M182 146 Q194 172 198 196 M182 146 Q176 170 172 192" stroke="rgba(0,191,165,.2)" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+                    </svg>
+                    <!-- aspiration particles falling silently into the lungs -->
+                    <div class="lung-aspirate" aria-hidden="true">
+                        <span style="--x:-44px;--d:5.4s;--del:0.0s"></span>
+                        <span style="--x:-22px;--d:6.1s;--del:1.6s"></span>
+                        <span style="--x:6px;--d:4.8s;--del:0.7s"></span>
+                        <span style="--x:28px;--d:5.7s;--del:2.2s"></span>
+                        <span style="--x:48px;--d:6.5s;--del:3.1s"></span>
+                    </div>
+                </div>
+                <div class="wave-wrap">
+                    <div class="wave-label">
+                        <span><span class="wave-pulse"></span> Live Respiratory Waveform · AEYRON</span>
+                        <span class="wave-tag">REAL-TIME</span>
+                    </div>
+                    <canvas id="wcv" width="260" height="64">
+                    </canvas>
+                    <div class="wave-stats">
+                        <div>
+                            <div class="wave-stat-v" id="rrv">16</div>
+                            <div class="wave-stat-l">Breaths/min</div>
+                        </div>
+                        <div>
+                            <div class="wave-stat-v" id="hrv">68</div>
+                            <div class="wave-stat-l">Heart rate</div>
+                        </div>
+                        <div>
+                            <div class="wave-stat-v">±0.2mm</div>
+                            <div class="wave-stat-l">Precision</div>
+                        </div>
+                    </div>
+
+                    <!-- 14-week decline mini-chart: what AEYRON sees vs. what doctors see -->
+                    <div class="s5-decline">
+                        <div class="s5-decline-head">
+                            <span>14-WEEK DECLINE</span>
+                            <span class="s5-decline-legend">
+                                <span class="lg-aey"></span>AEYRON sees
+                                <span class="lg-doc"></span>Doctors see
+                            </span>
+                        </div>
+                        <svg class="s5-decline-svg" viewBox="0 0 260 88" preserveAspectRatio="none">
+                            <!-- gridlines -->
+                            <g stroke="rgba(255,255,255,0.05)" stroke-width="1">
+                                <line x1="0" y1="22" x2="260" y2="22"/>
+                                <line x1="0" y1="44" x2="260" y2="44"/>
+                                <line x1="0" y1="66" x2="260" y2="66"/>
+                            </g>
+                            <!-- AEYRON's smooth detectable decline curve -->
+                            <path id="s5dec-aey" d="M0 18 C 60 22, 120 38, 200 58 S 240 78, 260 86" fill="none" stroke="#00E5C8" stroke-width="1.6" stroke-dasharray="600" stroke-dashoffset="600"/>
+                            <!-- Doctor view = flatline that suddenly spikes -->
+                            <path id="s5dec-doc" d="M0 22 H 230 L 235 86 L 260 86" fill="none" stroke="#FF4530" stroke-width="1.6" stroke-dasharray="0,4" stroke-linecap="round"/>
+                            <!-- crisis marker -->
+                            <circle id="s5dec-crisis" cx="232" cy="22" r="0" fill="#FF4530" opacity="0.9"/>
+                        </svg>
+                        <div class="s5-decline-axis">
+                            <span>W1</span><span>W7</span><span>W14 — crisis</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div id="s6">
+        <div class="s6-sticky">
+            <div class="s6-left">
+                <div class="ann" style="top:10%;right:calc(50% + 148px);flex-direction:row-reverse" id="a1" data-slide="1">
+                    <div class="ann-text">
+                        <span class="ann-title">Breathing Radar</span>
+                        <span class="ann-sub">Measures chest movement</span>
+                    </div>
+                    <div class="ann-line" style="width:60px"></div>
+                </div>
+                <div class="ann" style="top:42%;right:calc(50% + 148px);flex-direction:row-reverse" id="a2" data-slide="3">
+                    <div class="ann-text">
+                        <span class="ann-title">Smart Processor</span>
+                        <span class="ann-sub">On-device AI</span>
+                    </div>
+                    <div class="ann-line" style="width:60px"></div>
+                </div>
+                <div class="ann" style="top:74%;right:calc(50% + 148px);flex-direction:row-reverse" id="a3" data-slide="2">
+                    <div class="ann-text">
+                        <span class="ann-title">Voice Sensor</span>
+                        <span class="ann-sub">Detects voice changes</span>
+                    </div>
+                    <div class="ann-line" style="width:60px"></div>
+                </div>
+                <div class="ann r" style="top:10%;left:calc(50% + 148px)" id="a4" data-slide="0">
+                    <div class="ann-line" style="width:60px"></div>
+                    <div class="ann-text">
+                        <span class="ann-title">Clear Glass</span>
+                        <span class="ann-sub">Looks like a normal mirror</span>
+                    </div>
+                </div>
+                <div class="ann r" style="top:42%;left:calc(50% + 148px)" id="a5" data-slide="3">
+                    <div class="ann-line" style="width:60px"></div>
+                    <div class="ann-text">
+                        <span class="ann-title">Runs On-Device</span>
+                        <span class="ann-sub">No cloud · Low cost</span>
+                    </div>
+                </div>
+                <div class="ann r" style="top:74%;left:calc(50% + 148px)" id="a6" data-slide="0">
+                    <div class="ann-line" style="width:60px"></div>
+                    <div class="ann-text">
+                        <span class="ann-title">Drop-in Install</span>
+                        <span class="ann-sub">15 min · no retrofit</span>
+                    </div>
+                </div>
+                <div class="mirror-frame" id="pebble-root">
+                    <div class="pebble-persp">
+                        <div class="pebble-float" id="pebble-float">
+                            <div class="pebble-stage" id="pebble-stage">
+                                <div class="pebble-canvas-wrap" id="pebble-canvas-wrap"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="s6-right">
+                <div class="s6-slides" id="s6sls">
+                    <div class="s6-slide act" data-i="0">
+                        <div class="slide-num">001 / 005 — The Respira Mirror</div>
+                        <h2 class="slide-h">
+                            A bathroom mirror that
+                            <em>protects</em>
+                             Parkinson's patients.
+                        </h2>
+                        <p class="slide-p">The Respira unit replaces any standard bathroom mirror. It looks like a mirror. But behind the glass, it continuously monitors breathing — looking for early warning signs of respiratory failure that lead to pneumonia. No wearable. No button. No disruption.</p>
+                        <a href="#s-demo" class="s6-demo-inline">▶ See it work in 30s</a>
+                        <div class="slide-specs">
+                            <div class="spr">
+                                <span class="spk">Product Name</span>
+                                <span class="spv">Respira — Mirror-Mounted Unit</span>
+                            </div>
+                            <div class="spr">
+                                <span class="spk">Target Condition</span>
+                                <span class="spv">Parkinson's Disease Stages 2–4</span>
+                            </div>
+                            <div class="spr">
+                                <span class="spk">Hardware Cost</span>
+                                <span class="spv">~$80 per unit</span>
+                            </div>
+                            <div class="spr">
+                                <span class="spk">Installation Time</span>
+                                <span class="spv">~15 Minutes · Standard AC Outlet</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="s6-slide" data-i="1">
+                        <div class="slide-num">002 / 005 — The Radar</div>
+                        <h2 class="slide-h">
+                            Radar sensor. 
+                            <em>No contact.</em>
+                             Breathing measured through clothing.
+                        </h2>
+                        <p class="slide-p">A small radar — similar to the sensors in modern cars — measures tiny chest movements with each breath. It works through clothing, in darkness. The resident does nothing.</p>
+                        <div class="slide-specs">
+                            <div class="spr">
+                                <span class="spk">Sensor</span>
+                                <span class="spv">Breathing radar</span>
+                            </div>
+                            <div class="spr">
+                                <span class="spk">Processor</span>
+                                <span class="spv">On-device chip</span>
+                            </div>
+                            <div class="spr">
+                                <span class="spk">Accuracy</span>
+                                <span class="spv">±0.2mm chest movement</span>
+                            </div>
+                            <div class="spr">
+                                <span class="spk">Range</span>
+                                <span class="spv">0.5 – 3 metres</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="s6-slide" data-i="2">
+                        <div class="slide-num">003 / 005 — The Voice Sensor</div>
+                        <h2 class="slide-h">
+                            Voice softening — the 
+                            <em>earliest warning</em>
+                             nobody hears.
+                        </h2>
+                        <p class="slide-p">In Parkinson's, the muscles that control speech weaken before swallowing. A small microphone in the mirror listens for voice softening — a sign that throat muscles are weakening. AEYRON detects this weeks before swallowing problems begin. All processing happens on the device. Nothing is recorded.</p>
+                        <div class="slide-specs">
+                            <div class="spr">
+                                <span class="spk">Sensor</span>
+                                <span class="spv">Voice microphone</span>
+                            </div>
+                            <div class="spr">
+                                <span class="spk">Detects</span>
+                                <span class="spv">Voice softening over time</span>
+                            </div>
+                            <div class="spr">
+                                <span class="spk">Privacy</span>
+                                <span class="spv">On-device only · Never recorded</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="s6-slide" data-i="3">
+                        <div class="slide-num">004 / 005 — The AI Engine</div>
+                        <h2 class="slide-h">
+                            Smart AI. 
+                            <em>No cloud.</em>
+                             Alerts in under 3 seconds.
+                        </h2>
+                        <p class="slide-p">All processing happens inside the mirror. The AI learns each resident's normal breathing and voice over 7 days. When it detects a worrying change, an encrypted alert reaches the care team in under 3 seconds.</p>
+                        <div class="slide-specs">
+                            <div class="spr">
+                                <span class="spk">Detection Rate</span>
+                                <span class="spv">88% · n=42 sessions, 2024</span>
+                            </div>
+                            <div class="spr">
+                                <span class="spk">Alert Speed</span>
+                                <span class="spv">Under 3 seconds</span>
+                            </div>
+                            <div class="spr">
+                                <span class="spk">Security</span>
+                                <span class="spv">Encrypted · Healthcare compliant</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="s6-slide" data-i="4">
+                        <div class="slide-num">005 / 005 — The Dashboard</div>
+                        <h2 class="slide-h">
+                            Care dashboard. 
+                            <em>Weeks of data</em>
+                             — not just the crisis moment.
+                        </h2>
+                        <p class="slide-p">Care staff get real-time alerts and see each resident's breathing trend over weeks and months. This lets them act early — 10–14 weeks before a pneumonia hospitalisation would otherwise happen.</p>
+                        <div class="slide-specs">
+                            <div class="spr">
+                                <span class="spk">Dashboard</span>
+                                <span class="spv">Web, iOS, Android</span>
+                            </div>
+                            <div class="spr">
+                                <span class="spk">Trend View</span>
+                                <span class="spv">10–14 weeks of history</span>
+                            </div>
+                            <div class="spr">
+                                <span class="spk">Pricing</span>
+                                <span class="spv">$160 per unit per month</span>
+                            </div>
+                            <div class="spr">
+                                <span class="spk">For</span>
+                                <span class="spv">Memory care · Assisted living</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="s6-dots" id="s6dots">
+                    <div class="s6-dot act" data-i="0"></div>
+                    <div class="s6-dot" data-i="1"></div>
+                    <div class="s6-dot" data-i="2"></div>
+                    <div class="s6-dot" data-i="3"></div>
+                    <div class="s6-dot" data-i="4"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <section id="s-guardian">
+        <div class="guardian-wrap">
+            <div class="guardian-head">
+                <div class="guardian-label rv">The Guardian Advantage</div>
+                <h2 class="guardian-h rv">
+                    AEYRON vs. 
+                    <em>the alternatives</em>
+                </h2>
+            </div>
+            <table class="guardian-table rv">
+                <thead>
+                    <tr>
+                        <th>Criteria</th>
+                        <th class="g-col-aeyron">AEYRON Respira</th>
+                        <th>Wearables</th>
+                        <th>Manual Nursing Checks</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>24/7 Passive Monitoring</td>
+                        <td class="guardian-check" data-label="AEYRON" data-tip="Continuous radar + voice — never sleeps, never charges.">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="20 6 9 17 4 12"/>
+                            </svg>
+                        </td>
+                        <td class="guardian-limited" data-label="Wearables" data-tip="Watches and bands miss data when removed for charging or showering.">Limited</td>
+                        <td class="guardian-x" data-label="Manual" data-tip="Nurses cannot continuously observe respiratory rhythm at scale.">✗</td>
+                    </tr>
+                    <tr>
+                        <td>Privacy (No Cameras)</td>
+                        <td class="guardian-check" data-label="AEYRON" data-tip="Radar + on-device audio inference. No image ever leaves the unit.">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="20 6 9 17 4 12"/>
+                            </svg>
+                        </td>
+                        <td class="guardian-check-muted" data-label="Wearables" data-tip="Most wearables are camera-free, but stream raw biometrics to cloud.">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="20 6 9 17 4 12"/>
+                            </svg>
+                        </td>
+                        <td class="guardian-check-muted" data-label="Manual" data-tip="Manual checks are private — but only at the moment of observation.">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="20 6 9 17 4 12"/>
+                            </svg>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>10-Week Early Warning</td>
+                        <td class="guardian-check" data-label="AEYRON" data-tip="Trend models flag sub-clinical decline weeks before symptoms surface.">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="20 6 9 17 4 12"/>
+                            </svg>
+                        </td>
+                        <td class="guardian-x" data-label="Wearables" data-tip="Spot-tracking heart-rate or steps; no respiratory trend baseline.">✗</td>
+                        <td class="guardian-x" data-label="Manual" data-tip="Nurses see the crisis — pneumonia — not the slope toward it.">✗</td>
+                    </tr>
+                    <tr>
+                        <td>Zero-Chore (No Charging)</td>
+                        <td class="guardian-check" data-label="AEYRON" data-tip="Wired into existing AC outlet. Resident does nothing.">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="20 6 9 17 4 12"/>
+                            </svg>
+                        </td>
+                        <td class="guardian-x" data-label="Wearables" data-tip="Battery life forces nightly removal — abandonment rate >40%.">✗</td>
+                        <td class="guardian-check-muted" data-label="Manual" data-tip="No device — but staff time is the chore.">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="20 6 9 17 4 12"/>
+                            </svg>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Works in Dementia / Memory Care</td>
+                        <td class="guardian-check" data-label="AEYRON" data-tip="Passive — no cooperation needed. Critical for residents with cognitive decline.">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="20 6 9 17 4 12"/>
+                            </svg>
+                        </td>
+                        <td class="guardian-x" data-label="Wearables" data-tip="Residents with dementia routinely remove or destroy wearables.">✗</td>
+                        <td class="guardian-limited" data-label="Manual" data-tip="Possible but staff-time-limited; nights are largely unmonitored.">Limited</td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr class="guardian-score">
+                        <td>Total ✓</td>
+                        <td class="g-score g-aey" data-label="AEYRON" data-target="5">
+                            <span class="g-score-v">0</span><span class="g-score-d">/5</span>
+                        </td>
+                        <td class="g-score g-wear" data-label="Wearables" data-target="1">
+                            <span class="g-score-v">0</span><span class="g-score-d">/5</span>
+                        </td>
+                        <td class="g-score g-man" data-label="Manual" data-target="1">
+                            <span class="g-score-v">0</span><span class="g-score-d">/5</span>
+                        </td>
+                    </tr>
+                </tfoot>
+            </table>
+
+            <!-- single shared tooltip -->
+            <div class="g-tooltip" id="g-tooltip" role="tooltip"></div>
+        </div>
+    </section>
+
+    <section id="s7">
+        <div class="s7-head">
+            <div class="sec-label rv" style="justify-content:center;margin-bottom:14px">How It Works</div>
+            <h2 class="s7-h rv">
+                Silent. Passive.
+                <em>Precise.</em>
+            </h2>
+            <p class="s7-sub rv">No interaction from the resident. No wearable. No training required. Just a mirror that works every single day.</p>
+
+            <!-- Temporal arc: full lifecycle of a deployment -->
+            <div class="s7-temporal rv" aria-hidden="true">
+                <span class="s7-tx" data-step="0"><span class="s7-tx-l">Hour&nbsp;1</span><span class="s7-tx-d">First reading</span></span>
+                <span class="s7-tx-sep"></span>
+                <span class="s7-tx" data-step="1"><span class="s7-tx-l">Day&nbsp;1–7</span><span class="s7-tx-d">Calibration</span></span>
+                <span class="s7-tx-sep"></span>
+                <span class="s7-tx" data-step="2"><span class="s7-tx-l">Day&nbsp;8+</span><span class="s7-tx-d">Personal baseline live</span></span>
+                <span class="s7-tx-sep"></span>
+                <span class="s7-tx" data-step="3"><span class="s7-tx-l">Week&nbsp;10–14</span><span class="s7-tx-d">Alert · weeks before crisis</span></span>
+            </div>
+        </div>
+        <div class="s7-steps">
+            <div class="s7-line">
+                <div class="s7-line-fill" id="s7lf"></div>
+            </div>
+            <div class="s7-step" data-step="0">
+                <div class="s7-step-num">01</div>
+                <div class="s7-step-tag">Passive Detection</div>
+                <div class="s7-step-title">Resident stands at the mirror</div>
+                <p class="s7-step-p">Presence is detected automatically. Nothing to press, nothing to wear. From the resident's perspective, it is still just a bathroom mirror.</p>
+                <div class="s7-vis s7-vis-radar" aria-hidden="true">
+                    <svg viewBox="0 0 120 80" preserveAspectRatio="xMidYMid meet">
+                        <circle cx="60" cy="60" r="50" fill="none" stroke="rgba(0,229,200,0.15)" stroke-width="1"/>
+                        <circle cx="60" cy="60" r="34" fill="none" stroke="rgba(0,229,200,0.25)" stroke-width="1"/>
+                        <circle cx="60" cy="60" r="18" fill="none" stroke="rgba(0,229,200,0.4)" stroke-width="1"/>
+                        <path class="s7-radar-arm" d="M60 60 L 60 6" stroke="#00E5C8" stroke-width="1.5" stroke-linecap="round"/>
+                        <circle cx="60" cy="60" r="2.5" fill="#00E5C8"/>
+                        <circle class="s7-radar-blip" cx="42" cy="32" r="2" fill="#00E5C8"/>
+                    </svg>
+                    <span class="s7-vis-cap">Presence detected</span>
+                </div>
+            </div>
+            <div class="s7-step" data-step="1">
+                <div class="s7-step-num">02</div>
+                <div class="s7-step-tag">Radar + Voice</div>
+                <div class="s7-step-title">Breathing and voice captured together</div>
+                <p class="s7-step-p">A radar measures chest movements. A microphone listens for voice softening — an early sign of throat muscle weakening in Parkinson's. Both are processed inside the device. Nothing is sent to the cloud. Nothing is recorded.</p>
+                <div class="s7-vis s7-vis-dual" aria-hidden="true">
+                    <div class="s7-dual-row">
+                        <span class="s7-dual-l">CHEST</span>
+                        <svg viewBox="0 0 200 24" preserveAspectRatio="none">
+                            <path class="s7-dual-wave s7-dual-chest" d="M0 12 Q 25 4 50 12 T 100 12 T 150 12 T 200 12" fill="none" stroke="#00E5C8" stroke-width="1.4"/>
+                        </svg>
+                    </div>
+                    <div class="s7-dual-row">
+                        <span class="s7-dual-l">VOICE</span>
+                        <svg viewBox="0 0 200 24" preserveAspectRatio="none">
+                            <g class="s7-dual-bars">
+                                <rect x="2"  y="8"  width="3" height="8"/>
+                                <rect x="9"  y="4"  width="3" height="16"/>
+                                <rect x="16" y="6"  width="3" height="12"/>
+                                <rect x="23" y="2"  width="3" height="20"/>
+                                <rect x="30" y="6"  width="3" height="12"/>
+                                <rect x="37" y="9"  width="3" height="6"/>
+                                <rect x="44" y="3"  width="3" height="18"/>
+                                <rect x="51" y="6"  width="3" height="12"/>
+                                <rect x="58" y="8"  width="3" height="8"/>
+                                <rect x="65" y="4"  width="3" height="16"/>
+                                <rect x="72" y="9"  width="3" height="6"/>
+                                <rect x="79" y="3"  width="3" height="18"/>
+                                <rect x="86" y="6"  width="3" height="12"/>
+                                <rect x="93" y="8"  width="3" height="8"/>
+                                <rect x="100" y="4" width="3" height="16"/>
+                                <rect x="107" y="6" width="3" height="12"/>
+                                <rect x="114" y="9" width="3" height="6"/>
+                                <rect x="121" y="3" width="3" height="18"/>
+                                <rect x="128" y="6" width="3" height="12"/>
+                                <rect x="135" y="8" width="3" height="8"/>
+                            </g>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+            <div class="s7-step" data-step="2">
+                <div class="s7-step-num">03</div>
+                <div class="s7-step-tag">Personal AI Baseline</div>
+                <div class="s7-step-title">Your pattern, not a population average</div>
+                <p class="s7-step-p">Over the first 7 days, AEYRON builds a unique respiratory and voice profile for each resident. From day 8 onward, every reading is compared against that personal baseline.</p>
+                <div class="s7-vis s7-vis-baseline" aria-hidden="true">
+                    <div class="s7-bl-row">
+                        <span class="s7-bl-l">CALIBRATION</span>
+                        <span class="s7-bl-v"><span id="s7bl-day">7</span><span class="s7-bl-suf">/7 days</span></span>
+                    </div>
+                    <div class="s7-bl-track"><span class="s7-bl-fill"></span></div>
+                    <div class="s7-bl-foot">
+                        <span>D1</span><span>D2</span><span>D3</span><span>D4</span><span>D5</span><span>D6</span><span>D7</span>
+                    </div>
+                </div>
+            </div>
+            <div class="s7-step" data-step="3">
+                <div class="s7-step-num">04</div>
+                <div class="s7-step-tag">Early Alert · Weeks Before Crisis</div>
+                <div class="s7-step-title">Care team notified when the trend begins — not when it peaks</div>
+                <p class="s7-step-p">When AI detects a consistent downward trend in respiratory or vocal strength — the 10–14 week warning window — an encrypted push alert reaches the facility dashboard and care team app.</p>
+                <div class="s7-vis s7-vis-alert" aria-hidden="true">
+                    <div class="s7-alert-toast">
+                        <div class="s7-alert-row">
+                            <span class="s7-alert-pulse"></span>
+                            <span class="s7-alert-tag">RESPIRA · CARE TEAM</span>
+                            <span class="s7-alert-time">now</span>
+                        </div>
+                        <div class="s7-alert-h">Respiratory trend declining — Resident #134</div>
+                        <div class="s7-alert-p">Sub-clinical decline detected. Estimated lead time: 12 weeks. Tap to review trend.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="s-roi">
+        <div class="roi-wrap">
+            <div class="roi-head">
+                <div class="roi-label rv">Economic Impact</div>
+                <h2 class="roi-h rv">
+                    The 
+                    <em>ROI</em>
+                     for Facility Buyers
+                </h2>
+            </div>
+            <div class="roi-proposition rv">
+                One prevented transfer ≈ <strong>$15,000</strong> in saved revenue.
+                Respira runs at <strong>&lt;&nbsp;$2/day</strong> per resident.
+                <span class="roi-proposition-emph">A single avoided crisis pays for 25 mirrors for a full year.</span>
+            </div>
+
+            <div class="roi-cards">
+                <div class="roi-card rv">
+                    <div class="roi-card-tag">HOSPITAL TRANSFERS</div>
+                    <div class="roi-card-stat">
+                        <span class="roi-stat-v" data-cu data-target="75">0</span><span class="roi-stat-u">% fewer</span>
+                    </div>
+                    <div class="roi-card-t">Reduced hospitalizations</div>
+                    <div class="roi-mini">
+                        <div class="roi-mini-row">
+                            <span class="roi-mini-l">Without AEYRON</span>
+                            <div class="roi-mini-bar"><span class="roi-mini-fill bad" style="--w:100%"></span></div>
+                            <span class="roi-mini-v">4 / yr</span>
+                        </div>
+                        <div class="roi-mini-row">
+                            <span class="roi-mini-l">With AEYRON</span>
+                            <div class="roi-mini-bar"><span class="roi-mini-fill good" style="--w:25%"></span></div>
+                            <span class="roi-mini-v good">1 / yr</span>
+                        </div>
+                    </div>
+                    <p class="roi-card-p">Catching the 10–14 week decline lets staff intervene early — fewer transfers, preserved bed occupancy.</p>
+                </div>
+
+                <div class="roi-card rv">
+                    <div class="roi-card-tag">NURSE TIME</div>
+                    <div class="roi-card-stat">
+                        <span class="roi-stat-v" data-cu data-target="22">0</span><span class="roi-stat-u">hrs / wk reclaimed</span>
+                    </div>
+                    <div class="roi-card-t">Staff efficiency</div>
+                    <div class="roi-mini">
+                        <div class="roi-mini-row">
+                            <span class="roi-mini-l">Manual checks</span>
+                            <div class="roi-mini-bar"><span class="roi-mini-fill bad" style="--w:100%"></span></div>
+                            <span class="roi-mini-v">~30 hrs</span>
+                        </div>
+                        <div class="roi-mini-row">
+                            <span class="roi-mini-l">With AEYRON</span>
+                            <div class="roi-mini-bar"><span class="roi-mini-fill good" style="--w:27%"></span></div>
+                            <span class="roi-mini-v good">~8 hrs</span>
+                        </div>
+                    </div>
+                    <p class="roi-card-p">Passive monitoring replaces routine respiratory checks. Nurses are alerted only when action is needed.</p>
+                </div>
+
+                <div class="roi-card rv">
+                    <div class="roi-card-tag">FAMILY TRUST</div>
+                    <div class="roi-card-stat">
+                        <span class="roi-stat-v" data-cu data-target="92">0</span><span class="roi-stat-u">% pilot NPS</span>
+                    </div>
+                    <div class="roi-card-t">Family peace of mind</div>
+                    <div class="roi-mini">
+                        <div class="roi-gauge">
+                            <svg viewBox="0 0 100 56">
+                                <path d="M10 50 A 40 40 0 0 1 90 50" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="6" stroke-linecap="round"/>
+                                <path id="roi-gauge-arc" d="M10 50 A 40 40 0 0 1 90 50" fill="none" stroke="#00E5C8" stroke-width="6" stroke-linecap="round"
+                                    stroke-dasharray="126" stroke-dashoffset="126"/>
+                            </svg>
+                            <div class="roi-gauge-cap"><span data-cu data-target="92">0</span><span class="roi-gauge-suf">/100</span></div>
+                        </div>
+                    </div>
+                    <p class="roi-card-p">Pilot families rate the proactive monitoring 92/100. Facilities use it as a sales advantage at intake.</p>
+                </div>
+            </div>
+
+            <!-- Interactive ROI calculator -->
+            <div class="roi-calc rv">
+                <div class="roi-calc-head">
+                    <div>
+                        <div class="roi-calc-tag">QUICK ROI · YOUR FACILITY</div>
+                        <h3 class="roi-calc-h">If <span id="roi-residents" class="roi-calc-strong">80</span> residents had AEYRON…</h3>
+                    </div>
+                    <div class="roi-calc-savings">
+                        <div class="roi-calc-savings-l">Estimated annual savings</div>
+                        <div class="roi-calc-savings-v">$<span id="roi-savings">0</span></div>
+                    </div>
+                </div>
+                <div class="roi-calc-slider-wrap">
+                    <input id="roi-slider" type="range" min="20" max="300" step="5" value="80" />
+                    <div class="roi-calc-axis"><span>20</span><span>100</span><span>200</span><span>300</span></div>
+                </div>
+                <div class="roi-calc-foot">
+                    <div class="roi-calc-stat">
+                        <span class="roi-calc-stat-l">Avoided transfers / yr</span>
+                        <span class="roi-calc-stat-v" id="roi-avoided">0</span>
+                    </div>
+                    <div class="roi-calc-stat">
+                        <span class="roi-calc-stat-l">Nurse hours reclaimed / yr</span>
+                        <span class="roi-calc-stat-v" id="roi-nursehrs">0</span>
+                    </div>
+                    <div class="roi-calc-stat">
+                        <span class="roi-calc-stat-l">Net ROI multiple</span>
+                        <span class="roi-calc-stat-v" id="roi-multiple">0×</span>
+                    </div>
+                </div>
+                <p class="roi-calc-note">Estimates assume 4 transfers/yr without monitoring → 1 with, $15k saved per avoided transfer, 22 nurse-hrs/wk reclaimed scaled to facility size, and Respira at $160/unit/mo.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="s-privacy">
+        <div class="privacy-head">
+            <div class="sec-label rv" style="justify-content:center;margin-bottom:14px">Privacy &amp; Compliance</div>
+            <h2 class="privacy-h rv">Privacy by <em>design</em>.</h2>
+            <p class="privacy-sub rv">No camera. No cloud. The only thing that ever leaves the device is an encrypted "trend declining" alert — a single bit of intent, never raw biometrics.</p>
+        </div>
+
+        <!-- Animated data-flow: sensor → on-device AI vault → alert only (no data) -->
+        <div class="privacy-flow rv" aria-hidden="true">
+            <div class="pf-row">
+                <div class="pf-node">
+                    <span class="pf-node-l">SENSOR</span>
+                    <span class="pf-node-d">Radar + voice</span>
+                </div>
+                <svg class="pf-pipe" viewBox="0 0 200 14" preserveAspectRatio="none">
+                    <line x1="2" y1="7" x2="198" y2="7" stroke="rgba(0,229,200,0.25)" stroke-width="1.5"/>
+                    <circle class="pf-dot" cx="0" cy="7" r="3" fill="#00E5C8"/>
+                    <circle class="pf-dot pf-dot-2" cx="0" cy="7" r="3" fill="#00E5C8"/>
+                </svg>
+                <div class="pf-node pf-node-vault">
+                    <span class="pf-node-l">ON-DEVICE AI</span>
+                    <span class="pf-node-d">Vaulted · encrypted at rest</span>
+                    <svg class="pf-lock" viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="4" y="11" width="16" height="10" rx="2"/>
+                        <path d="M8 11V7a4 4 0 0 1 8 0v4"/>
+                    </svg>
+                </div>
+                <svg class="pf-pipe pf-pipe-out" viewBox="0 0 200 14" preserveAspectRatio="none">
+                    <line x1="2" y1="7" x2="198" y2="7" stroke="rgba(0,229,200,0.25)" stroke-width="1.5" stroke-dasharray="0 0"/>
+                    <circle class="pf-dot pf-dot-out" cx="0" cy="7" r="2.5" fill="#00E5C8"/>
+                </svg>
+                <div class="pf-node">
+                    <span class="pf-node-l">ALERT ONLY</span>
+                    <span class="pf-node-d">"Trend declining" + ID</span>
+                </div>
+            </div>
+            <div class="pf-blocked">
+                <span class="pf-blocked-x">✗</span>
+                <span class="pf-blocked-l">No raw biometrics. No image. No audio. No cloud sync of resident data.</span>
+            </div>
+        </div>
+
+        <div class="privacy-wrap">
+            <div class="privacy-item rv" data-tip="Radar + voice are processed entirely inside the Respira mirror's NPU. Models, weights, and inference are local — there is no remote API call to detect a problem.">
+                <div class="privacy-icon">
+                    <svg viewBox="0 0 24 24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                        <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                    </svg>
+                </div>
+                <div>
+                    <div class="privacy-title">Edge computing</div>
+                    <div class="privacy-desc">All inference runs on a local NPU. Data never leaves the device.</div>
+                </div>
+            </div>
+            <div class="privacy-item rv" data-tip="Two reasons: 1) cameras are intolerable in bedrooms and bathrooms; 2) for memory-care residents who can't consent, video is a non-starter. Radar gives us the same signal with none of the dignity cost.">
+                <div class="privacy-icon">
+                    <svg viewBox="0 0 24 24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                        <circle cx="12" cy="12" r="3"/>
+                    </svg>
+                </div>
+                <div>
+                    <div class="privacy-title">Zero-optical</div>
+                    <div class="privacy-desc">No camera, anywhere, ever. Radar respects bedroom dignity.</div>
+                </div>
+            </div>
+            <div class="privacy-item rv" data-tip="Architected for HIPAA today; SOC 2 Type II audit in progress. Canadian deployments PIPEDA-compatible; EU evaluation aligned with GDPR Art. 9 special-category data rules.">
+                <div class="privacy-icon">
+                    <svg viewBox="0 0 24 24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                        <path d="M9 12l2 2 4-4"/>
+                    </svg>
+                </div>
+                <div>
+                    <div class="privacy-title">Compliance-ready</div>
+                    <div class="privacy-desc">HIPAA-aligned · SOC 2 in progress · PIPEDA / GDPR-compatible.</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="privacy-compliance rv">
+            <div class="pc-l">CERTIFICATIONS &amp; FRAMEWORKS</div>
+            <div class="pc-row">
+                <span class="pc-tag">HIPAA · aligned</span>
+                <span class="pc-sep">·</span>
+                <span class="pc-tag pending">SOC 2 Type II · in progress</span>
+                <span class="pc-sep">·</span>
+                <span class="pc-tag">PIPEDA · Canadian deployments</span>
+                <span class="pc-sep">·</span>
+                <span class="pc-tag">GDPR-compatible</span>
+                <span class="pc-sep">·</span>
+                <span class="pc-tag">FDA pathway · Class II planned</span>
+            </div>
+        </div>
+    </section>
+
+    <section id="s-platform">
+        <div class="plat-wrap">
+            <div class="plat-head">
+                <div class="plat-lbl rv">The Platform</div>
+                <h2 class="plat-h rv">Clinical intelligence, <em>delivered</em>.</h2>
+                <p class="plat-sub rv">A live dashboard for care teams. Real-time vitals, 14-week trend history, and silent decline alerts — built for the way memory-care staff actually work.</p>
+            </div>
+
+            <!-- Dashboard mock -->
+            <div class="dash rv" aria-hidden="true">
+                <!-- Browser-style chrome -->
+                <div class="dash-chrome">
+                    <div class="dash-dots">
+                        <span class="dd dd-r"></span><span class="dd dd-y"></span><span class="dd dd-g"></span>
+                    </div>
+                    <div class="dash-url">
+                        <span class="dash-lock">🔒</span>
+                        <span>care.aeyron.health</span>
+                        <span class="dash-url-tag">FACILITY · MAPLE GROVE MEMORY CARE</span>
+                    </div>
+                    <div class="dash-user">
+                        <span class="dash-user-av">RN</span>
+                        <span class="dash-user-n">Nurse · Reyna</span>
+                    </div>
+                </div>
+
+                <div class="dash-body">
+                    <!-- Left rail: roster -->
+                    <aside class="dash-roster">
+                        <div class="dash-side-h">RESIDENTS · 28</div>
+                        <div class="dash-search">
+                            <span>⌕</span><span>Search</span><span class="dash-kbd">⌘K</span>
+                        </div>
+                        <ul class="dash-r-list">
+                            <li class="dash-r dash-r-active">
+                                <span class="dash-r-dot dash-r-warn"></span>
+                                <div>
+                                    <div class="dash-r-n">Eleanor M.</div>
+                                    <div class="dash-r-s">Stage 3 PD · Room 214</div>
+                                </div>
+                                <span class="dash-r-tag">⚠</span>
+                            </li>
+                            <li class="dash-r"><span class="dash-r-dot dash-r-ok"></span><div><div class="dash-r-n">Harold K.</div><div class="dash-r-s">Stage 2 PD · Room 117</div></div></li>
+                            <li class="dash-r"><span class="dash-r-dot dash-r-ok"></span><div><div class="dash-r-n">Margaret T.</div><div class="dash-r-s">Stage 2 PD · Room 102</div></div></li>
+                            <li class="dash-r"><span class="dash-r-dot dash-r-warn"></span><div><div class="dash-r-n">Robert F.</div><div class="dash-r-s">Stage 3 PD · Room 308</div></div></li>
+                            <li class="dash-r"><span class="dash-r-dot dash-r-ok"></span><div><div class="dash-r-n">Dorothy W.</div><div class="dash-r-s">Stage 2 PD · Room 121</div></div></li>
+                            <li class="dash-r"><span class="dash-r-dot dash-r-ok"></span><div><div class="dash-r-n">Frank J.</div><div class="dash-r-s">Stage 2 PD · Room 219</div></div></li>
+                            <li class="dash-r"><span class="dash-r-dot dash-r-ok"></span><div><div class="dash-r-n">Helen S.</div><div class="dash-r-s">Stage 3 PD · Room 305</div></div></li>
+                        </ul>
+                    </aside>
+
+                    <!-- Main pane -->
+                    <main class="dash-main">
+                        <header class="dash-main-h">
+                            <div>
+                                <div class="dash-r-meta">RM 214 · STAGE 3 PD · 78F</div>
+                                <h3 class="dash-r-title">Eleanor M.</h3>
+                                <div class="dash-r-sub">14-week respiratory trend &nbsp;<span class="dash-trend-tag">DECLINING</span></div>
+                            </div>
+                            <div class="dash-actions">
+                                <button class="dash-act">Flag for review</button>
+                                <button class="dash-act dash-act-primary">Notify physician</button>
+                            </div>
+                        </header>
+
+                        <div class="dash-kpis">
+                            <div class="dash-kpi">
+                                <div class="dash-kpi-l">BREATH RATE</div>
+                                <div class="dash-kpi-v"><span id="dash-br">22</span><span class="dash-kpi-u">bpm</span></div>
+                                <div class="dash-kpi-d dash-kpi-bad">↑ 4 vs baseline</div>
+                            </div>
+                            <div class="dash-kpi">
+                                <div class="dash-kpi-l">HEART RATE</div>
+                                <div class="dash-kpi-v"><span id="dash-hr">78</span><span class="dash-kpi-u">bpm</span></div>
+                                <div class="dash-kpi-d">+ 6 vs baseline</div>
+                            </div>
+                            <div class="dash-kpi">
+                                <div class="dash-kpi-l">VOICE STRENGTH</div>
+                                <div class="dash-kpi-v"><span id="dash-vs">62</span><span class="dash-kpi-u">/100</span></div>
+                                <div class="dash-kpi-d dash-kpi-bad">−18 vs baseline</div>
+                            </div>
+                            <div class="dash-kpi">
+                                <div class="dash-kpi-l">COUGH EVENTS</div>
+                                <div class="dash-kpi-v"><span id="dash-co">14</span><span class="dash-kpi-u">/24h</span></div>
+                                <div class="dash-kpi-d dash-kpi-bad">↑ 2.3× baseline</div>
+                            </div>
+                        </div>
+
+                        <!-- Trend chart -->
+                        <figure class="dash-chart">
+                            <figcaption>
+                                <span>RESPIRATORY TREND · LAST 14 WEEKS</span>
+                                <span class="dash-chart-legend">
+                                    <span class="lg lg-aey"></span>Eleanor's trend
+                                    <span class="lg lg-bl"></span>Personal baseline
+                                </span>
+                            </figcaption>
+                            <svg class="dash-chart-svg" viewBox="0 0 600 180" preserveAspectRatio="none">
+                                <g stroke="rgba(255,255,255,0.05)">
+                                    <line x1="0" y1="45"  x2="600" y2="45"/>
+                                    <line x1="0" y1="90"  x2="600" y2="90"/>
+                                    <line x1="0" y1="135" x2="600" y2="135"/>
+                                </g>
+                                <line x1="0"   y1="78" x2="600" y2="78" stroke="rgba(0,229,200,0.45)" stroke-width="1" stroke-dasharray="4 4"/>
+                                <path id="dash-trend"
+                                      d="M0 80 C 50 76, 110 78, 180 84 C 250 90, 320 102, 400 124 C 470 142, 530 158, 600 168"
+                                      fill="none" stroke="#FF4530" stroke-width="2"
+                                      stroke-dasharray="850" stroke-dashoffset="850"/>
+                                <path id="dash-trend-fill"
+                                      d="M0 80 C 50 76, 110 78, 180 84 C 250 90, 320 102, 400 124 C 470 142, 530 158, 600 168 L 600 180 L 0 180 Z"
+                                      fill="url(#dash-grad)" opacity="0"/>
+                                <defs>
+                                    <linearGradient id="dash-grad" x1="0" y1="0" x2="0" y2="1">
+                                        <stop offset="0%" stop-color="#FF4530" stop-opacity="0.25"/>
+                                        <stop offset="100%" stop-color="#FF4530" stop-opacity="0"/>
+                                    </linearGradient>
+                                </defs>
+                                <circle id="dash-trend-end" cx="600" cy="168" r="0" fill="#FF4530"/>
+                            </svg>
+                            <div class="dash-x-axis">
+                                <span>W1</span><span>W3</span><span>W6</span><span>W9</span><span>W12</span><span>W14 — today</span>
+                            </div>
+                            <div class="dash-anno">
+                                <span class="dash-anno-pulse"></span>
+                                Sub-clinical decline detected — action recommended
+                            </div>
+                        </figure>
+                    </main>
+
+                    <!-- Right rail: alert feed -->
+                    <aside class="dash-feed">
+                        <div class="dash-side-h">LIVE ALERTS</div>
+                        <div class="dash-alert dash-alert-live">
+                            <div class="dash-alert-row">
+                                <span class="dash-alert-dot"></span>
+                                <span class="dash-alert-time">2 min ago</span>
+                            </div>
+                            <div class="dash-alert-h">Eleanor M. · Rm 214</div>
+                            <div class="dash-alert-p">Respiratory trend declining. Lead time est. 12 weeks.</div>
+                        </div>
+                        <div class="dash-alert">
+                            <div class="dash-alert-row">
+                                <span class="dash-alert-dot dash-alert-ok"></span>
+                                <span class="dash-alert-time">17 min ago</span>
+                            </div>
+                            <div class="dash-alert-h">Margaret T. · Rm 102</div>
+                            <div class="dash-alert-p">Voice strength baseline locked · Day 8/8.</div>
+                        </div>
+                        <div class="dash-alert">
+                            <div class="dash-alert-row">
+                                <span class="dash-alert-dot dash-alert-warn"></span>
+                                <span class="dash-alert-time">54 min ago</span>
+                            </div>
+                            <div class="dash-alert-h">Robert F. · Rm 308</div>
+                            <div class="dash-alert-p">Mild voice softening — 5% below personal baseline.</div>
+                        </div>
+                        <div class="dash-alert">
+                            <div class="dash-alert-row">
+                                <span class="dash-alert-dot dash-alert-ok"></span>
+                                <span class="dash-alert-time">3h ago</span>
+                            </div>
+                            <div class="dash-alert-h">System</div>
+                            <div class="dash-alert-p">All 28 devices online · firmware v3.4.2</div>
+                        </div>
+                    </aside>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="s-team">
+        <div class="steam-wrap">
+            <div class="steam-head">
+                <div class="steam-label rv">The Team</div>
+                <h2 class="steam-h rv">
+                    Where we
+                    <em>come from</em>
+                </h2>
+                <div class="steam-logos rv">
+                    <div class="steam-logo-item rv">
+                        <div class="steam-logo-box">
+                            <img src="logos/microsoft.png" alt="Microsoft" loading="lazy">
+                        </div>
+                        <span class="steam-logo-name">Microsoft</span>
+                    </div>
+                    <div class="steam-logo-item rv">
+                        <div class="steam-logo-box">
+                            <img src="logos/yc.png" alt="Y Combinator" loading="lazy">
+                        </div>
+                        <span class="steam-logo-name">YC Startups</span>
+                    </div>
+                    <div class="steam-logo-item rv">
+                        <div class="steam-logo-box">
+                            <img src="logos/amd.png" alt="AMD" loading="lazy">
+                        </div>
+                        <span class="steam-logo-name">AMD</span>
+                    </div>
+                    <div class="steam-logo-item rv">
+                        <div class="steam-logo-box">
+                            <img src="logos/ministry-of-mines.svg" alt="Ministry of Mines, Government of India" loading="lazy">
+                        </div>
+                        <span class="steam-logo-name">Ministry of Mines</span>
+                    </div>
+                    <div class="steam-logo-item rv">
+                        <div class="steam-logo-box">
+                            <img src="logos/xceedance.svg" alt="Xceedance" loading="lazy">
+                        </div>
+                        <span class="steam-logo-name">Xceedance</span>
+                    </div>
+                    <div class="steam-logo-item rv">
+                        <div class="steam-logo-box">
+                            <img src="logos/gw-startup-avenue.svg" alt="GW Startup Avenue" loading="lazy">
+                        </div>
+                        <span class="steam-logo-name">GW Startup Avenue</span>
+                    </div>
+                </div>
+                <p class="steam-sub rv">Engineered by teams at GWU and University of Waterloo. Radar, ML, clinical research, product design.</p>
+            </div>
+        </div>
+    </section>
+
+
+    <section id="s-founders">
+        <div class="sf-wrap">
+            <div class="sf-head">
+                <div class="sf-lbl rv">Founders</div>
+                <h2 class="sf-h rv">The people <em>behind Respira</em></h2>
+            </div>
+            <div class="sf-grid">
+
+                <article class="sf-card rv" data-tilt>
+                    <div class="sf-av-wrap" aria-hidden="true">
+                        <div class="sf-av-bg"></div>
+                        <div class="sf-av">PV</div>
+                    </div>
+                    <div class="sf-name">Pingash Vohra</div>
+                    <div class="sf-role">CEO &amp; Co-Founder</div>
+                    <p class="sf-bio">Forbes Zero-Experience Fellow. Building products since 14. CS @ University of Waterloo.</p>
+                    <div class="sf-meta">
+                        <div class="sf-meta-row">
+                            <span class="sf-meta-l">Prior</span>
+                            <span class="sf-tags"><span class="sf-tag">Forbes ZE</span><span class="sf-tag">UWaterloo</span></span>
+                        </div>
+                        <div class="sf-meta-row">
+                            <span class="sf-meta-l">Expertise</span>
+                            <span class="sf-tags"><span class="sf-tag">GTM</span><span class="sf-tag">Fundraising</span><span class="sf-tag">Product</span></span>
+                        </div>
+                        <div class="sf-meta-row sf-meta-built">
+                            <span class="sf-meta-l">Built</span>
+                            <span class="sf-built">Pilot strategy · investor narrative · facility partnerships.</span>
+                        </div>
+                    </div>
+                    <div class="sf-actions">
+                        <a class="sf-li" href="https://www.linkedin.com/in/pingashvohra" target="_blank" rel="noopener noreferrer">LinkedIn ↗</a>
+                        <a class="sf-li sf-li-ghost" href="mailto:pingash@aeyron.health">Email</a>
+                    </div>
+                </article>
+
+                <article class="sf-card rv" data-tilt>
+                    <div class="sf-av-wrap" aria-hidden="true">
+                        <div class="sf-av-bg"></div>
+                        <div class="sf-av">VJ</div>
+                    </div>
+                    <div class="sf-name">Vansh Jain</div>
+                    <div class="sf-role">CTO &amp; Co-Founder</div>
+                    <p class="sf-bio">Ex-AMD · Ex-E3 (YC S21). Firmware, sensor fusion, and the ML pipeline behind Respira. CS @ University of Waterloo.</p>
+                    <div class="sf-meta">
+                        <div class="sf-meta-row">
+                            <span class="sf-meta-l">Prior</span>
+                            <span class="sf-tags"><span class="sf-tag">AMD</span><span class="sf-tag">E3 · YC S21</span><span class="sf-tag">UWaterloo</span></span>
+                        </div>
+                        <div class="sf-meta-row">
+                            <span class="sf-meta-l">Expertise</span>
+                            <span class="sf-tags"><span class="sf-tag">Radar / mmWave</span><span class="sf-tag">Sensor fusion</span><span class="sf-tag">On-device ML</span></span>
+                        </div>
+                        <div class="sf-meta-row sf-meta-built">
+                            <span class="sf-meta-l">Built</span>
+                            <span class="sf-built">Mirror firmware · respiratory ML · ROCm voice pipeline.</span>
+                        </div>
+                    </div>
+                    <div class="sf-actions">
+                        <a class="sf-li" href="https://www.linkedin.com/in/jain-vansh-" target="_blank" rel="noopener noreferrer">LinkedIn ↗</a>
+                        <a class="sf-li sf-li-ghost" href="mailto:vansh@aeyron.health">Email</a>
+                    </div>
+                </article>
+
+                <article class="sf-card rv" data-tilt>
+                    <div class="sf-av-wrap" aria-hidden="true">
+                        <div class="sf-av-bg"></div>
+                        <div class="sf-av">SK</div>
+                    </div>
+                    <div class="sf-name">Siddharth Kwatra</div>
+                    <div class="sf-role">COO &amp; Co-Founder</div>
+                    <p class="sf-bio">Federal Reserve Research Analyst. President, Washington Forum on India. Finance &amp; International Affairs @ GWU.</p>
+                    <div class="sf-meta">
+                        <div class="sf-meta-row">
+                            <span class="sf-meta-l">Prior</span>
+                            <span class="sf-tags"><span class="sf-tag">US Fed Reserve</span><span class="sf-tag">NITI Aayog</span><span class="sf-tag">Ministry of Mines</span><span class="sf-tag">GWU</span></span>
+                        </div>
+                        <div class="sf-meta-row">
+                            <span class="sf-meta-l">Expertise</span>
+                            <span class="sf-tags"><span class="sf-tag">Regulatory</span><span class="sf-tag">Macro &amp; Policy</span><span class="sf-tag">Operations</span></span>
+                        </div>
+                        <div class="sf-meta-row sf-meta-built">
+                            <span class="sf-meta-l">Built</span>
+                            <span class="sf-built">Wellness-first regulatory path · India expansion · ops scaffolding.</span>
+                        </div>
+                    </div>
+                    <div class="sf-actions">
+                        <a class="sf-li" href="https://www.linkedin.com/in/siddharth-kwatra-227417270/" target="_blank" rel="noopener noreferrer">LinkedIn ↗</a>
+                        <a class="sf-li sf-li-ghost" href="mailto:siddharth@aeyron.health">Email</a>
+                    </div>
+                </article>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- ── Demo section ──────────────────────────────────────────────── -->
+    <section id="s-demo">
+        <div class="sdemo-wrap">
+            <div class="sdemo-label rv">Live Demo · Browser Version</div>
+            <h2 class="sdemo-h rv">See it working. On your face. <em>Right now.</em></h2>
+            <p class="sdemo-sub rv">A glimpse of what runs behind your mirror — every night, silently. This is your browser webcam. Respira hardware sees 10× more.</p>
+
+            <!-- Capability pills -->
+            <div class="sdemo-pills rv" aria-hidden="true">
+                <span class="sdemo-pill"><span class="sdemo-pill-i">♥</span> Heart rate</span>
+                <span class="sdemo-pill"><span class="sdemo-pill-i">~</span> Breath rate</span>
+                <span class="sdemo-pill"><span class="sdemo-pill-i">⌖</span> Distance</span>
+                <span class="sdemo-pill"><span class="sdemo-pill-i">◉</span> Blink rate</span>
+                <span class="sdemo-pill"><span class="sdemo-pill-i">♪</span> Voice strength</span>
+                <span class="sdemo-pill"><span class="sdemo-pill-i">!</span> Cough events</span>
+            </div>
+
+            <button class="sdemo-btn rv" id="demo-open-btn">▶ Try Respira Live</button>
+
+            <div class="sdemo-priv rv" aria-hidden="true">
+                <span class="sdemo-priv-dot"></span>
+                Camera + audio stay 100% on this device · zero transmission · close to revoke access
+            </div>
+
+            <!-- Browser vs hardware spec compare -->
+            <div class="sdemo-vs rv">
+                <div class="sdemo-vs-l">BROWSER vs HARDWARE</div>
+                <div class="sdemo-vs-grid">
+                    <div class="sdemo-vs-row">
+                        <span class="sdemo-vs-k">Heart-rate accuracy</span>
+                        <span class="sdemo-vs-b">±5 bpm <span class="sdemo-vs-tag bad">browser</span></span>
+                        <span class="sdemo-vs-h">±2 bpm <span class="sdemo-vs-tag good">hardware</span></span>
+                    </div>
+                    <div class="sdemo-vs-row">
+                        <span class="sdemo-vs-k">Breath-rate accuracy</span>
+                        <span class="sdemo-vs-b">±3 brpm <span class="sdemo-vs-tag bad">browser</span></span>
+                        <span class="sdemo-vs-h">±0.5 brpm <span class="sdemo-vs-tag good">hardware</span></span>
+                    </div>
+                    <div class="sdemo-vs-row">
+                        <span class="sdemo-vs-k">Continuous · 24/7</span>
+                        <span class="sdemo-vs-b">No · session-only <span class="sdemo-vs-tag bad">browser</span></span>
+                        <span class="sdemo-vs-h">Yes · always-on <span class="sdemo-vs-tag good">hardware</span></span>
+                    </div>
+                    <div class="sdemo-vs-row">
+                        <span class="sdemo-vs-k">Privacy</span>
+                        <span class="sdemo-vs-b">Camera-based <span class="sdemo-vs-tag warn">browser</span></span>
+                        <span class="sdemo-vs-h">Radar-only · no camera <span class="sdemo-vs-tag good">hardware</span></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ── Demo overlay ───────────────────────────────────────────────── -->
+    <div id="demo-overlay" role="dialog" aria-modal="true" aria-label="Respira live demo">
+        <div class="demo-privacy-banner">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+            Your camera and microphone never leave your device. Zero data transmission.
+            <button class="demo-close-btn" id="demo-close-btn">✕ Close</button>
+        </div>
+        <div class="demo-hw-banner">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-top:1px"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+            You're viewing a browser preview using your device's built-in sensors. The Respira mirror unit uses dedicated mmWave radar and clinical-grade microphones — significantly more accurate than any phone or laptop camera.
+        </div>
+
+        <!-- Permission screen -->
+        <div class="demo-perm-screen" id="demo-perm-screen">
+            <h3 class="demo-perm-h">Respira needs access to your camera and microphone</h3>
+            <p class="demo-perm-sub">Everything is processed on your device. Nothing is transmitted.</p>
+            <button class="demo-allow-btn" id="demo-allow-btn">Allow Access →</button>
+            <a href="#" class="demo-cancel-link" id="demo-cancel-link">Cancel</a>
+        </div>
+
+        <!-- Loading screen -->
+        <div class="demo-load-screen" id="demo-load-screen" style="display:none">
+            <div class="demo-load-label">Initializing sensors…</div>
+            <div class="demo-load-bar-track"><div class="demo-load-bar" id="demo-load-bar"></div></div>
+            <p class="demo-load-status" id="demo-load-status">Loading face detection model…</p>
+            <p style="font-size:.65rem;color:rgba(255,255,255,.35);margin-top:16px;text-align:center">Tip: sit back so your shoulders are visible for best breath rate accuracy</p>
+        </div>
+
+        <!-- Error screen -->
+        <div class="demo-error-screen" id="demo-error-screen" style="display:none">
+            <div class="demo-error-icon">⚠</div>
+            <div class="demo-error-h" id="demo-error-h"></div>
+            <p class="demo-error-msg" id="demo-error-msg"></p>
+            <button class="demo-error-close" id="demo-error-close">Close Demo</button>
+        </div>
+
+        <!-- Main (camera + cards) -->
+        <div id="demo-main" style="display:none">
+            <div class="demo-body">
+                <div class="demo-feed-col">
+                    <div class="demo-video-wrap">
+                        <video id="demo-video" autoplay muted playsinline></video>
+                        <div class="demo-breath-ring" id="demo-breath-ring">
+                            <div class="demo-breath-dot"></div>
+                        </div>
+                        <div class="demo-pos-hint" id="demo-pos-hint">← Sit back — show shoulders for breath rate →</div>
+                    </div>
+                </div>
+                <div class="demo-metrics-col" id="demo-metrics-col">
+                    <!-- Cards injected by JS -->
+                </div>
+            </div>
+            <div class="demo-footer">
+                <p class="demo-footer-hw-note">This browser demo shows a fraction of what Respira sees every night. The hardware unit is 10–15× more sensitive using dedicated radar and microphones behind your mirror.</p>
+                <p class="demo-footer-tagline">Green card border = hardware-accurate. Yellow = browser estimate.</p>
+                <a href="#s9" class="demo-pilot-btn" id="demo-pilot-link">See What the Hardware Can Do →</a>
+            </div>
+        </div>
+    </div>
+
+    <section id="s8">
+        <div class="s8-wrap">
+            <div class="s8-head">
+                <div class="s8-lbl rv">Traction</div>
+                <h2 class="s8-h rv">
+                    Built to win.
+                    <br>
+                    <em>Backed to scale.</em>
+                </h2>
+            </div>
+            <div class="s8-cards">
+                <div class="s8-card">
+                    <div class="s8-card-icon">
+                        <svg viewBox="0 0 24 24">
+                            <polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/>
+                            <polyline points="16 7 22 7 22 13"/>
+                        </svg>
+                    </div>
+                    <div class="s8-card-t">Accelerator Validation</div>
+                    <div class="s8-card-v">Velocity, UW</div>
+                    <div class="s8-card-d">University of Waterloo's flagship deep-tech incubator. Ranked #1 university startup program in Canada.</div>
+                </div>
+                <div class="s8-card">
+                    <div class="s8-card-icon">
+                        <svg viewBox="0 0 24 24">
+                            <rect x="2" y="3" width="20" height="14" rx="2"/>
+                            <line x1="8" y1="21" x2="16" y2="21"/>
+                            <line x1="12" y1="17" x2="12" y2="21"/>
+                        </svg>
+                    </div>
+                    <div class="s8-card-t">Addressable Market</div>
+                    <div class="s8-card-v">Senior Living RPM</div>
+                    <div class="s8-card-d">US remote patient monitoring for senior living. 30,000+ facilities. SaaS model — updates as we scale.</div>
+                </div>
+                <div class="s8-card">
+                    <div class="s8-card-icon">
+                        <svg viewBox="0 0 24 24">
+                            <circle cx="12" cy="12" r="10"/>
+                            <polyline points="12 6 12 12 16 14"/>
+                        </svg>
+                    </div>
+                    <div class="s8-card-t">Pilot Progress</div>
+                    <div class="s8-card-v">Onboarding Now</div>
+                    <div class="s8-card-d">Prototype-to-pilot in progress. Pilot cohort onboarding across Waterloo Region and Toronto.</div>
+                </div>
+            </div>
+            <div class="s8-backers rv">
+                <div class="s8-backers-l">BACKED BY</div>
+                <div class="s8-backers-row">
+                    <div class="s8-backer">
+                        <div class="s8-backer-logo s8-backer-velocity">
+                            <img src="logos/velocity.png" alt="Velocity">
+                        </div>
+                        <span class="s8-backer-n">Velocity · UW</span>
+                    </div>
+                    <div class="s8-backer">
+                        <div class="s8-backer-logo">
+                            <img src="logos/1517fund.svg" alt="1517 Fund">
+                        </div>
+                        <span class="s8-backer-n">1517 Fund</span>
+                    </div>
+                    <div class="s8-backer">
+                        <div class="s8-backer-logo">
+                            <img src="logos/google-for-startups.svg" alt="Google for Startups">
+                        </div>
+                        <span class="s8-backer-n">Google for Startups</span>
+                    </div>
+                    <div class="s8-backer">
+                        <div class="s8-backer-logo">
+                            <img src="logos/canopy-founders.svg" alt="Canopy Founders Inc">
+                        </div>
+                        <span class="s8-backer-n">Canopy Founders</span>
+                    </div>
+                    <div class="s8-backer">
+                        <div class="s8-backer-logo">
+                            <img src="logos/yc-summer-school.svg" alt="YC Summer School">
+                        </div>
+                        <span class="s8-backer-n">YC Summer School</span>
+                    </div>
+                    <div class="s8-backer">
+                        <div class="s8-backer-logo">
+                            <img src="logos/refraction.svg" alt="Refraction">
+                        </div>
+                        <span class="s8-backer-n">Refraction</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="s-roadmap">
+        <div class="roadmap-wrap">
+            <div class="roadmap-head">
+                <div class="roadmap-label rv">The Path Ahead</div>
+                <h2 class="roadmap-h rv">
+                    Strategic
+                    <em>Roadmap</em>
+                     · Wellness-First Strategy
+                </h2>
+            </div>
+
+            <!-- Year ribbon -->
+            <div class="rm-ribbon rv" aria-hidden="true">
+                <div class="rm-ribbon-track">
+                    <div class="rm-ribbon-fill" id="rm-ribbon-fill"></div>
+                    <div class="rm-ribbon-marker" id="rm-ribbon-marker">
+                        <span class="rm-ribbon-marker-dot"></span>
+                        <span class="rm-ribbon-marker-l">YOU ARE HERE</span>
+                    </div>
+                </div>
+                <div class="rm-ribbon-axis">
+                    <span>Q4 2025</span>
+                    <span>Q2 2026</span>
+                    <span>Q4 2026</span>
+                    <span>2027</span>
+                    <span>2028+</span>
+                </div>
+            </div>
+
+            <div class="roadmap-timeline">
+
+                <div class="roadmap-phase rv" data-tilt>
+                    <div class="rm-phase-head">
+                        <span class="roadmap-phase-tag rm-tag-active">
+                            <span class="rm-tag-dot"></span> Phase 1 · Active
+                        </span>
+                        <span class="rm-phase-when">Q4 2025 → Q2 2026</span>
+                    </div>
+                    <h3 class="roadmap-phase-h">Pilot Onboarding · Wellness-First Launch</h3>
+                    <p class="roadmap-phase-p">Canada + EU. Wellness-first positioning sidesteps medical-device classification delays while we collect real-world respiratory data.</p>
+                    <ul class="rm-phase-ms">
+                        <li><span class="rm-ms-d">▸</span> 10 pilot facilities · Waterloo Region + Toronto</li>
+                        <li><span class="rm-ms-d">▸</span> Memory-care &amp; assisted-living deployments</li>
+                        <li><span class="rm-ms-d">▸</span> Wellness regulatory path · no FDA gating</li>
+                        <li><span class="rm-ms-d">▸</span> Care-team dashboard v1 · Web + iOS + Android</li>
+                    </ul>
+                    <div class="rm-phase-target">
+                        <span class="rm-tg-l">Target by end of phase</span>
+                        <span class="rm-tg-v">200+ residents monitored continuously</span>
+                    </div>
+                </div>
+
+                <div class="roadmap-phase rv" data-tilt>
+                    <div class="rm-phase-head">
+                        <span class="roadmap-phase-tag rm-tag-planned">Phase 2 · Planned</span>
+                        <span class="rm-phase-when">Q3 2026 → 2027</span>
+                    </div>
+                    <h3 class="roadmap-phase-h">100-Unit MVP Sprint &amp; Clinical Validation</h3>
+                    <p class="roadmap-phase-p">Scale pilots. Validate respiratory + voice trend models against clinical outcomes. Build the evidence base for FDA Class II pathway.</p>
+                    <ul class="rm-phase-ms">
+                        <li><span class="rm-ms-d">▸</span> 100 units across N. America &amp; EU</li>
+                        <li><span class="rm-ms-d">▸</span> IRB-approved retrospective &amp; prospective studies</li>
+                        <li><span class="rm-ms-d">▸</span> SOC 2 Type II audit close</li>
+                        <li><span class="rm-ms-d">▸</span> First peer-reviewed publication submission</li>
+                    </ul>
+                    <div class="rm-phase-target">
+                        <span class="rm-tg-l">Target by end of phase</span>
+                        <span class="rm-tg-v">$1M ARR · 4-week pilot-to-deploy time</span>
+                    </div>
+                </div>
+
+                <div class="roadmap-phase rv" data-tilt>
+                    <div class="rm-phase-head">
+                        <span class="roadmap-phase-tag rm-tag-vision">Phase 3 · Vision</span>
+                        <span class="rm-phase-when">2027 →</span>
+                    </div>
+                    <h3 class="roadmap-phase-h">Expansion · COPD / CHF + AI Licensing</h3>
+                    <p class="roadmap-phase-p">Extend the platform to COPD and congestive heart failure. License the AI engine to medical-device OEMs and healthcare systems.</p>
+                    <ul class="rm-phase-ms">
+                        <li><span class="rm-ms-d">▸</span> COPD + CHF early-decline models</li>
+                        <li><span class="rm-ms-d">▸</span> OEM licensing · 3rd-party mirrors &amp; sensors</li>
+                        <li><span class="rm-ms-d">▸</span> Health-system enterprise tier</li>
+                        <li><span class="rm-ms-d">▸</span> FDA Class II clearance · medical-device track</li>
+                    </ul>
+                    <div class="rm-phase-target">
+                        <span class="rm-tg-l">Target by end of phase</span>
+                        <span class="rm-tg-v">10K+ devices · 3 condition coverage</span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <section id="s9">
+        <div class="s9-glow"></div>
+        <div class="s9-wrap">
+            <div class="s9-pre rv">Early Access · Parkinson's Care Pilot</div>
+            <h2 class="s9-h rv">
+                <span id="s9-weeks">10–14</span> weeks.
+                <br>
+                <em>That's the window.</em>
+                <br>
+                Don't waste it.
+            </h2>
+            <p class="s9-p rv">We're onboarding 10 pilot memory-care and assisted-living facilities across Waterloo Region and Toronto. Mirror-mounted. No wearables. Just early-warning data that prevents the death nobody saw coming.</p>
+
+            <!-- Pilot slot counter -->
+            <div class="s9-slots rv" aria-hidden="true">
+                <div class="s9-slots-row">
+                    <span class="s9-slots-l">PILOT COHORT</span>
+                    <span class="s9-slots-v"><span id="s9-slot-fill">3</span> <span class="s9-slots-d">/ 10 facilities onboarding</span></span>
+                </div>
+                <div class="s9-slots-bar">
+                    <div class="s9-slots-fill" id="s9-slots-fill"></div>
+                </div>
+                <div class="s9-slots-foot">
+                    <span class="s9-slot s9-slot-on"></span>
+                    <span class="s9-slot s9-slot-on"></span>
+                    <span class="s9-slot s9-slot-on"></span>
+                    <span class="s9-slot"></span>
+                    <span class="s9-slot"></span>
+                    <span class="s9-slot"></span>
+                    <span class="s9-slot"></span>
+                    <span class="s9-slot"></span>
+                    <span class="s9-slot"></span>
+                    <span class="s9-slot"></span>
+                </div>
+            </div>
+
+            <!-- Audience tabs -->
+            <div class="s9-tabs rv" role="tablist" aria-label="Who are you?">
+                <button class="s9-tab active" data-aud="facility" role="tab" aria-selected="true">For Facilities</button>
+                <button class="s9-tab" data-aud="investor" role="tab" aria-selected="false">For Investors</button>
+                <button class="s9-tab" data-aud="clinician" role="tab" aria-selected="false">For Clinicians</button>
+            </div>
+
+            <div class="s9-form rv">
+                <input class="s9-input" id="wlin" type="email" placeholder="Your facility email">
+                <button class="s9-btn" id="wlbtn">Request Access</button>
+            </div>
+
+            <!-- What you get -->
+            <div class="s9-benefits rv">
+                <div class="s9-benefit">
+                    <span class="s9-b-i">01</span>
+                    <span class="s9-b-t" id="s9-b1">15-minute pilot install · standard AC outlet, no retrofit.</span>
+                </div>
+                <div class="s9-benefit">
+                    <span class="s9-b-i">02</span>
+                    <span class="s9-b-t" id="s9-b2">Care-team dashboard + 14-week trends from day 8.</span>
+                </div>
+                <div class="s9-benefit">
+                    <span class="s9-b-i">03</span>
+                    <span class="s9-b-t" id="s9-b3">Pilot pricing + co-publication option for facilities.</span>
+                </div>
+            </div>
+
+            <p class="s9-note rv">
+                Partnerships &amp; investors →
+                <a href="mailto:aeyron7hq@gmail.com">aeyron7hq@gmail.com</a>
+            </p>
+        </div>
+    </section>
+
+    <script src="js/breath.js" defer></script>
+    <script src="js/main.js" defer></script>
+    <script type="module" src="js/pebble-stl.js?v=6"></script>
+    <script src="js/respira-demo.js" defer></script>
+    </script>
+</body>
+</html>

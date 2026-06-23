@@ -1,3 +1,13 @@
-# Drag this folder into Netlify “Deploy manually”, or connect Git and set publish directory to “.” (root).
+# Vite static build. Connect Git and Netlify will run the build automatically.
 [build]
-  publish = "."
+  command = "npm run build"
+  publish = "dist"
+
+[build.environment]
+  NODE_VERSION = "20"
+
+# SPA-style fallback (single page) just in case of deep links
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200

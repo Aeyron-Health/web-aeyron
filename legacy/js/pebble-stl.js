@@ -56,6 +56,11 @@ function init() {
     rim.position.set(-0.2, -0.4, -1.2);
     scene.add(rim);
 
+    /** Teal "breath" point light — pulses with global breath phase. */
+    const breathLight = new THREE.PointLight(0x00E5C8, 0.0, 6, 1.6);
+    breathLight.position.set(0, 0, 1.4);
+    scene.add(breathLight);
+
     const pivot = new THREE.Group();
     scene.add(pivot);
 
@@ -65,9 +70,16 @@ function init() {
     /** Upright egg, ~18° Y to show front + left profile (reference). */
     const baseX = -9 * DEG;
     const baseY = 18 * DEG;
+    /** Scroll-driven extra Y rotation through the s6 section. */
+    let scrollOrbit = 0; // degrees, lerps in render loop
 
     function applyRotation() {
-        pivot.rotation.set(baseX + rotX * DEG, baseY + rotY * DEG, 0, 'YXZ');
+        pivot.rotation.set(
+            baseX + rotX * DEG,
+            baseY + (rotY + scrollOrbit) * DEG,
+            0,
+            'YXZ'
+        );
     }
 
     applyRotation();
@@ -113,8 +125,35 @@ function init() {
     const ro = new ResizeObserver(resize);
     ro.observe(root);
 
-    function onFrame() {
+    /* ── Scroll-orbit + visibility gating ───────────────────────── */
+    let inView = true;
+    const s6 = document.getElementById('s6');
+    if (s6 && 'IntersectionObserver' in window) {
+        new IntersectionObserver(([e]) => { inView = e.isIntersecting; },
+            { rootMargin: '200px 0px' }).observe(s6);
+    }
+    function updateScrollOrbit() {
+        if (!s6) return;
+        const r = s6.getBoundingClientRect();
+        const p = Math.max(0, Math.min(1, -r.top / Math.max(1, r.height - innerHeight)));
+        const target = (p - 0.5) * 60; // -30deg → +30deg through section
+        scrollOrbit += (target - scrollOrbit) * 0.08;
+    }
+
+    /* Drive breath-glow from global breath phase if available, else local sin */
+    let breathPhase = 0;
+    let lastT = performance.now();
+    function onFrame(t) {
         requestAnimationFrame(onFrame);
+        if (!inView) return;
+        const dt = Math.min(0.05, ((t || performance.now()) - lastT) / 1000);
+        lastT = t || performance.now();
+        // 14 bpm "recovered" rate when device is shown
+        breathPhase += (14 / 60) * Math.PI * 2 * dt;
+        const pulse = 0.5 + 0.5 * Math.sin(breathPhase);
+        breathLight.intensity = 0.6 + pulse * 1.2;
+        updateScrollOrbit();
+        applyRotation();
         renderer.render(scene, camera);
     }
     onFrame();

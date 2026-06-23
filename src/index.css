@@ -1,0 +1,181 @@
+@import "tailwindcss";
+
+/* =========================================================================
+   AEYRON - "Visible Signal" design system
+   Calm-clinical, confident. One committed accent (signal blue, never purple),
+   warm-cool near-white canvas, deep ink, dark cinematic bookends.
+   All color in OKLCH. Neutrals tinted toward the signal hue (255).
+   ========================================================================= */
+@theme {
+  /* ---- Brand surfaces (light) ---- */
+  --color-canvas: oklch(0.986 0.004 255); /* page background, near-white tinted (NOT cream) */
+  --color-canvas-sunk: oklch(0.966 0.006 255); /* alternating section / sunk panels */
+  --color-paper: oklch(1 0 0); /* pure-white cards where needed */
+
+  /* ---- Dark bookends (hero, north-star) ---- */
+  --color-night: oklch(0.17 0.018 255); /* dark section background */
+  --color-night-deep: oklch(0.13 0.016 255); /* deepest hero base */
+  --color-night-raise: oklch(0.225 0.021 255); /* elevated surface on dark */
+
+  /* ---- Ink / text on light ---- */
+  --color-ink: oklch(0.21 0.021 255); /* primary text on light */
+  --color-ink-soft: oklch(0.455 0.022 255); /* muted text on light (>=4.5:1 on canvas) */
+  --color-ink-faint: oklch(0.62 0.018 255); /* captions / least emphasis (use sparingly, large only) */
+
+  /* ---- Mist / text on dark ---- */
+  --color-mist: oklch(0.965 0.005 255); /* primary text on dark */
+  --color-mist-soft: oklch(0.76 0.016 255); /* muted text on dark */
+
+  /* ---- The one committed accent ---- */
+  --color-signal: oklch(0.565 0.188 255); /* primary accent on light */
+  --color-signal-hi: oklch(0.705 0.165 255); /* brighter accent for dark backgrounds */
+  --color-signal-deep: oklch(0.46 0.17 255); /* pressed / dense */
+  --color-signal-tint: oklch(0.95 0.03 255); /* faint accent wash on light */
+  --color-signal-tint-dark: oklch(0.28 0.07 255); /* accent wash on dark */
+
+  /* ---- Semantic-only hues (meaning, not decoration) ---- */
+  --color-vital: oklch(0.74 0.16 150); /* "on-track / healthy" status ONLY */
+  --color-vital-tint: oklch(0.95 0.04 150);
+  --color-attention: oklch(0.78 0.14 70); /* "needs attention" status, sparse */
+
+  /* ---- Hairlines ---- */
+  --color-line: oklch(0.905 0.008 255); /* border on light */
+  --color-line-strong: oklch(0.85 0.012 255);
+  --color-line-dark: oklch(0.32 0.022 255); /* border on dark */
+
+  /* ---- Type families ---- */
+  --font-display: "Clash Display", "Satoshi", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "Satoshi", ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", monospace;
+
+  /* ---- Motion easings (no bounce, no elastic) ---- */
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-out-quint: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
+
+  /* ---- Shape (cards capped 12-16px) ---- */
+  --radius-card: 16px;
+
+  /* ---- Fluid display sizes (cap ~6rem / -0.04em floor) ---- */
+  --text-mega: clamp(2.5rem, 5.9vw, 5rem);
+  --text-mega--line-height: 1;
+  --text-mega--letter-spacing: -0.032em;
+  --text-h2: clamp(2rem, 4.4vw, 3.4rem);
+  --text-h2--line-height: 1.02;
+  --text-h2--letter-spacing: -0.03em;
+}
+
+/* =========================================================================
+   Base layer
+   ========================================================================= */
+@layer base {
+  :root {
+    color-scheme: light;
+  }
+
+  * {
+    border-color: var(--color-line);
+  }
+
+  html {
+    -webkit-text-size-adjust: 100%;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background: var(--color-canvas);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    font-size: 1rem; /* 16px floor */
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  h1, h2, h3, h4 {
+    font-family: var(--font-display);
+    font-weight: 600;
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  /* Tabular figures for any metric/data */
+  .tnum {
+    font-variant-numeric: tabular-nums;
+    font-family: var(--font-mono);
+  }
+
+  ::selection {
+    background: var(--color-signal);
+    color: white;
+  }
+
+  /* Visible, branded keyboard focus */
+  :focus-visible {
+    outline: 2px solid var(--color-signal);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+
+  /* Respect reduced motion globally: kill transitions/animations, no smooth scroll */
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.001ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.001ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+/* =========================================================================
+   Reusable utilities / keyframes
+   ========================================================================= */
+@layer utilities {
+  .shell {
+    width: 100%;
+    max-width: 1240px;
+    margin-inline: auto;
+    padding-inline: clamp(1.25rem, 5vw, 3rem);
+  }
+
+  .eyebrow {
+    font-family: var(--font-mono);
+    font-size: 0.74rem;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+  }
+
+  /* Faint engineering grid backdrop (used sparingly on dark sections) */
+  .grid-faint {
+    background-image:
+      linear-gradient(to right, oklch(1 0 0 / 0.04) 1px, transparent 1px),
+      linear-gradient(to bottom, oklch(1 0 0 / 0.04) 1px, transparent 1px);
+    background-size: 64px 64px;
+  }
+
+  @keyframes signal-dash {
+    to {
+      stroke-dashoffset: 0;
+    }
+  }
+
+  @keyframes drift {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-50%);
+    }
+  }
+}
