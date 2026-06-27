@@ -61,7 +61,7 @@ function ScreenTremor({ active, reduced }: VizProps) {
           <SignalWave color={SIGNAL} height={90} intensity={0.4} strokeWidth={1} speed={4.5} />
         </div>
       </div>
-      <ScreenFooter>Held in hand, all day on watch</ScreenFooter>
+      <ScreenFooter>Held in hand, all day on a smart watch</ScreenFooter>
     </div>
   );
 }
@@ -138,7 +138,7 @@ function ScreenTap({ active, reduced }: VizProps) {
         {bars.map((_, i) => (
           <motion.span
             key={i}
-            className="w-2.5 flex-1 max-w-[16px] rounded-full"
+            className="h-full w-3 rounded-full"
             style={{ background: SIGNAL_HI, transformOrigin: "bottom" }}
             initial={false}
             animate={

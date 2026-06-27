@@ -53,8 +53,8 @@ export function Shift() {
                 viewport={{ once: true, amount: 0.5 }}
                 transition={{ duration: 0.65, ease: easeOutExpo, delay: 0.2 }}
               >
-                Aeyron turns the phone and watch you already carry into continuous,
-                passive monitoring.
+                Aeyron turns the phone, smart watch, and smart speaker you already
+                carry into continuous, passive monitoring.
               </motion.p>
 
               {/* Friction, shed. Each clause reveals in sequence. */}

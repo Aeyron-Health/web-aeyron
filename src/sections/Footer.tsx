@@ -124,7 +124,10 @@ export function Footer() {
 
         {/* Legal disclaimer */}
         <Reveal delay={0.04} className="mt-12">
-          <p className="max-w-prose text-[0.8rem] leading-relaxed text-mist-soft">
+          <p className="max-w-prose text-[0.92rem] font-medium leading-relaxed text-mist">
+            {disclaimer.regulatory}
+          </p>
+          <p className="mt-4 max-w-prose text-[0.8rem] leading-relaxed text-mist-soft">
             {disclaimer.full}
           </p>
         </Reveal>

@@ -103,7 +103,8 @@ const VISITS = [
   level: symptomLevel(v.t),
 }));
 
-const MONTHS = ["Jan", "Mar", "May", "Jul", "Sep", "Nov", ""];
+// Only the two endpoints, so month ticks never collide with the clinic-visit labels.
+const MONTHS = ["Jan", "", "", "", "", "", "Dec"];
 
 /** Convert a normalized year position to a readable month/day-ish label. */
 function dateLabel(t: number): string {

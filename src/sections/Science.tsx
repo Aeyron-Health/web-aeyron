@@ -236,7 +236,7 @@ function PrivacyCallout() {
   const points = [
     {
       title: "Biomarkers extracted on-device",
-      body: "Signals are computed on the phone and watch you already hold. Raw data stays with you, not on a server by default.",
+      body: "Signals are computed on the phone, smart watch, and smart speaker you already hold. Raw data stays with you, not on a server by default.",
     },
     {
       title: "You stay in control",

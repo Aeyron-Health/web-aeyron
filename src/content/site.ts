@@ -47,7 +47,7 @@ export const measurements: Measurement[] = [
     id: "tremor",
     name: "Tremor",
     what: "The hand's shake at the Parkinsonian 3-7 Hz signature.",
-    how: "Read from the phone's motion sensors while it's simply held - and continuously, all day, when paired with an Apple Watch.",
+    how: "Read from the phone's motion sensors while it's simply held - and continuously, all day, when paired with a smart watch.",
     signal: "Continuous tremor and dyskinesia, not a once-a-year snapshot.",
     viz: "tremor",
     researchKey: "continuous",
@@ -92,7 +92,7 @@ export const measurements: Measurement[] = [
     id: "nonmotor",
     name: "Non-motor",
     what: "Sleep, heart rate, mood, and medication adherence and response.",
-    how: "Pulled from the health data already on the phone and watch, with the person's permission.",
+    how: "Pulled from the health data already on the phone, smart watch, and smart speaker, with the person's permission.",
     signal: "The on/off picture that motor scores alone miss.",
     viz: "nonmotor",
   },
@@ -130,11 +130,11 @@ export const audiences: Audience[] = [
     id: "clinicians",
     who: "Neurologists & movement-disorder clinics",
     headline: "Frequent, UPDRS-aligned data between visits.",
-    body: "See what happens between appointments. Aeyron surfaces motor and non-motor trends aligned to the measures you already use, so medication decisions rest on more than a single morning's exam.",
+    body: "See what happens between appointments. With the patient's consent, Aeyron's trends flow to their neurologist, and a suggestion layer flags the moments worth a closer look, so medication decisions rest on more than a single morning's exam.",
     points: [
-      "A clinician dashboard with longitudinal trends",
+      "A clinician dashboard with longitudinal trends, shared with the patient's neurologist",
+      "A suggestion layer that flags when medication timing or response may be worth revisiting - not just a report",
       "Signals grounded in published digital-biomarker research",
-      "Better medication titration, fewer guesses",
     ],
   },
   {
@@ -161,7 +161,7 @@ export const roadmap: RoadmapPhase[] = [
   {
     phase: "Phase 1",
     title: "Passive monitoring, in your pocket",
-    body: "The Aeyron app turns the phone and watch people already own into continuous, passive monitoring - a research-grounded wellness companion available today.",
+    body: "The Aeyron app turns the phone, smart watch, and smart speaker people already own into continuous, passive monitoring - a research-grounded wellness companion available today.",
     status: "now",
   },
   {
@@ -199,7 +199,7 @@ export const backers = [
   { name: "Google for Startups", file: "/logos/google-for-startups.svg" },
   { name: "Canopy Founders", file: "/logos/canopy-founders.svg" },
   { name: "YC Summer School", file: "/logos/yc-summer-school.svg" },
-  { name: "Refraction", file: "/logos/refraction.svg" },
+  { name: "Refraction Innovation Hub", file: "/logos/refraction.svg" },
 ];
 
 export const teamFrom = [
@@ -207,7 +207,7 @@ export const teamFrom = [
   { name: "Y Combinator", file: "/logos/yc.png" },
   { name: "AMD", file: "/logos/amd.png" },
   { name: "Xceedance", file: "/logos/xceedance.svg" },
-  { name: "GW Startup Avenue", file: "/logos/gw-startup-avenue.svg" },
+  { name: "GW Entrepreneurship and Innovation", file: "/logos/gw-startup-avenue.svg" },
   { name: "Ministry of Mines", file: "/logos/ministry-of-mines.svg" },
 ];
 
@@ -216,4 +216,8 @@ export const disclaimer = {
   short:
     "For informational and wellness purposes only - not a clinical measurement.",
   full: "Aeyron is a wellness and personal-tracking tool. It is not a medical device and is not intended to diagnose, treat, cure, or prevent Parkinson's disease or any other condition. It is not a substitute for professional medical advice. Always consult a qualified healthcare provider. Do not start, stop, or change any treatment or medication based on this app. Aeyron has not been cleared or approved by the FDA.",
+  // Forward-looking regulatory line. Uses "pursuing"; switch to "awaiting" only
+  // once a 510(k)/De Novo submission has actually been filed.
+  regulatory:
+    "We are on a path to becoming a regulated medical device, and are pursuing FDA clearance.",
 };

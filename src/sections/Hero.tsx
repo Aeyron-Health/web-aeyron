@@ -202,8 +202,9 @@ export function Hero() {
               variants={item}
               className="mt-6 max-w-[58ch] text-lg text-mist-soft sm:text-xl"
             >
-              The phone and watch you already own become continuous, passive
-              monitoring. No clinic, no extra device, no friction.
+              The phone, smart watch, and smart speaker you already own become
+              continuous, passive monitoring. No clinic, no extra device, no
+              friction.
             </motion.p>
 
             <motion.div
