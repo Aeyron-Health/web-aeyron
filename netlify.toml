@@ -6,7 +6,28 @@
 [build.environment]
   NODE_VERSION = "20"
 
-# SPA-style fallback (single page) just in case of deep links
+# Explicit legal/support pages are emitted as static route entries.
+[[redirects]]
+  from = "/privacy"
+  to = "/privacy/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/terms"
+  to = "/terms/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/support"
+  to = "/support/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/delete"
+  to = "/delete/index.html"
+  status = 200
+
+## SPA-style fallback for the product site.
 [[redirects]]
   from = "/*"
   to = "/index.html"
