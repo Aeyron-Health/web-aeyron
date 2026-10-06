@@ -1,4 +1,4 @@
-import { type ReactNode } from "react";
+import { type ReactNode, useState } from "react";
 import { brand } from "../content/site";
 import { currentPublicRoute, publicRoutes, type PublicRoute } from "../publicRoutes";
 import { WaveMark } from "../components/WaveMark";
@@ -26,15 +26,17 @@ const supportItems = [
 ];
 
 function Shell({ route, copy }: { route: PublicRoute; copy: PageCopy }) {
+  const [menuOpen, setMenuOpen] = useState(false);
+
   return (
     <div className="min-h-screen bg-canvas text-ink">
       <header className="border-b border-line bg-canvas/95 backdrop-blur">
-        <nav className="shell flex min-h-16 flex-wrap items-center justify-between gap-3 py-3" aria-label="Aeyron website">
+        <nav className="shell relative flex min-h-16 items-center justify-between gap-3 py-3" aria-label="Aeyron website">
           <a href="/" className="inline-flex min-h-11 items-center gap-2 text-lg font-semibold text-ink">
             <WaveMark className="h-7 w-7" />
             {brand.wordmark}
           </a>
-          <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-sm">
+          <div className="hidden items-center gap-x-4 text-sm sm:flex">
             {publicRoutes.map(item => (
               <a
                 key={item.path}
@@ -46,6 +48,43 @@ function Shell({ route, copy }: { route: PublicRoute; copy: PageCopy }) {
               </a>
             ))}
           </div>
+          <button
+            type="button"
+            className="inline-flex min-h-11 min-w-11 items-center justify-center rounded-lg border border-line text-ink hover:bg-paper sm:hidden"
+            aria-expanded={menuOpen}
+            aria-controls="public-navigation-menu"
+            aria-label={menuOpen ? "Close navigation menu" : "Open navigation menu"}
+            onClick={() => setMenuOpen(open => !open)}
+          >
+            <span className="sr-only">Menu</span>
+            <span aria-hidden="true" className="flex w-5 flex-col gap-1.5">
+              <span className="h-0.5 w-full rounded-full bg-current" />
+              <span className="h-0.5 w-full rounded-full bg-current" />
+              <span className="h-0.5 w-full rounded-full bg-current" />
+            </span>
+          </button>
+          {menuOpen ? (
+            <div
+              id="public-navigation-menu"
+              className="absolute inset-x-0 top-full z-10 border-b border-line bg-canvas p-3 shadow-lg sm:hidden"
+            >
+              <div className="shell grid gap-1">
+                {publicRoutes.map(item => (
+                  <a
+                    key={item.path}
+                    href={item.path}
+                    aria-current={route === item.path ? "page" : undefined}
+                    className={route === item.path
+                      ? "rounded-lg bg-paper px-4 py-3 font-semibold text-ink"
+                      : "rounded-lg px-4 py-3 text-ink-soft hover:bg-paper hover:text-ink"}
+                    onClick={() => setMenuOpen(false)}
+                  >
+                    {item.label}
+                  </a>
+                ))}
+              </div>
+            </div>
+          ) : null}
         </nav>
       </header>
 
