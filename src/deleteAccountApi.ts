@@ -20,6 +20,7 @@ export type DeletionReceipt = Readonly<{
 export type DeletionApiErrorCode =
   | "configuration"
   | "authentication"
+  | "rate_limit"
   | "unavailable"
   | "conflict"
   | "contract"
@@ -138,6 +139,12 @@ export async function sendDeletionSignInLink(email: string): Promise<void> {
     options: { emailRedirectTo: `${window.location.origin}/delete` },
   });
   if (error) {
+    if (error.status === 429) {
+      throw new DeletionApiError(
+        "Too many sign-in links were requested. Please wait before trying again.",
+        "rate_limit",
+      );
+    }
     throw new DeletionApiError("We could not send a sign-in link. Please try again later.", "unavailable");
   }
 }

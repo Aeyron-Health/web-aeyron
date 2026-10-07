@@ -20,3 +20,9 @@ test("deletion browser configuration only uses intentionally public values", () 
   assert.match(source, /flowType: "implicit"/);
   assert.equal(packageJSON.dependencies["@supabase/supabase-js"], "2.116.0");
 });
+
+test("deletion sign-in reports email rate limits without exposing account existence", () => {
+  assert.match(source, /error\.status === 429/);
+  assert.match(source, /Too many sign-in links were requested/);
+  assert.doesNotMatch(source, /user not found|account does not exist/i);
+});

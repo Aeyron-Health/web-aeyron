@@ -9,7 +9,7 @@ import {
   submitDeletionRequest,
 } from "../deleteAccountApi";
 
-type State = "loading" | "signed-out" | "link-sent" | "signed-in" | "submitting" | "submitted" | "error";
+type State = "loading" | "signed-out" | "sending-link" | "link-sent" | "signed-in" | "submitting" | "submitted" | "error";
 
 function message(error: unknown): string {
   return error instanceof DeletionApiError
@@ -43,6 +43,7 @@ export function DeleteAccountFlow() {
   async function requestLink(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setError("");
+    setState("sending-link");
     try {
       await sendDeletionSignInLink(email);
       setState("link-sent");
@@ -101,8 +102,10 @@ export function DeleteAccountFlow() {
   return <form className="rounded-card border border-line bg-paper p-5" onSubmit={requestLink}>
     <label className="block font-semibold" htmlFor="deletion-email">Sign in to continue</label>
     <p className="mt-2 text-ink-soft">Enter the email for the Aeyron account you want to delete. We will send a one-time sign-in link. We do not display whether an account exists.</p>
-    <input autoComplete="email" className="mt-4 min-h-11 w-full rounded-lg border border-line-strong bg-canvas px-3 text-ink" id="deletion-email" onChange={event => setEmail(event.target.value)} required type="email" value={email} />
-    <button className="mt-4 min-h-11 rounded-full bg-signal px-5 font-semibold text-white" type="submit">Send secure sign-in link</button>
+    <input autoComplete="email" className="mt-4 min-h-11 w-full rounded-lg border border-line-strong bg-canvas px-3 text-ink" disabled={state === "sending-link"} id="deletion-email" onChange={event => setEmail(event.target.value)} required type="email" value={email} />
+    <button className="mt-4 min-h-11 rounded-full bg-signal px-5 font-semibold text-white disabled:cursor-not-allowed disabled:opacity-50" disabled={state === "sending-link"} type="submit">
+      {state === "sending-link" ? "Sending secure link…" : "Send secure sign-in link"}
+    </button>
     {state === "link-sent" && <p className="mt-4 text-sm text-ink-soft" role="status">If this email can sign in to Aeyron, a secure link is on its way. Open it in this browser to continue.</p>}
     {state === "error" && <p className="mt-4 text-sm text-ink" role="alert">{error}</p>}
   </form>;
