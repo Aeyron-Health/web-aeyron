@@ -1,5 +1,6 @@
 import { type ReactNode, useState } from "react";
 import { brand } from "../content/site";
+import { DeleteAccountFlow } from "../components/DeleteAccountFlow";
 import { currentPublicRoute, publicRoutes, type PublicRoute } from "../publicRoutes";
 import { WaveMark } from "../components/WaveMark";
 
@@ -204,16 +205,13 @@ function DeletePage() {
         intro: "Account deletion is permanent. We must verify that the request comes from the account holder before any deletion can begin.",
         children: <>
           <Section title="Start from the app">
-            <p>Open the Aeyron app, sign in to the account you want to delete, and use the account-deletion option in Account settings. This website is the direct explanation and completion route, but it must never accept a password or privileged deletion credential.</p>
+            <p>You can request deletion here with a secure email sign-in link, or in the Aeyron app. This page never accepts a password or a privileged deletion credential.</p>
           </Section>
           <Section title="What happens next">
             <p>A properly configured deletion service verifies the account, records a deletion request, removes the account and associated data that Aeyron is not legally required to retain, and tells you when processing is complete. A submitted request is not confirmation that deletion has completed.</p>
           </Section>
           <Section title="Current availability">
-            <div className="rounded-card border border-attention/40 bg-paper p-5 text-ink">
-              <p className="font-semibold">Authenticated web deletion is not configured in this static website yet.</p>
-              <p className="mt-2 text-ink-soft">Do not send account details by email. Until the authenticated backend is enabled and independently verified, use the deletion option in the app or contact Aeyron support to confirm the available process.</p>
-            </div>
+            <DeleteAccountFlow />
           </Section>
           <Section title="Need help">
             <p>Contact <a className="text-signal-deep underline underline-offset-4" href={`mailto:${brand.contactEmail}`}>{brand.contactEmail}</a>. Do not include a password, sign-in code, or health information.</p>
