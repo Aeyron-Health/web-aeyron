@@ -140,6 +140,10 @@ export function Footer() {
             <span className="tnum">&copy; 2026</span> {brand.wordmark}
           </p>
           <div className="flex items-center gap-2 text-mist-soft">
+            <a className="min-h-[44px] px-2 inline-flex items-center hover:text-mist" href="/privacy">Privacy</a>
+            <a className="min-h-[44px] px-2 inline-flex items-center hover:text-mist" href="/terms">Terms</a>
+            <a className="min-h-[44px] px-2 inline-flex items-center hover:text-mist" href="/support">Support</a>
+            <a className="min-h-[44px] px-2 inline-flex items-center hover:text-mist" href="/delete">Delete account</a>
             <WaveMark className="h-5 w-5 opacity-80" />
             <span className="font-display text-sm tracking-tight text-mist">
               {brand.wordmark}

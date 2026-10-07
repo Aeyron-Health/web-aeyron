@@ -13,8 +13,14 @@ import { Roadmap } from "./sections/Roadmap";
 import { CTA } from "./sections/CTA";
 import { NorthStar } from "./sections/NorthStar";
 import { Footer } from "./sections/Footer";
+import { currentPublicRoute } from "./publicRoutes";
+import { PublicInformationPage } from "./sections/PublicInformationPage";
 
 export default function App() {
+  if (currentPublicRoute(window.location.pathname)) {
+    return <PublicInformationPage />;
+  }
+
   return (
     <>
       <a
