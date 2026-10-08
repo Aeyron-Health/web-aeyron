@@ -26,3 +26,14 @@ test("deletion sign-in reports email rate limits without exposing account existe
   assert.match(source, /Too many sign-in links were requested/);
   assert.doesNotMatch(source, /user not found|account does not exist/i);
 });
+
+test("deletion sign-in never creates an account and hides unknown addresses", () => {
+  assert.match(source, /shouldCreateUser: false/);
+  assert.match(source, /error\.status !== 422/);
+});
+
+test("deletion page does not promise a completion notice it cannot send", () => {
+  const page = readFileSync(new URL("../src/sections/PublicInformationPage.tsx", import.meta.url), "utf8");
+  assert.doesNotMatch(page, /tells you when processing is complete/);
+  assert.doesNotMatch(page, /properly configured deletion service/);
+});

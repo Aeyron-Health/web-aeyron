@@ -136,9 +136,13 @@ export async function sendDeletionSignInLink(email: string): Promise<void> {
   }
   const { error } = await client().auth.signInWithOtp({
     email: normalized,
-    options: { emailRedirectTo: `${window.location.origin}/delete` },
+    // Never create an account from the deletion page: an unknown address must
+    // not become a new sign-in user.
+    options: { emailRedirectTo: `${window.location.origin}/delete`, shouldCreateUser: false },
   });
-  if (error) {
+  // With sign-ups disabled for OTP, Supabase rejects unknown addresses (422).
+  // Treat that like success so the page never reveals whether an account exists.
+  if (error && error.status !== 422) {
     if (error.status === 429) {
       throw new DeletionApiError(
         "Too many sign-in links were requested. Please wait before trying again.",

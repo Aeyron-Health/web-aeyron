@@ -202,16 +202,23 @@ function DeletePage() {
       copy={{
         eyebrow: "Delete account",
         title: "Delete your Aeyron account and cloud data.",
-        intro: "Account deletion is permanent. We must verify that the request comes from the account holder before any deletion can begin.",
+        intro: "You can delete your Aeyron account and the data linked to it at any time, from the app or from this page. Deletion is permanent.",
         children: <>
-          <Section title="Start from the app">
-            <p>You can request deletion here with a secure email sign-in link, or in the Aeyron app. This page never accepts a password or a privileged deletion credential.</p>
+          <Section title="Delete in the app (fastest)">
+            <ol className="list-decimal space-y-1 pl-6">
+              <li>Open Aeyron and tap the menu.</li>
+              <li>Tap <strong>Your account</strong>, then <strong>Delete account</strong>.</li>
+              <li>Tap <strong>Request account and cloud data deletion</strong>, then confirm with <strong>Request deletion</strong>.</li>
+            </ol>
+            <p>You can see the status of your request on the same screen.</p>
           </Section>
-          <Section title="What happens next">
-            <p>A properly configured deletion service verifies the account, records a deletion request, removes the account and associated data that Aeyron is not legally required to retain, and tells you when processing is complete. A submitted request is not confirmation that deletion has completed.</p>
-          </Section>
-          <Section title="Current availability">
+          <Section title="Delete on the web">
+            <p>Enter the email address of your Aeyron account below. If you used Sign in with Apple with Hide My Email, enter that private relay address. Open the one-time sign-in link we email you on this device, then confirm the deletion request. We never ask for your password on this page, and we do not show whether an account exists for an email address.</p>
             <DeleteAccountFlow />
+            <p>If the page says your account cannot be deleted online, or you cannot get into your email, write to <a className="text-signal-deep underline underline-offset-4" href={`mailto:${brand.contactEmail}?subject=Delete%20my%20account`}>{brand.contactEmail}</a> from your account's email address with the subject "Delete my account". We will check that the request comes from the account holder.</p>
+          </Section>
+          <Section title="How long it takes">
+            <p>Deletion is not instant, because each step is checked. A request is due within 30 days. This website does not email you when deletion is complete: submitting a request is not confirmation that it has finished, and you can follow its status in the app under Your account.</p>
           </Section>
           <Section title="Need help">
             <p>Contact <a className="text-signal-deep underline underline-offset-4" href={`mailto:${brand.contactEmail}`}>{brand.contactEmail}</a>. Do not include a password, sign-in code, or health information.</p>
