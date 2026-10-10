@@ -3,7 +3,7 @@ import { Section } from "../components/Section";
 import { easeOutExpo } from "../lib/motion";
 
 /** Words that shed friction, revealed in sequence. */
-const FRICTION = ["No clinic.", "No extra device.", "No friction."];
+const FRICTION = ["No new device.", "No daily homework.", "Yours to keep."];
 
 export function Shift() {
   const reduced = useReducedMotion();
@@ -43,7 +43,7 @@ export function Shift() {
                 viewport={{ once: true, amount: 0.5 }}
                 transition={{ duration: 0.7, ease: easeOutExpo, delay: 0.08 }}
               >
-                So we stopped waiting for the next appointment.
+                So we built something for the days in between.
               </motion.h2>
 
               <motion.p
@@ -53,8 +53,9 @@ export function Shift() {
                 viewport={{ once: true, amount: 0.5 }}
                 transition={{ duration: 0.65, ease: easeOutExpo, delay: 0.2 }}
               >
-                Aeyron turns the phone, smart watch, and smart speaker you already
-                carry into continuous, passive monitoring.
+                Aeyron uses the phone you already own to organize your walking
+                pattern, phone motion, typing timing and check-ins into simple
+                trends.
               </motion.p>
 
               {/* Friction, shed. Each clause reveals in sequence. */}

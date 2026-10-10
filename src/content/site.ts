@@ -6,12 +6,12 @@
 export const brand = {
   name: "Aeyron",
   wordmark: "Aeyron",
-  // Mission, plain: most accessible passive Parkinson's monitoring platform.
+  // Mission, plain: a wellness companion, never a diagnostic or monitoring claim.
   mission:
-    "Building the world's most accessible passive monitoring platform for Parkinson's disease.",
+    "A Parkinson's wellness companion that organizes your everyday information on the phone you already own.",
   // Brand tagline (revealed word-by-word on scroll). Easy to swap.
-  tagline: "Care that never looks away.",
-  taglineSub: "The hours between visits, finally seen.",
+  tagline: "Your everyday, organized and yours.",
+  taglineSub: "The days between visits, in one place.",
   investorEmail: "aeyron7hq@gmail.com",
   contactEmail: "aeyron7hq@gmail.com",
 };
@@ -21,9 +21,8 @@ export const nav = {
     { label: "The gap", href: "#gap" },
     { label: "How it works", href: "#how-it-works" },
     { label: "What you get", href: "#what-you-get" },
-    { label: "The science", href: "#science" },
+    { label: "Research", href: "#science" },
     { label: "Who it's for", href: "#audiences" },
-    { label: "Roadmap", href: "#roadmap" },
   ],
   cta: { label: "Get early access", href: "#cta" },
 };
@@ -44,65 +43,39 @@ export type Measurement = {
 
 export const measurements: Measurement[] = [
   {
-    id: "tremor",
-    name: "Tremor",
-    what: "The hand's shake at the Parkinsonian 3-7 Hz signature.",
-    how: "Read from the phone's motion sensors while it's simply held - and continuously, all day, when paired with a smart watch.",
-    signal: "Continuous tremor and dyskinesia, not a once-a-year snapshot.",
+    id: "motion",
+    name: "Phone motion",
+    what: "How much the phone moves while you hold it.",
+    how: "Read from the phone's own motion sensors while you simply hold it. No test to take.",
+    signal: "A day-to-day motion trend, compared with your own past.",
     viz: "tremor",
-    researchKey: "continuous",
+    researchKey: "motion",
   },
   {
     id: "gait",
-    name: "Gait & mobility",
-    what: "Walking speed, step length, and steadiness.",
-    how: "Read passively from Apple HealthKit and Android Health Connect as the person walks around normally. No test taken.",
-    signal: "Everyday mobility, measured without a clinic walk-test.",
+    name: "Walking pattern",
+    what: "Walking information your iPhone already keeps in Apple Health.",
+    how: "With your permission, Aeyron reads walking data from Apple Health as you go about your day.",
+    signal: "Your walking pattern over time, compared with your own past.",
     viz: "gait",
     researchKey: "gait",
   },
   {
-    id: "tapping",
-    name: "Finger tapping",
-    what: "The rhythm and variability of finger taps - early signs of bradykinesia.",
-    how: "Measured from normal taps inside the app; slowing and dysrhythmia surface gently over time.",
-    signal: "Bradykinesia trends a clinician would otherwise see twice a year.",
-    viz: "tap",
-    researchKey: "tapping",
-  },
-  {
     id: "typing",
-    name: "Typing rhythm",
-    what: "Key hold-times and cadence while typing - never the content.",
-    how: "An optional Aeyron keyboard measures typing rhythm across the apps people already use.",
-    signal: "A research-backed early-PD signal, captured with zero extra effort.",
+    name: "Typing timing",
+    what: "Key hold-times and pace while typing - never the words.",
+    how: "An optional Aeyron keyboard records the timing of your typing in the apps you already use.",
+    signal: "A typing-timing trend, compared with your own past.",
     viz: "typing",
     researchKey: "typing",
   },
   {
-    id: "voice",
-    name: "Voice",
-    what: "Jitter, shimmer, and overall voice quality.",
-    how: "Optional spoken check-ins, a few seconds at a time.",
-    signal: "Vocal changes that often arrive early and quietly.",
-    viz: "voice",
-    researchKey: "voice",
-  },
-  {
-    id: "nonmotor",
-    name: "Non-motor",
-    what: "Sleep, heart rate, mood, and medication adherence and response.",
-    how: "Pulled from the health data already on the phone, smart watch, and smart speaker, with the person's permission.",
-    signal: "The on/off picture that motor scores alone miss.",
+    id: "checkins",
+    name: "Your check-ins",
+    what: "Short check-ins you log yourself, including the medication check-ins you log.",
+    how: "A few taps in the app, whenever it suits you.",
+    signal: "Your own notes, kept alongside your trends so you can review them together.",
     viz: "nonmotor",
-  },
-  {
-    id: "deeptests",
-    name: "On-demand deep tests",
-    what: "Spiral drawing, reaction time, and memory checks.",
-    how: "A few quick, high-precision tests for when sharper tracking is wanted.",
-    signal: "Precision on demand, layered on top of passive monitoring.",
-    viz: "deeptests",
   },
 ];
 
@@ -118,69 +91,35 @@ export const audiences: Audience[] = [
   {
     id: "patients",
     who: "People living with Parkinson's & caregivers",
-    headline: "Finally, something that watches between visits.",
-    body: "Dignity, reassurance, and control. Aeyron quietly keeps track so you don't have to, and turns months of real life into a picture you can understand and act on.",
+    headline: "The days between visits, in one place.",
+    body: "Aeyron quietly organizes your everyday information so you don't have to, and turns months of real life into simple trends you can look back on.",
     points: [
       "No clinic visit, no wearable to buy, no daily homework",
-      "A clear personal trend you actually own",
-      "A plain-English summary to bring to your neurologist",
+      "Simple trends compared with your own past, that you own",
+      "A plain-English summary to review with your clinician",
     ],
   },
   {
     id: "clinicians",
     who: "Neurologists & movement-disorder clinics",
-    headline: "Frequent, UPDRS-aligned data between visits.",
-    body: "See what happens between appointments. With the patient's consent, Aeyron's trends flow to their neurologist, and a suggestion layer flags the moments worth a closer look, so medication decisions rest on more than a single morning's exam.",
+    headline: "A patient-kept summary for the conversation.",
+    body: "Your patients can choose to bring a short summary of their own trends and check-ins to their visit. Aeyron does not interpret results, flag anything, or suggest treatment changes. The clinical judgment stays with you.",
     points: [
-      "A clinician dashboard with longitudinal trends, shared with the patient's neurologist",
-      "A suggestion layer that flags when medication timing or response may be worth revisiting - not just a report",
-      "Signals grounded in published digital-biomarker research",
+      "Shared only when the patient chooses to share it",
+      "Trends compared with the person's own past, not a clinical score",
+      "Not a medical device and not a diagnostic tool",
     ],
   },
   {
     id: "partners",
     who: "Care facilities, researchers & investors",
-    headline: "Scale, validation, and the bigger vision.",
-    body: "Passive monitoring that runs on devices residents and participants already own - a foundation for pilots, research cohorts, and a platform built to grow into clinical-grade validation.",
+    headline: "A wellness companion on devices people already own.",
+    body: "Aeyron runs on the phone people already carry, which keeps it low-friction for the people who use it. Get in touch if you would like to learn more.",
     points: [
-      "Pilot-ready, low-friction deployment",
-      "A clear clinical-validation and regulatory roadmap",
-      "A path from pocket today to ambient home tomorrow",
+      "Runs on the iPhone people already own",
+      "Opt-in, permission-based data sources",
+      "Built as a wellness companion, not a medical device",
     ],
-  },
-];
-
-export type RoadmapPhase = {
-  phase: string;
-  title: string;
-  body: string;
-  status: "now" | "next" | "horizon";
-};
-
-export const roadmap: RoadmapPhase[] = [
-  {
-    phase: "Phase 1",
-    title: "Passive monitoring, in your pocket",
-    body: "The Aeyron app turns the phone, smart watch, and smart speaker people already own into continuous, passive monitoring - a research-grounded wellness companion available today.",
-    status: "now",
-  },
-  {
-    phase: "Phase 2",
-    title: "Clinical validation",
-    body: "Validation studies against MDS-UPDRS and partnership with movement-disorder clinics, following the Digital Medicine Society's V3 framework.",
-    status: "next",
-  },
-  {
-    phase: "Phase 3",
-    title: "Regulatory track",
-    body: "Pursue FDA Software-as-a-Medical-Device review along the established 510(k) / De Novo pathways, where the evidence supports it.",
-    status: "next",
-  },
-  {
-    phase: "North star",
-    title: "Ambient monitoring at home",
-    body: "A passive, no-wearable home monitor - the eventual zero-effort endpoint of the same mission. Software in your pocket today; ambient monitoring in your home tomorrow.",
-    status: "horizon",
   },
 ];
 
@@ -216,8 +155,4 @@ export const disclaimer = {
   short:
     "For informational and wellness purposes only - not a clinical measurement.",
   full: "Aeyron is a wellness and personal-tracking tool. It is not a medical device and is not intended to diagnose, treat, cure, or prevent Parkinson's disease or any other condition. It is not a substitute for professional medical advice. Always consult a qualified healthcare provider. Do not start, stop, or change any treatment or medication based on this app. Aeyron has not been cleared or approved by the FDA.",
-  // Forward-looking regulatory line. Uses "pursuing"; switch to "awaiting" only
-  // once a 510(k)/De Novo submission has actually been filed.
-  regulatory:
-    "We are on a path to becoming a regulated medical device, and are pursuing FDA clearance.",
 };

@@ -18,7 +18,7 @@ import { audiences } from "../content/site";
  * WHO IT'S FOR - accessible tabbed switcher (WAI-ARIA tabs pattern with
  * roving tabindex + arrow-key navigation). Each audience carries a distinct
  * accent treatment and supporting label so the three never read as identical
- * cards: patients get reassurance, clinicians get rigor, partners get scale.
+ * cards: patients get reassurance, clinicians get context, partners get scale.
  *
  * BIG MOMENT: the panel arrives from depth on scroll (a clip-reveal that lifts
  * the card up out of the page), and switching audiences is theatrical - the
@@ -49,7 +49,7 @@ const treatments: Record<string, Treatment> = {
   clinicians: {
     accent: "var(--color-signal-hi)",
     wash: "oklch(0.705 0.165 255 / 0.12)",
-    kicker: "Rigor",
+    kicker: "Context",
     intensity: 0.62,
   },
   partners: {
@@ -190,11 +190,11 @@ export function Audiences() {
       <Reveal as="div" className="max-w-2xl">
         <p className="eyebrow text-signal-hi">Who it&apos;s for</p>
         <h2 className="mt-4 text-h2 text-mist">
-          One quiet signal, read three different ways.
+          One wellness companion, seen three ways.
         </h2>
         <p className="mt-5 text-lg text-mist-soft">
-          The same passive monitoring serves very different people. Choose who
-          you are - the picture changes to match.
+          The same everyday companion means different things to different
+          people. Choose who you are - the picture changes to match.
         </p>
       </Reveal>
 

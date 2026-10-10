@@ -17,7 +17,7 @@ const AUDIENCES: { key: AudienceKey; label: string; subject: string }[] = [
   {
     key: "clinicians",
     label: "Clinician",
-    subject: "Early access - clinician / movement-disorder clinic",
+    subject: "Early access - clinician",
   },
   {
     key: "partners",
@@ -31,9 +31,9 @@ function bodyFor(key: AudienceKey, email: string): string {
     patients:
       "Hi Aeyron team,\n\nI'm a patient or caregiver and I'd like early access to the Aeyron wellness companion.",
     clinicians:
-      "Hi Aeyron team,\n\nI'm a clinician interested in Aeyron's longitudinal monitoring and a possible pilot.",
+      "Hi Aeyron team,\n\nI'm a clinician and I'd like to learn more about Aeyron.",
     partners:
-      "Hi Aeyron team,\n\nI'd like to talk about a pilot, a research cohort, or investment.",
+      "Hi Aeyron team,\n\nI'd like to talk about a partnership or investment.",
   };
   return `${lines[key]}\n\nReply-to: ${email}\n\nSent from aeyron.health`;
 }
@@ -84,12 +84,11 @@ export function CTA() {
             Early access
           </Reveal>
           <Reveal as="h2" className="mt-4 font-display text-h2 text-mist">
-            Start watching between visits.
+            Get early access.
           </Reveal>
           <Reveal as="p" className="mt-5 text-lg text-mist-soft" delay={0.05}>
-            Aeyron is opening early access to its wellness companion, and lining
-            up pilots with clinics, care facilities, and research partners. Tell
-            us who you are and we'll be in touch.
+            Aeyron is opening early access to its Parkinson's wellness
+            companion. Tell us who you are and we'll be in touch.
           </Reveal>
 
           <Reveal className="mt-8" delay={0.1}>

@@ -45,11 +45,9 @@ function symptomLevel(t: number): number {
 
 /** Human label for a severity level. */
 function levelWord(lvl: number): string {
-  if (lvl >= 0.72) return "high";
-  if (lvl >= 0.56) return "elevated";
-  if (lvl >= 0.42) return "moderate";
-  if (lvl >= 0.26) return "low";
-  return "very low";
+  if (lvl >= 0.62) return "harder day";
+  if (lvl >= 0.38) return "mixed day";
+  return "easier day";
 }
 
 /** Build a smooth-ish polyline path across the year. */
@@ -224,16 +222,16 @@ export function Gap() {
         </Reveal>
         <Reveal delay={0.06}>
           <h2 className="mt-4 text-h2 text-ink text-balance">
-            Three data points a year. A disease that moves by the hour.
+            A few visits a year. Everyday life happens in between.
           </h2>
         </Reveal>
         <Reveal delay={0.12}>
           <p className="mt-6 max-w-[60ch] text-lg text-ink-soft">
-            Parkinson's is tracked with the MDS-UPDRS exam: a neurologist watches
-            you tap your fingers and walk a hallway, scores it, and sees you again
-            in a few months. But symptoms swing hour to hour as medication moves
-            through on and off periods. Everything that happens between visits is
-            simply missing, and treatment decisions rest on that thin slice.
+            Most people with Parkinson's see their neurologist a few times a
+            year. Everyday life happens in the months between those visits, and
+            much of it is hard to remember once you are in the room. Aeyron helps
+            you keep your own record of those days, to review with your
+            clinician.
           </p>
         </Reveal>
       </motion.div>
@@ -257,7 +255,7 @@ export function Gap() {
                 />
               </svg>
               <span className="text-sm font-medium text-ink">
-                What actually happens
+                Everyday life (illustration)
               </span>
             </span>
             <span className="flex items-center gap-2.5">
@@ -266,8 +264,11 @@ export function Gap() {
                 aria-hidden="true"
               />
               <span className="text-sm font-medium text-ink-soft">
-                Clinic visit, what gets recorded
+                Clinic visit
               </span>
+            </span>
+            <span className="font-mono text-[11px] uppercase tracking-wider text-ink-faint">
+              Illustration only, not real data
             </span>
             {/* Hover affordance, calm and quiet. */}
             <span className="hidden items-center gap-2 text-sm text-ink-faint sm:flex">
@@ -296,7 +297,7 @@ export function Gap() {
               viewBox={`0 0 ${VB_W} ${VB_H}`}
               className="block w-full"
               role="img"
-              aria-label="A one-year timeline. A continuous, restless curve shows Parkinson's symptoms fluctuating hour to hour, while only three clinic visits are recorded across the year, missing nearly all of the real variation. Hover or drag across the chart to compare what actually happened at any moment against the nearest clinic visit."
+              aria-label="Illustration only, not real data. A one-year timeline: a wavy line stands for everyday life across the year, with three clinic visits marked as dots."
             >
               {/* y-axis intent labels (left-anchored so they never clip) */}
               <text
@@ -306,7 +307,7 @@ export function Gap() {
                 className="fill-ink-faint"
                 style={{ fontSize: 15, fontFamily: "var(--font-mono)" }}
               >
-                Worse
+                Harder days
               </text>
               <text
                 x={2}
@@ -315,7 +316,7 @@ export function Gap() {
                 className="fill-ink-faint"
                 style={{ fontSize: 15, fontFamily: "var(--font-mono)" }}
               >
-                Better
+                Easier days
               </text>
 
               {/* Faint horizontal guide lines */}
@@ -528,7 +529,7 @@ export function Gap() {
                         className="block h-2 w-2 rounded-full bg-signal"
                         aria-hidden="true"
                       />
-                      What actually happened
+                      Everyday life (illustration)
                     </span>
                     <span className="font-medium text-signal-deep">
                       {levelWord(curLevel)}
@@ -540,16 +541,14 @@ export function Gap() {
                         className="block h-2 w-2 rounded-full border-2 border-ink bg-paper"
                         aria-hidden="true"
                       />
-                      Nearest clinic record
+                      Nearest clinic visit
                     </span>
                     <span className="font-medium text-ink">
                       {levelWord(nearestVisit.level)}
                     </span>
                   </p>
                   <p className="mt-2.5 border-t border-line pt-2 text-[13px] leading-snug text-ink-soft">
-                    The chart records{" "}
-                    <span className="tnum font-medium text-ink">{drift} points</span>{" "}
-                    off this moment's reality.
+                    Illustration only, not real data.
                   </p>
                 </div>
               </motion.div>
@@ -557,17 +556,12 @@ export function Gap() {
           </div>
 
           {/* Read-out under the chart drives the point home. */}
-          <div className="mt-7 grid gap-6 border-t border-line pt-6 sm:grid-cols-3">
+          <div className="mt-7 grid gap-6 border-t border-line pt-6 sm:grid-cols-2">
             <Stat unit="clinic visits / year" tone="ink">
               <CountUp to={3} duration={1.1} />
             </Stat>
-            <Stat unit="hours unseen between them" tone="signal">
+            <Stat unit="hours between them" tone="signal">
               <CountUp to={8757} duration={1.7} />
-            </Stat>
-            <Stat unit="medication on/off cycles a day" tone="ink">
-              <CountUp to={2} duration={1.1} group={false} />
-              <span aria-hidden="true">-</span>
-              <CountUp to={5} duration={1.3} group={false} />
             </Stat>
           </div>
         </motion.figure>
@@ -585,8 +579,9 @@ export function Gap() {
 
       <Reveal delay={0.1} className="mt-6">
         <p className="max-w-[60ch] text-sm text-ink-soft">
-          The blue line is the lived reality. The three dots are what a clinician
-          has to reason from. Aeyron's purpose is to fill in the rest, passively.
+          Illustration only, not real data. The line stands for everyday life;
+          the dots are clinic visits. Aeyron helps you keep your own record of
+          the days in between.
         </p>
       </Reveal>
       </div>
@@ -681,8 +676,8 @@ function UnseenHours({ reduced }: { reduced: boolean }) {
             </span>
           </p>
           <p className="mt-4 max-w-[44ch] text-lg text-ink sm:text-xl">
-            hours of lived reality go unrecorded between three clinic visits.
-            Aeyron is built to see them.
+            hours of everyday life happen between three clinic visits. Aeyron
+            helps you keep them organized.
           </p>
         </div>
       </div>
@@ -762,16 +757,15 @@ function UnseenHours({ reduced }: { reduced: boolean }) {
 
               {/* Accessible, non-animated statement of the same fact. */}
               <span className="sr-only">
-                8,757 hours of lived reality go unrecorded between three clinic
-                visits.
+                8,757 hours of everyday life happen between three clinic visits.
               </span>
 
               <motion.p
                 className="mt-6 max-w-[42ch] text-balance text-xl text-ink sm:text-2xl"
                 style={{ opacity: labelOpacity, y: labelY }}
               >
-                hours of lived reality go unrecorded between three clinic visits.
-                <span className="text-signal-deep"> Aeyron is built to see them.</span>
+                hours of everyday life happen between three clinic visits.
+                <span className="text-signal-deep"> Aeyron helps you keep them organized.</span>
               </motion.p>
             </div>
           </div>

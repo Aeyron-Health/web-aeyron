@@ -42,11 +42,11 @@ type VizProps = { active: boolean; reduced: boolean };
    Compact, dark-surface versions tuned to read at phone scale.
    ------------------------------------------------------------------------- */
 
-/* Tremor: live 3-7 Hz oscilloscope trace on screen. */
+/* Phone motion: a calm decorative trace on screen (illustration, not data). */
 function ScreenTremor({ active, reduced }: VizProps) {
   return (
     <div className="flex h-full w-full flex-col">
-      <ScreenHeader label="Tremor" unit="3-7 Hz" />
+      <ScreenHeader label="Phone motion" unit="day to day" />
       <div className="relative flex flex-1 items-center justify-center overflow-hidden">
         <div className="absolute inset-x-0 top-1/2 -translate-y-1/2">
           <SignalWave
@@ -61,7 +61,7 @@ function ScreenTremor({ active, reduced }: VizProps) {
           <SignalWave color={SIGNAL} height={90} intensity={0.4} strokeWidth={1} speed={4.5} />
         </div>
       </div>
-      <ScreenFooter>Held in hand, all day on a smart watch</ScreenFooter>
+      <ScreenFooter>While you hold the phone</ScreenFooter>
     </div>
   );
 }
@@ -71,9 +71,9 @@ function ScreenGait({ active, reduced }: VizProps) {
   const steps = [0, 1, 2, 3, 4];
   return (
     <div className="flex h-full w-full flex-col">
-      <ScreenHeader label="Gait" unit="cadence" />
+      <ScreenHeader label="Walking" unit="Apple Health" />
       <div className="relative flex flex-1 items-center justify-center overflow-hidden">
-        <svg viewBox="0 0 240 130" className="w-[88%]" role="img" aria-label="Walking cadence pulses">
+        <svg viewBox="0 0 240 130" className="w-[88%]" role="img" aria-label="Walking pattern illustration">
           <line x1="0" y1="98" x2="240" y2="98" stroke={SIGNAL_HI} strokeOpacity="0.2" strokeWidth="1" />
           {steps.map((s) => {
             const x = 26 + s * 48;
@@ -122,7 +122,7 @@ function ScreenGait({ active, reduced }: VizProps) {
           })}
         </svg>
       </div>
-      <ScreenFooter>Speed, step length, steadiness</ScreenFooter>
+      <ScreenFooter>Walking pattern from Apple Health</ScreenFooter>
     </div>
   );
 }
@@ -166,7 +166,7 @@ function ScreenTyping({ active, reduced }: VizProps) {
   let idx = 0;
   return (
     <div className="flex h-full w-full flex-col">
-      <ScreenHeader label="Typing" unit="hold-time" />
+      <ScreenHeader label="Typing" unit="timing" />
       <div className="flex flex-1 flex-col items-center justify-center gap-1.5 overflow-hidden px-3">
         {rows.map((row, r) => (
           <div key={r} className="flex gap-1.5" style={{ marginLeft: r * 10 }}>
@@ -249,13 +249,13 @@ function ScreenVoice({ active, reduced }: VizProps) {
 function ScreenNonMotor({ active, reduced }: VizProps) {
   const tiles: { label: string; pts: number[] }[] = [
     { label: "sleep", pts: [6, 5, 7, 6, 8, 7, 8] },
-    { label: "heart", pts: [4, 5, 4, 6, 5, 4, 5] },
+    { label: "energy", pts: [4, 5, 4, 6, 5, 4, 5] },
     { label: "mood", pts: [3, 4, 4, 5, 4, 6, 5] },
     { label: "meds", pts: [7, 7, 6, 7, 7, 7, 8] },
   ];
   return (
     <div className="flex h-full w-full flex-col">
-      <ScreenHeader label="Non-motor" unit="trends" />
+      <ScreenHeader label="Check-ins" unit="you log" />
       <div className="grid flex-1 grid-cols-2 content-center gap-2 overflow-hidden px-3 py-2">
         {tiles.map((t, ti) => {
           const max = Math.max(...t.pts);
@@ -296,7 +296,7 @@ function ScreenNonMotor({ active, reduced }: VizProps) {
           );
         })}
       </div>
-      <ScreenFooter>Sleep, heart rate, mood, meds</ScreenFooter>
+      <ScreenFooter>Check-ins you log yourself</ScreenFooter>
     </div>
   );
 }
@@ -480,7 +480,7 @@ function ItemCopy({ m, index }: { m: Measurement; index: number }) {
         {hasResearch(m.researchKey) && (
           <span className="eyebrow inline-flex items-center gap-1.5 rounded-full bg-signal-tint px-2.5 py-1 text-signal-deep">
             <span className="block h-1.5 w-1.5 rounded-full bg-signal" aria-hidden />
-            Research-grounded
+            Background research
           </span>
         )}
       </div>
@@ -731,14 +731,14 @@ export function HowItWorks() {
           <p className="eyebrow text-signal-deep">How it works</p>
         </Reveal>
         <Reveal delay={0.06}>
-          <h2 className="mt-5 text-h2 text-ink">Seven everyday signals, read passively</h2>
+          <h2 className="mt-5 text-h2 text-ink">Four everyday inputs, organized for you</h2>
         </Reveal>
         <Reveal delay={0.12}>
           <p className="mt-6 text-lg leading-relaxed text-ink-soft">
-            Aeyron turns ordinary moments - holding the phone, walking, tapping,
-            typing, speaking - into a continuous picture of Parkinson's-related
-            change. No clinic visit, no new hardware. Here is what it watches,
-            and how.
+            Aeyron uses the phone you already own to organize your walking
+            pattern, phone motion, typing timing and check-ins into simple
+            trends, compared with your own past. No new hardware. Here is what
+            it uses, and how.
           </p>
         </Reveal>
       </div>

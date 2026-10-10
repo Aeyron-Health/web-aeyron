@@ -9,9 +9,7 @@ import { LiveTremor } from "./sections/LiveTremor";
 import { WhatYouGet } from "./sections/WhatYouGet";
 import { Science } from "./sections/Science";
 import { Audiences } from "./sections/Audiences";
-import { Roadmap } from "./sections/Roadmap";
 import { CTA } from "./sections/CTA";
-import { NorthStar } from "./sections/NorthStar";
 import { Footer } from "./sections/Footer";
 import { currentPublicRoute } from "./publicRoutes";
 import { PublicInformationPage } from "./sections/PublicInformationPage";
@@ -43,9 +41,7 @@ export default function App() {
           <WhatYouGet />
           <Science />
           <Audiences />
-          <Roadmap />
           <CTA />
-          <NorthStar />
         </main>
         <Footer />
       </div>

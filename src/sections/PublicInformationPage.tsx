@@ -126,7 +126,7 @@ function PrivacyPage() {
       copy={{
         eyebrow: "Privacy",
         title: "Clear choices about your data.",
-        intro: "Aeyron is a personal health-monitoring app under active development. This page explains the current product boundaries and is not a substitute for an approved participant consent notice.",
+        intro: "Aeyron is a personal wellness app under active development. This page explains the current product boundaries and is not a substitute for an approved participant consent notice.",
         children: <>
           <Section title="What the website collects">
             <p>This website does not ask for health information. The hosting provider may process limited technical request information needed to operate and protect the site.</p>
