@@ -10,9 +10,6 @@ import {
 } from "framer-motion";
 import { Section } from "../components/Section";
 import { Reveal } from "../components/Reveal";
-import { Magnetic } from "../components/Magnetic";
-import { CountUp } from "../components/CountUp";
-import { PhoneFrame } from "../components/PhoneFrame";
 import { usePointerParallax } from "../hooks/usePointer";
 import { easeOutExpo } from "../lib/motion";
 
@@ -114,11 +111,11 @@ function useIsLarge() {
  * 1) Phone mockup - personal trend + plain-English summary
  * ------------------------------------------------------------------ */
 
-// Tremor index trending down, then steadying. Lower is calmer/better.
 const PHONE_W = 260;
 const CHART_W = 228;
 const CHART_H = 92;
-const trendPts = [62, 58, 60, 51, 44, 40, 33, 31, 29, 30, 28, 27];
+// Illustration only: a flat, wandering line so it never reads as real symptom data.
+const trendPts = [44, 47, 43, 46, 45, 42, 46, 44, 45, 43, 46, 44];
 
 function trendPath(values: number[], w: number, h: number, pad = 4) {
   const max = 70;
@@ -172,7 +169,7 @@ function PhoneMockup({
       className="relative mx-auto w-full max-w-[280px] rounded-[34px] border border-line bg-paper p-2.5 shadow-[0_30px_60px_-30px_oklch(0.21_0.04_255/0.45)]"
       style={{ width: PHONE_W + 20 }}
       role="img"
-      aria-label="Aeyron patient app: Tremor index 27, on track, down 18 percent versus last month. The trend settles and stays steady."
+      aria-label="Illustration of the Aeyron app, not real data: a phone motion trend described as similar to your past, with a short weekly summary."
     >
       {/* device inner screen */}
       <div className="overflow-hidden rounded-[26px] bg-canvas-sunk">
@@ -190,19 +187,14 @@ function PhoneMockup({
           {/* header */}
           <div className="mt-1 flex items-baseline justify-between">
             <span className="font-mono text-[0.62rem] uppercase tracking-[0.12em] text-ink-soft">
-              Tremor index
+              Phone motion
             </span>
-            <OnTrackChip>On track</OnTrackChip>
+            <OnTrackChip>Illustration</OnTrackChip>
           </div>
 
-          <div className="mt-1.5 flex items-end gap-2">
-            <CountUp
-              to={27}
-              className="tnum text-3xl font-semibold leading-none text-ink"
-            />
-            <span className="tnum mb-0.5 inline-flex items-center gap-0.5 text-[0.72rem] font-medium text-vital">
-              <span aria-hidden="true">↓</span>
-              <CountUp to={18} suffix="%" /> vs. last month
+          <div className="mt-1.5">
+            <span className="text-lg font-semibold leading-tight text-ink">
+              Similar to your past
             </span>
           </div>
 
@@ -295,8 +287,8 @@ function PhoneMockup({
                 This week
               </span>
               <p className="mt-1 text-[0.78rem] leading-snug text-ink">
-                Your shake has settled and stayed steady. Morning mobility looks a
-                little better than last month.
+                Phone motion and walking pattern were similar to your past few
+                weeks. You logged 5 check-ins.
               </p>
             </motion.div>
           ) : (
@@ -305,11 +297,14 @@ function PhoneMockup({
                 This week
               </span>
               <p className="mt-1 text-[0.78rem] leading-snug text-ink">
-                Your shake has settled and stayed steady. Morning mobility looks a
-                little better than last month.
+                Phone motion and walking pattern were similar to your past few
+                weeks. You logged 5 check-ins.
               </p>
             </div>
           )}
+          <p className="mt-2 text-center font-mono text-[0.55rem] uppercase tracking-[0.1em] text-ink-faint">
+            Illustration only, not real data
+          </p>
         </div>
       </div>
     </div>
@@ -380,15 +375,16 @@ function PinnedPhoneHero() {
               A clear personal trend, and a summary in plain English.
             </h3>
             <p className="mt-4 max-w-xl leading-relaxed text-ink-soft">
-              No charts to decode alone. Aeyron shows whether your shake is
-              settling or stirring over weeks, then writes the takeaway in words
-              anyone can read - the same words you can hand to your care team.
+              No charts to decode alone. Aeyron shows how your phone motion,
+              walking pattern and typing timing compare with your own past, then
+              writes a short summary in plain words you can bring to your next
+              appointment.
             </p>
             <ul className="mt-6 space-y-3">
               {[
-                "A personal trend you actually own, not a once-a-year snapshot",
-                "A plain-English weekly summary, ready to share with your neurologist",
-                "Quiet by design: it tracks so you don't have to",
+                "A personal trend you own, compared with your own past",
+                "A plain-English weekly summary to review with your clinician",
+                "Quiet by design: it organizes so you don't have to",
               ].map((point) => (
                 <li
                   key={point}
@@ -445,15 +441,15 @@ function StaticPhoneRow() {
           A clear personal trend, and a summary in plain English.
         </h3>
         <p className="mt-4 max-w-xl leading-relaxed text-ink-soft">
-          No charts to decode alone. Aeyron shows whether your shake is settling
-          or stirring over weeks, then writes the takeaway in words anyone can
-          read - the same words you can hand to your care team.
+          No charts to decode alone. Aeyron shows how your phone motion, walking
+          pattern and typing timing compare with your own past, then writes a
+          short summary in plain words you can bring to your next appointment.
         </p>
         <ul className="mt-6 space-y-3">
           {[
-            "A personal trend you actually own, not a once-a-year snapshot",
-            "A plain-English weekly summary, ready to share with your neurologist",
-            "Quiet by design: it tracks so you don't have to",
+            "A personal trend you own, compared with your own past",
+            "A plain-English weekly summary to review with your clinician",
+            "Quiet by design: it organizes so you don't have to",
           ].map((point) => (
             <li
               key={point}
@@ -483,30 +479,23 @@ function StaticPhoneRow() {
 }
 
 /* ------------------------------------------------------------------ *
- * 2) Clinician dashboard mockup - browser panel, longitudinal trend, KPIs
+ * 2) Visit summary mockup - illustration only, not real data
  * ------------------------------------------------------------------ */
 
 const DASH_W = 360;
 const DASH_H = 130;
-// Longitudinal motor-score trend (clinician view), gently improving with variance.
-const dashPts = [54, 57, 52, 49, 53, 47, 44, 46, 41, 39, 42, 38, 36, 37, 34];
+// Illustration only: a flat, wandering line with no direction implied.
+const dashPts = [46, 48, 44, 47, 45, 49, 46, 44, 47, 45, 48, 46, 44, 47, 45];
 
-type Kpi = {
-  label: string;
-  value: number;
-  decimals?: number;
-  unit: string;
-  trend: string;
-  good: boolean;
-};
-const kpis: Kpi[] = [
-  { label: "Tremor index", value: 27, unit: "/100", trend: "−18%", good: true },
-  { label: "Gait speed", value: 1.18, decimals: 2, unit: "m/s", trend: "+6%", good: true },
-  { label: "Typing rhythm", value: 0.92, decimals: 2, unit: "var.", trend: "stable", good: true },
-  { label: "Med adherence", value: 94, unit: "%", trend: "+3 days", good: true },
+type SummaryTile = { label: string; value: string };
+const summaryTiles: SummaryTile[] = [
+  { label: "Phone motion", value: "Similar to your past" },
+  { label: "Walking pattern", value: "Similar to your past" },
+  { label: "Typing timing", value: "Similar to your past" },
+  { label: "Check-ins logged", value: "5 this week" },
 ];
 
-function ClinicianMockup() {
+function SummaryMockup() {
   const draw = useDraw();
   const line = trendPath(dashPts, DASH_W, DASH_H, 6);
 
@@ -514,7 +503,7 @@ function ClinicianMockup() {
     <div
       className="overflow-hidden rounded-2xl border border-line bg-paper shadow-[0_30px_70px_-40px_oklch(0.21_0.04_255/0.4)]"
       role="img"
-      aria-label="Aeyron clinician dashboard: 90-day longitudinal motor and non-motor trend, UPDRS-aligned and improving, with KPI tiles for tremor index, gait speed, typing rhythm, and medication adherence."
+      aria-label="Illustration of an Aeyron visit summary, not real data: a 90-day trend line and tiles for phone motion, walking pattern and typing timing, each described as similar to your past, plus check-ins logged."
     >
       {/* browser chrome (generic, not a real OS) */}
       <div className="flex items-center gap-2 border-b border-line bg-canvas-sunk px-4 py-2.5">
@@ -522,7 +511,7 @@ function ClinicianMockup() {
         <span className="size-2.5 rounded-full bg-line-strong" />
         <span className="size-2.5 rounded-full bg-line-strong" />
         <span className="ml-3 flex-1 truncate rounded-md bg-paper px-3 py-1 font-mono text-[0.62rem] text-ink-soft ring-1 ring-line">
-          clinic.aeyron.health / patient / longitudinal
+          Aeyron / visit summary
         </span>
       </div>
 
@@ -530,13 +519,13 @@ function ClinicianMockup() {
         <div className="flex flex-wrap items-baseline justify-between gap-2">
           <div>
             <span className="font-mono text-[0.62rem] uppercase tracking-[0.12em] text-ink-soft">
-              Motor & non-motor trend
+              Your trends, last 90 days
             </span>
             <p className="mt-0.5 text-sm font-medium text-ink">
-              90-day longitudinal view, UPDRS-aligned
+              Compared with your own past
             </p>
           </div>
-          <OnTrackChip>Stable, improving</OnTrackChip>
+          <OnTrackChip>Illustration only, not real data</OnTrackChip>
         </div>
 
         {/* longitudinal chart */}
@@ -583,25 +572,13 @@ function ClinicianMockup() {
 
         {/* KPI tiles */}
         <div className="mt-4 grid grid-cols-2 gap-2.5 sm:grid-cols-4">
-          {kpis.map((k) => (
+          {summaryTiles.map((k) => (
             <div key={k.label} className="rounded-lg border border-line bg-canvas-sunk p-3">
               <p className="font-mono text-[0.58rem] uppercase tracking-[0.08em] text-ink-soft">
                 {k.label}
               </p>
-              <p className="mt-1.5 flex items-baseline gap-0.5">
-                <CountUp
-                  to={k.value}
-                  decimals={k.decimals ?? 0}
-                  className="tnum text-xl font-semibold leading-none text-ink"
-                />
-                <span className="tnum text-[0.6rem] text-ink-faint">{k.unit}</span>
-              </p>
-              <p
-                className={`tnum mt-1 text-[0.62rem] font-medium ${
-                  k.good ? "text-vital" : "text-attention"
-                }`}
-              >
-                {k.trend}
+              <p className="mt-1.5 text-sm font-semibold leading-snug text-ink">
+                {k.value}
               </p>
             </div>
           ))}
@@ -611,166 +588,6 @@ function ClinicianMockup() {
   );
 }
 
-/* ------------------------------------------------------------------ *
- * 3) Interactive device gallery - the 4 REAL app screenshots
- * ------------------------------------------------------------------ */
-
-type Shot = { src: string; alt: string; label: string; fit: "cover" | "contain" };
-const shots: Shot[] = [
-  {
-    src: "/screens/app-vitals.png",
-    alt: "Aeyron app vitals screen showing daily health signals",
-    label: "Daily vitals",
-    fit: "cover",
-  },
-  {
-    src: "/screens/app-telemetry.png",
-    alt: "Aeyron app telemetry screen showing motion-sensor signal capture",
-    label: "Live telemetry",
-    fit: "cover",
-  },
-  {
-    src: "/screens/app-fidelity.png",
-    alt: "Aeyron app signal-fidelity screen",
-    label: "Signal fidelity",
-    fit: "cover",
-  },
-  {
-    src: "/screens/app-impact.png",
-    alt: "Aeyron app impact summary screen",
-    label: "Your impact",
-    fit: "contain",
-  },
-];
-
-/** Layered, fannable stack of real screenshots. Click a card to bring it to
- * front. Cursor parallax tilts the whole stack. Reduced motion -> a calm,
- * static, evenly-spread fan with no parallax and instant selection. */
-function DeviceGallery() {
-  const reduced = useReducedMotion();
-  const { x, y } = usePointerParallax(60);
-  const [active, setActive] = useState(0);
-
-  // parallax: tilt the stack toward the cursor (skipped when reduced)
-  const tilt = useTransform(x, (v) => v * 4);
-  const lift = useTransform(y, (v) => v * -10);
-
-  const n = shots.length;
-
-  return (
-    <motion.div
-      className="relative mx-auto h-[420px] w-full max-w-[560px] sm:h-[480px]"
-      style={reduced ? undefined : { rotateY: tilt as unknown as MotionValue<number>, y: lift }}
-    >
-      {/* soft ground shadow */}
-      <div
-        className="absolute bottom-6 left-1/2 h-10 w-[62%] -translate-x-1/2 rounded-[50%] bg-night-deep/15 blur-2xl"
-        aria-hidden="true"
-      />
-      {shots.map((shot, i) => {
-        // position relative to the active card -> classic fanned deck
-        const rel = ((i - active) % n + n) % n;
-        // map rel index to a 0..1 depth where 0 = front
-        const depth = rel;
-        const offset = depth * 86; // horizontal fan spacing
-        const drop = depth * 14; // vertical descent
-        const rot = depth * -5; // fan rotation
-        const scale = 1 - depth * 0.06;
-        const isFront = rel === 0;
-
-        return (
-          <Magnetic
-            key={shot.src}
-            strength={isFront ? 0.18 : 0.1}
-            className="absolute left-1/2 top-0"
-          >
-            <motion.button
-              type="button"
-              onClick={() => setActive(i)}
-              aria-label={`Show ${shot.label} screen`}
-              aria-pressed={isFront}
-              className="block cursor-pointer rounded-[2.4rem] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-signal focus-visible:ring-offset-4 focus-visible:ring-offset-canvas-sunk"
-              initial={false}
-              animate={{
-                x: `calc(-50% + ${offset}px)`,
-                y: drop,
-                rotate: reduced ? 0 : rot,
-                scale,
-                zIndex: n - depth,
-                opacity: depth > 3 ? 0 : 1,
-              }}
-              transition={{ duration: 0.6, ease: easeOutExpo }}
-              style={{ width: 188, zIndex: n - depth }}
-              whileHover={isFront || reduced ? undefined : { y: drop - 8 }}
-            >
-              <PhoneFrame
-                className="w-[188px]"
-                screenClassName="bg-night-deep"
-              >
-                <img
-                  src={shot.src}
-                  alt={shot.alt}
-                  loading="lazy"
-                  draggable={false}
-                  className={`absolute inset-0 h-full w-full ${
-                    shot.fit === "cover"
-                      ? "object-cover object-top"
-                      : "object-contain"
-                  }`}
-                />
-                {/* dim non-front cards so the active one reads clearly */}
-                <motion.span
-                  aria-hidden="true"
-                  className="pointer-events-none absolute inset-0 rounded-[1.7rem] bg-night-deep"
-                  animate={{ opacity: isFront ? 0 : 0.42 }}
-                  transition={{ duration: 0.5, ease: easeOutExpo }}
-                />
-              </PhoneFrame>
-            </motion.button>
-          </Magnetic>
-        );
-      })}
-
-      {/* front-card caption + controls */}
-      <div className="absolute inset-x-0 bottom-0 flex flex-col items-center gap-3">
-        <div className="text-center">
-          <p className="font-mono text-[0.6rem] uppercase tracking-[0.16em] text-ink-faint">
-            From the Aeyron app
-          </p>
-          <motion.p
-            key={active}
-            initial={reduced ? false : { opacity: 0, y: 6 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.4, ease: easeOutExpo }}
-            className="mt-1 text-sm font-medium text-ink"
-          >
-            {shots[active].label}
-          </motion.p>
-        </div>
-        {/* dot controls - 44px tap targets */}
-        <div className="flex items-center gap-1" role="tablist" aria-label="App screens">
-          {shots.map((shot, i) => (
-            <button
-              key={shot.src}
-              type="button"
-              role="tab"
-              aria-selected={i === active}
-              aria-label={shot.label}
-              onClick={() => setActive(i)}
-              className="grid size-11 place-items-center"
-            >
-              <span
-                className={`block h-1.5 rounded-full transition-all duration-300 ${
-                  i === active ? "w-6 bg-signal" : "w-1.5 bg-line-strong"
-                }`}
-              />
-            </button>
-          ))}
-        </div>
-      </div>
-    </motion.div>
-  );
-}
 
 /* ------------------------------------------------------------------ *
  * Section
@@ -791,14 +608,14 @@ export function WhatYouGet() {
         </Reveal>
         <Reveal delay={0.05}>
           <h2 className="mt-3 text-h2 text-ink">
-            Months of real life, turned into something you can act on.
+            Months of everyday life, organized into something you can review.
           </h2>
         </Reveal>
         <Reveal delay={0.1}>
           <p className="mt-5 text-lg leading-relaxed text-ink-soft">
-            Passive signals become three things: a personal trend you own, a
-            plain-English summary for your neurologist, and a clinician
-            dashboard that puts it all in context.
+            Your everyday signals and check-ins become two things: a personal
+            trend compared with your own past, and a plain-English summary to
+            review with your clinician.
           </p>
         </Reveal>
       </div>
@@ -808,18 +625,18 @@ export function WhatYouGet() {
           mobile / reduced motion -> calm static row. */}
       {usePin ? <PinnedPhoneHero /> : <StaticPhoneRow />}
 
-      {/* SECOND row: clinician dashboard, full-bleed-ish panel */}
+      {/* SECOND row: visit summary (illustration only) */}
       <div className="mt-20 grid gap-10 lg:mt-28 lg:grid-cols-12 lg:gap-12">
         <RevealVaried className="lg:col-span-4" variant="drift">
-          <span className="eyebrow text-ink-soft">02 / For the clinic</span>
+          <span className="eyebrow text-ink-soft">02 / For your appointment</span>
           <h3 className="mt-3 text-2xl font-semibold text-ink sm:text-3xl">
-            A clinician dashboard, aligned to measures they already use.
+            A simple summary to bring to your clinician.
           </h3>
           <p className="mt-4 leading-relaxed text-ink-soft">
-            Your neurologist sees the same story at clinical altitude:
-            longitudinal trends and UPDRS-style indices for tremor, gait,
-            typing rhythm, and medication adherence - so titration rests on more
-            than one morning's exam.
+            Bring a short summary of your trends and the check-ins you logged to
+            your next visit, so the conversation can start from more than one
+            morning. Aeyron does not interpret results or suggest treatment
+            changes. Your clinician decides what matters.
           </p>
           <p className="mt-5 inline-flex items-start gap-2 text-[0.82rem] leading-snug text-ink-soft">
             <svg
@@ -842,40 +659,16 @@ export function WhatYouGet() {
                 strokeLinejoin="round"
               />
             </svg>
-            Shared only with your permission. Raw content, like what you type,
-            never leaves the rhythm of the keystroke.
+            Shared only when you choose to share it. Aeyron records typing
+            timing, never what you type.
           </p>
         </RevealVaried>
 
         <RevealVaried className="lg:col-span-8" variant="clip" delay={0.1}>
           <ParallaxFloat invert depth={22}>
-            <ClinicianMockup />
+            <SummaryMockup />
           </ParallaxFloat>
         </RevealVaried>
-      </div>
-
-      {/* SECONDARY PROOF: real app screenshots, interactive device gallery */}
-      <div className="mt-20 border-t border-line pt-12 lg:mt-28">
-        <Reveal>
-          <div className="flex flex-wrap items-end justify-between gap-4">
-            <div>
-              <span className="eyebrow text-ink-soft">03 / The real thing</span>
-              <h3 className="mt-3 max-w-md text-xl font-semibold text-ink sm:text-2xl">
-                Polished mockups above. Below, the actual app.
-              </h3>
-            </div>
-            <p className="max-w-xs text-sm leading-snug text-ink-soft">
-              Live screens from Aeyron today - dark UI, built for glanceable,
-              everyday tracking. Tap a card to bring it forward.
-            </p>
-          </div>
-        </Reveal>
-
-        <Reveal delay={0.1}>
-          <div className="mt-12">
-            <DeviceGallery />
-          </div>
-        </Reveal>
       </div>
     </Section>
   );

@@ -14,10 +14,7 @@ Connect the early-access form (currently `mailto:`) to Supabase.
 - Plan: `@supabase/supabase-js`, `src/lib/supabase.ts`, a `waitlist` table (email, audience, created_at) with RLS **insert-only** for anon (no select), env vars `VITE_SUPABASE_URL` / `VITE_SUPABASE_ANON_KEY` (in `.env.local` + Vercel), update `src/sections/CTA.tsx` submit with success/duplicate/error states.
 
 ## 3. Hardware prototype (North Star)
-Make the hardware in the North-Star section **clickable** -> expands / opens a small page showing the hardware prototype and how it works.
-- Decide: in-page expanding panel/modal vs a small `/prototype` sub-page.
-- Needs: content (a few lines + any renders / images / video, or a link to point to).
-- File: `src/sections/NorthStar.tsx` (+ new component/page).
+The North Star and Roadmap sections were removed from the public site in the wellness-copy pass (App Store review), because they described future monitoring and an FDA path. If a hardware page comes back, it needs wellness-only wording first.
 
 ## 4. Mobile / phone transitions
 The big pinned + scroll-scrubbed set-pieces are currently **desktop-only** (gated off mobile for battery), so iPhone gets calm static versions and feels less animated.
@@ -25,8 +22,7 @@ The big pinned + scroll-scrubbed set-pieces are currently **desktop-only** (gate
 - Confirm whether anything is actually broken on device vs just "less motion".
 
 ## 5. FDA wording
-Footer line currently: "We are on a path to becoming a regulated medical device, and are pursuing FDA clearance." (`src/content/site.ts` -> `disclaimer.regulatory`).
-- Change **"pursuing"** -> **"awaiting"** ONLY if a 510(k) / De Novo has actually been filed (otherwise "awaiting FDA clearance" is a false regulatory claim).
+Done: the regulatory line ("on a path to becoming a regulated medical device... pursuing FDA clearance") and the FDA / 510(k) / De Novo roadmap were removed from the public site. The app is positioned as a wellness companion, not a medical device. Do not reintroduce regulatory-path claims on the public site.
 
 ## 6. Employee / team page
 Add a team / employees page (the people behind Aeyron).

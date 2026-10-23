@@ -333,10 +333,10 @@ export function LiveTremor() {
             See it on your own hand.
           </Reveal>
           <Reveal as="p" className="mt-5 text-lg leading-relaxed text-mist-soft" delay={0.05}>
-            This is a live look at the kind of motion signal Aeyron watches over
-            time. Hold still, then let your hand drift, and watch the trace
-            respond. It is a wellness demo of the signal we capture, not a
-            diagnosis and not a measurement of any condition.
+            This is a live look at phone motion: how much the phone moves while
+            you hold it. Hold still, then let your hand drift, and watch the
+            trace respond. It is a wellness demo, not a diagnosis and not a
+            measurement of any condition.
           </Reveal>
 
           <Reveal className="mt-8 flex flex-wrap items-center gap-3" delay={0.1}>
@@ -391,8 +391,8 @@ export function LiveTremor() {
               <span aria-hidden className="mt-0.5 text-signal-hi">
                 {"▸"}
               </span>
-              Open this page on your phone for the real thing - it reads your
-              hand's actual micro-motion through the accelerometer.
+              Open this page on your phone for the live version - it reads how
+              much the phone moves in your hand through its motion sensor.
             </Reveal>
           ) : null}
         </div>

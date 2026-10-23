@@ -103,15 +103,15 @@ export function Hero() {
     { text: "neurologist" },
     { text: "sees" },
     { text: "you" },
-    { text: "three" },
+    { text: "a" },
+    { text: "few" },
     { text: "times" },
     { text: "a" },
     { text: "year." },
-    { text: "Parkinson's" },
-    { text: "changes" },
-    { text: "by", accent: true },
-    { text: "the", accent: true },
-    { text: "hour.", accent: true },
+    { text: "Life" },
+    { text: "happens" },
+    { text: "every", accent: true },
+    { text: "day.", accent: true },
   ];
   const headlineText = headlineWords.map((w) => w.text).join(" ");
 
@@ -122,7 +122,7 @@ export function Hero() {
       full
       pad="none"
       className="overflow-hidden"
-      aria-label="Aeyron: passive Parkinson's monitoring"
+      aria-label="Aeyron: a Parkinson's wellness companion"
     >
       <div ref={sectionRef} className="relative flex min-h-[100svh] flex-col">
         {/* Background layer (parallaxes slower than content on scroll for depth).
@@ -170,7 +170,7 @@ export function Hero() {
                   />
                 )}
               </span>
-              Passive Parkinson's monitoring
+              A Parkinson's wellness companion
             </motion.p>
 
             {/* Kinetic headline. Words animate in individually for presence, but
@@ -202,9 +202,9 @@ export function Hero() {
               variants={item}
               className="mt-6 max-w-[58ch] text-lg text-mist-soft sm:text-xl"
             >
-              The phone, smart watch, and smart speaker you already own become
-              continuous, passive monitoring. No clinic, no extra device, no
-              friction.
+              Aeyron uses the phone you already own to organize your walking
+              pattern, phone motion, typing timing and check-ins into simple
+              trends. Not a medical device. Does not diagnose.
             </motion.p>
 
             <motion.div
@@ -217,11 +217,11 @@ export function Hero() {
                 </Button>
               </Magnetic>
               <Button variant="ghost" tone="dark" href="#audiences">
-                For clinicians
+                Who it's for
               </Button>
             </motion.div>
 
-            {/* Honest "sensing" hint: a calm live tremor pulse, no fake metric. */}
+            {/* Decorative hint only: a calm pulse, no metric. */}
             <motion.div variants={item} className="mt-10">
               <LiveReadingChip reduced={!!reduced} />
             </motion.div>
@@ -375,7 +375,7 @@ function LiveReadingChip({ reduced }: { reduced: boolean }) {
         />
       </span>
       <span className="eyebrow text-[0.6rem] text-mist-soft">
-        Sensing in the background
+        Works with the phone you own
       </span>
     </div>
   );

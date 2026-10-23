@@ -8,7 +8,7 @@ import {
 } from "framer-motion";
 import { Section } from "../components/Section";
 import { Reveal } from "../components/Reveal";
-import { research, validationAnchors } from "../content/research";
+import { research, researchDisclaimer } from "../content/research";
 import type { Citation, ResearchTopic } from "../content/research";
 import { disclaimer } from "../content/site";
 import { easeOutExpo } from "../lib/motion";
@@ -235,16 +235,16 @@ function TopicItem({
 function PrivacyCallout() {
   const points = [
     {
-      title: "Biomarkers extracted on-device",
-      body: "Signals are computed on the phone, smart watch, and smart speaker you already hold. Raw data stays with you, not on a server by default.",
+      title: "Summaries, not raw content",
+      body: "Aeyron works with summaries of phone motion, walking pattern and typing timing, only from the sources you turn on.",
     },
     {
       title: "You stay in control",
-      body: "Every source is opt-in, your trend is yours to keep, and you decide what to share with your clinician.",
+      body: "Every source is opt-in, you can change permissions at any time, and you decide what to share with your clinician.",
     },
     {
-      title: "Rhythm, never content",
-      body: "Typing analysis reads the timing of keystrokes only. It never sees, stores, or transmits the words you write.",
+      title: "Timing, never words",
+      body: "The Aeyron keyboard is designed to record the timing of keystrokes, not the words you type.",
     },
   ];
 
@@ -277,7 +277,7 @@ function PrivacyCallout() {
         <div>
           <p className="eyebrow text-vital">Privacy first</p>
           <p className="mt-0.5 font-display text-lg text-ink">
-            Your data never leaves your hands by default.
+            You choose what Aeyron can use.
           </p>
         </div>
       </div>
@@ -306,15 +306,17 @@ function HonestFraming() {
       <div>
         <p className="eyebrow text-signal-hi">Honest framing</p>
         <p className="mt-4 max-w-[34ch] font-display text-2xl leading-tight text-mist sm:text-[1.7rem]">
-          Aeyron is a research-grade companion to clinical care, not a diagnosis
+          Aeyron is a wellness companion, not a medical device, not a diagnosis
           and not a replacement for your doctor.
         </p>
       </div>
       <div className="flex flex-col justify-center gap-5">
         <p className="text-[0.98rem] leading-relaxed text-mist-soft">
-          Today, Aeyron is a wellness and personal-tracking tool grounded in
-          published digital-biomarker research. Clinical validation against
-          MDS-UPDRS and FDA review are on our roadmap, not a claim we make now.
+          Aeyron is a wellness and personal-tracking tool. It organizes your
+          everyday information into trends compared with your own past. It
+          does not diagnose, does not measure symptoms, and does not tell you
+          what to do about your treatment. Do not change medication based on
+          Aeyron.
         </p>
         <div className="rounded-xl border border-line-dark bg-white/[0.04] px-4 py-3">
           <p className="text-sm leading-relaxed text-mist-soft">
@@ -359,62 +361,20 @@ export function Science() {
           style={reduced ? undefined : { y: headY, opacity: headOpacity }}
         >
           <Reveal>
-            <p className="eyebrow text-signal">The science</p>
+            <p className="eyebrow text-signal">Background research</p>
           </Reveal>
           <KineticHeading
-            text="Grounded in published research."
+            text="Background reading, not proof."
             className="mt-4 text-h2 text-ink"
           />
           <Reveal delay={0.06}>
             <p className="mt-5 max-w-[42ch] text-lg leading-relaxed text-ink-soft">
-              Every signal Aeyron tracks traces to peer-reviewed work and aligns
-              with the MDS-UPDRS measures clinicians already use. The numbers
-              below are reported as the studies found them, with their sample
-              sizes and sources in plain view.
+              Researchers have studied phone motion, typing timing and walking
+              in people with Parkinson's. We list some of that work here as
+              background reading. {researchDisclaimer}
             </p>
           </Reveal>
 
-          <Reveal delay={0.08}>
-            <div className="mt-8 border-t border-line pt-6">
-              <p className="eyebrow text-ink-soft">Grounded in</p>
-              <motion.ul
-                className="mt-3 flex flex-wrap gap-2"
-                initial={reduced ? false : "hidden"}
-                whileInView="show"
-                viewport={{ once: true, amount: 0.5 }}
-                variants={{
-                  hidden: {},
-                  show: {
-                    transition: { staggerChildren: 0.08, delayChildren: 0.1 },
-                  },
-                }}
-              >
-                {validationAnchors.map((a) => (
-                  <motion.li
-                    key={a}
-                    className="rounded-full border border-line bg-canvas-sunk px-3 py-1.5 text-[0.78rem] leading-snug text-ink-soft will-change-transform"
-                    variants={{
-                      hidden: {
-                        opacity: 0,
-                        y: 18,
-                        scale: 0.82,
-                        filter: "blur(6px)",
-                      },
-                      show: {
-                        opacity: 1,
-                        y: 0,
-                        scale: 1,
-                        filter: "blur(0px)",
-                        transition: { duration: 0.6, ease: easeOutExpo },
-                      },
-                    }}
-                  >
-                    {a}
-                  </motion.li>
-                ))}
-              </motion.ul>
-            </div>
-          </Reveal>
         </motion.div>
 
         {/* Research list column */}
@@ -433,7 +393,7 @@ export function Science() {
             ))}
           </div>
           <p className="mt-3 px-1 text-sm leading-relaxed text-ink-soft">
-            {disclaimer.short}
+            {researchDisclaimer} {disclaimer.short}
           </p>
         </Reveal>
       </div>
