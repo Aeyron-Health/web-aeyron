@@ -41,9 +41,25 @@ test("deletion page does not promise a completion notice it cannot send", () => 
 test("deletion copy says a request is reviewed first and nothing is deleted on submit", () => {
   const page = readFileSync(new URL("../src/sections/PublicInformationPage.tsx", import.meta.url), "utf8");
   const flow = readFileSync(new URL("../src/components/DeleteAccountFlow.tsx", import.meta.url), "utf8");
-  assert.match(page, /Nothing is deleted until we approve it/);
-  assert.match(page, /confirms within 7 days/);
+  const copy = readFileSync(new URL("../src/content/deletionCopy.ts", import.meta.url), "utf8");
+  assert.match(copy, /We review requests within 7 days\. After approval, your data is deleted promptly and backups are removed within 30 days\./);
+  assert.match(copy, /Nothing is deleted until we approve it\./);
+  assert.match(copy, /If you signed in with Apple, you may be asked to allow Aeyron again next time\./);
+  assert.match(page, /REVIEW_TIMELINE/);
+  assert.match(page, /APPLE_CANCEL_NOTE/);
   assert.match(flow, /Request received\. We’ll confirm within 7 days\./);
   assert.doesNotMatch(page, /You can delete your Aeyron account and the data linked to it at any time/);
   assert.doesNotMatch(flow, /starts Aeyron’s deletion process/);
+});
+
+test("cancel says contact support until the in-app cancel build ships; in-app variant is ready", () => {
+  const copy = readFileSync(new URL("../src/content/deletionCopy.ts", import.meta.url), "utf8");
+  assert.match(copy, /export const IN_APP_CANCEL_AVAILABLE = false;/);
+  assert.match(copy, /CANCEL_HOW = IN_APP_CANCEL_AVAILABLE \? CANCEL_IN_APP : CANCEL_BY_SUPPORT/);
+  assert.match(copy, /To cancel the request while it waits for review, contact support/);
+  assert.match(copy, /You can cancel the request in the app \(Your account\) while it waits for review\./);
+  for (const file of ["../src/sections/PublicInformationPage.tsx", "../src/components/DeleteAccountFlow.tsx", "../src/deleteAccountApi.ts"]) {
+    const source = readFileSync(new URL(file, import.meta.url), "utf8");
+    assert.doesNotMatch(source, /cancel it (there|in the app) while it waits/);
+  }
 });

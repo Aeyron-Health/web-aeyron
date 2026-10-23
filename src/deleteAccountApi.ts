@@ -1,4 +1,5 @@
 import { createClient, type Session, type SupabaseClient } from "@supabase/supabase-js";
+import { CANCEL_HOW } from "./content/deletionCopy";
 
 export type DeletionRequestStatus =
   | "submitted"
@@ -176,7 +177,7 @@ function idempotencyKey(): string {
 function requestFailure(status: number): DeletionApiError {
   if (status === 401) return new DeletionApiError("Your sign-in link has expired. Request a new one.", "authentication");
   if (status === 404) return new DeletionApiError("This account cannot submit a deletion request on the website yet. Use the app or contact support.", "unavailable");
-  if (status === 409) return new DeletionApiError("A deletion request is already open for this account. You can follow it, or cancel it while it waits for review, in the app.", "conflict");
+  if (status === 409) return new DeletionApiError(`A deletion request is already open for this account. You can follow it in the app. ${CANCEL_HOW}`, "conflict");
   if (status === 422) return new DeletionApiError("The deletion request could not be verified. Please try again later.", "contract");
   return new DeletionApiError("The deletion service is temporarily unavailable. Please try again later.", "unavailable");
 }
