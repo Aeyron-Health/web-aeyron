@@ -119,6 +119,24 @@ function Section({ title, children }: { title: string; children: ReactNode }) {
   );
 }
 
+const UPDATED = "October 22, 2026";
+
+function Email() {
+  return (
+    <a className="text-signal-deep underline underline-offset-4" href={`mailto:${brand.contactEmail}`}>
+      {brand.contactEmail}
+    </a>
+  );
+}
+
+function Bullets({ items }: { items: ReactNode[] }) {
+  return (
+    <ul className="list-disc space-y-2 pl-6">
+      {items.map((item, index) => <li key={index}>{item}</li>)}
+    </ul>
+  );
+}
+
 function PrivacyPage() {
   return (
     <Shell
@@ -126,20 +144,125 @@ function PrivacyPage() {
       copy={{
         eyebrow: "Privacy",
         title: "Clear choices about your data.",
-        intro: "Aeyron is a personal wellness app under active development. This page explains the current product boundaries and is not a substitute for an approved participant consent notice.",
+        intro: `Aeyron is a wellness companion app for people living with Parkinson's. It is in a small pilot on Apple TestFlight. This page explains what we collect, who handles it, how long we keep it, and how to delete it. Last updated ${UPDATED}.`,
         children: <>
-          <Section title="What the website collects">
-            <p>This website does not ask for health information. The hosting provider may process limited technical request information needed to operate and protect the site.</p>
+          <Section title="Who is responsible for your data">
+            <p>Until Aeyron's company is incorporated, Aeyron is run by its founder, Vansh Jain. He is responsible for your data and for this policy.</p>
+            <p>When the company is incorporated, we will update this policy to name it.</p>
+            <p>Questions or requests: <Email />.</p>
           </Section>
-          <Section title="What the app may process">
-            <p>When a person enables the relevant permissions and sharing choices, Aeyron may process health summaries, device-motion summaries, and keyboard timing summaries. The keyboard is designed to measure timing, not the words a person types.</p>
-            <p>Aeyron is not an emergency service and does not provide a diagnosis, treatment recommendation, or continuous clinical monitoring.</p>
+
+          <Section title="What the app sends to us">
+            <p>Nothing leaves your phone until you sign in and turn on sharing. After that, the app sends:</p>
+            <Bullets items={[
+              "Your sign-in email address. If you use Sign in with Apple with Hide My Email, we only see Apple's private relay address.",
+              "One number per measure per day. These come from Apple Health walking and activity data, your phone's motion history, how much the phone moves while you hold it, and typing timing from the optional Aeyron keyboard.",
+              "Only if you turn them on: daily hand-check results, and six daily counts about your medication routine. Medication names and doses are never sent.",
+              "Optional \"About you\" answers: your preferred name, whether you have Parkinson's, the year you were told, and the stage you report yourself. Every question is optional.",
+              "Your consent choices, the clinicians you link to, and any export or deletion requests, each with the time.",
+              "Your phone's time zone, with each daily number.",
+              "Crash reports. These contain no account, device, or personal identifiers.",
+            ]} />
           </Section>
+
+          <Section title="What stays on your phone">
+            <Bullets items={[
+              "What you type. The Aeyron keyboard measures timing only. It never stores or sends your words. Password fields use Apple's keyboard, so Aeyron sees nothing there.",
+              "Raw Apple Health samples, raw motion data, and raw touch data.",
+              "Your daily and monthly check-ins, unless you choose to share a report yourself.",
+              "Medication names, strengths, instructions, and times.",
+              "Photos from the medication label scanner. They are read on the phone and not saved.",
+            ]} />
+            <p>Aeyron does not use your microphone, location, or contacts. It has no advertising or analytics tools.</p>
+          </Section>
+
+          <Section title="Why we use it">
+            <Bullets items={[
+              "To show you your own trends.",
+              "To share your data with a clinician or family member, only if you choose to.",
+              "To send you sign-in emails.",
+              "To run the service, keep it secure, and fix problems.",
+              "To check that Aeyron's measurements work as intended.",
+            ]} />
+            <p><strong>We do not sell your data.</strong> We do not use it for advertising, and we do not give it to data brokers.</p>
+          </Section>
+
+          <Section title="Companies that handle data for us">
+            <p>These companies store or move data for us. They may use it only to provide their service to us.</p>
+            <Bullets items={[
+              <><strong>Supabase Inc.</strong> (USA): our database and sign-in system. It runs on Amazon Web Services in the us-east-2 region, in Ohio, USA.</>,
+              <><strong>Railway Corp.</strong> (USA): runs our app server in the western United States. It does not store our database. It keeps server logs.</>,
+              <><strong>Resend</strong> (USA): sends our sign-in emails, so it sees your email address.</>,
+              <><strong>Apple Inc.</strong>: delivers the app through TestFlight and provides Apple Health and Sign in with Apple. Apple does not receive the data the app sends to us. Apple's own privacy policy covers what Apple collects.</>,
+            ]} />
+            <p>Their standard terms of service apply. We have not yet signed separate data processing agreements with them.</p>
+          </Section>
+
+          <Section title="Sharing with clinicians and family, only with your consent">
+            <p><strong>Clinicians.</strong> A clinician sees your data only after you enter their invitation code in the app and agree. You choose which categories they see: Health summaries, Typing timing, or Phone motion. You also choose the name they see. They never see your check-ins, About-you answers, medication details, or hand checks. Every time a clinician views your data, we log it. You can disconnect at any time, and their access stops right away.</p>
+            <p><strong>Family.</strong> A family member gets a weekly email summary only if you add them and turn it on. You can remove them at any time.</p>
+            <p>We share your data with no one else, unless the law requires it, for example a valid court order.</p>
+          </Section>
+
+          <Section title="Research">
+            <p>Using Aeyron is not the same as taking part in a research study. Your data is used in a study only if you join that study and sign its own consent form. That form will name the research team, what they receive, and where it is kept.</p>
+            <p>When we work with a study, the research team receives daily numbers labelled with a study code, not your name or email.</p>
+          </Section>
+
+          <Section title="Where your data is stored">
+            <p>Your data is stored and processed in the United States. This is true for everyone, including people who live in Canada.</p>
+            <Bullets items={[
+              "Supabase stores it on Amazon Web Services, in the us-east-2 region (Ohio).",
+              "Railway runs our app server, which handles your data as it arrives and when you view it.",
+            ]} />
+            <p>While your data is in the United States, US law applies to it. US courts, police, or national security agencies may be able to get access to it under US law.</p>
+          </Section>
+
+          <Section title="How long we keep it">
+            <Bullets items={[
+              "Daily numbers: up to 365 days, or until you delete your account, whichever comes first.",
+              "About-you answers, sign-in details, and consent records: until you delete your account.",
+              "Clinician links: until you disconnect or delete your account.",
+              "Clinician access logs: 12 months.",
+              "Crash reports: 90 days.",
+              "Server logs: kept by Railway under its standard settings.",
+              "Backups: copies expire on their own. After a deletion, we check within 30 days that the backups have expired.",
+              "A short record that an export or deletion request was made and completed. It holds no health data.",
+            ]} />
+            <p>We are still setting up automatic clean-up for these limits. None of the data we hold is older than these limits yet.</p>
+          </Section>
+
           <Section title="Your choices">
-            <p>Permissions and sharing choices can be changed in the app and in iPhone Settings. Signing out clears the app's local session. It does not by itself confirm deletion of cloud records already accepted by a service.</p>
+            <Bullets items={[
+              "Turn sharing off at any time. This stops new uploads. It does not delete what was already sent.",
+              "Change Apple Health, motion, and keyboard permissions in iPhone Settings.",
+              <>Get a copy of your data: in the app, open <strong>Your account</strong> and tap <strong>Request data export</strong>. Requests are due within 30 days.</>,
+              <>Fix something that is wrong: email <Email />.</>,
+              <>Delete your account and cloud data: in the app, or on the <a className="text-signal-deep underline underline-offset-4" href="/delete">Delete account</a> page. Requests are due within 30 days. Signing out alone does not delete anything.</>,
+            ]} />
+            <p>If you live in Canada and you are not happy with how we handle a concern, you can complain to the Office of the Privacy Commissioner of Canada.</p>
           </Section>
-          <Section title="Questions and requests">
-            <p>For support or privacy questions, contact <a className="text-signal-deep underline underline-offset-4" href={`mailto:${brand.contactEmail}`}>{brand.contactEmail}</a>. Do not send passwords, sign-in codes, or health information by email.</p>
+
+          <Section title="How we protect your data">
+            <p>Data is encrypted when it travels over the internet. Our database host encrypts it when stored. Each person can read only their own data. Only the founder has administrator access. No system is perfectly secure, so we cannot promise that a breach will never happen.</p>
+          </Section>
+
+          <Section title="If there is a data breach">
+            <p>If a breach puts your data at risk, we will tell you by email as soon as we can. We will also report it to regulators where the law requires, such as the Privacy Commissioner of Canada or the US Federal Trade Commission.</p>
+            <p><strong>Railway incident, October 2026.</strong> On October 21, 2026, Railway, which runs our app server, reported a security incident on its platform. Railway does not store our database. It does hold the settings our server uses to reach the database. Railway has not told us that our account was affected. We are monitoring the incident. We will update this page, and contact you if we learn that your data was involved.</p>
+          </Section>
+
+          <Section title="This website">
+            <p>This website does not ask for health information. If you use the Delete account page, we use your email address to send you a one-time sign-in link, through Supabase and Resend. The company that hosts this website may process basic request details, such as your IP address, to run and protect the site.</p>
+            <p>This page is not the consent form for a research study.</p>
+          </Section>
+
+          <Section title="Changes to this policy">
+            <p>If we change this policy in a way that matters, we will update the date at the top and tell you in the app or by email before the change applies.</p>
+          </Section>
+
+          <Section title="Contact">
+            <p>Email <Email />. Do not send passwords, sign-in codes, or health information by email.</p>
           </Section>
         </>,
       }}
@@ -154,19 +277,43 @@ function TermsPage() {
       copy={{
         eyebrow: "Terms of use",
         title: "Use Aeyron carefully and stay in control.",
-        intro: "These terms describe the current Aeyron product experience. They require owner and legal review before public production publication.",
+        intro: `These terms apply when you use the Aeyron app or this website. By using Aeyron, you agree to them. Last updated ${UPDATED}.`,
         children: <>
+          <Section title="Who you are agreeing with">
+            <p>Until Aeyron's company is incorporated, Aeyron is run by its founder, Vansh Jain, and these terms are between you and him. When the company is incorporated, we will update these terms to name it.</p>
+          </Section>
+          <Section title="What Aeyron is">
+            <p>Aeyron is a wellness companion for people living with Parkinson's. It organizes your walking, phone motion, typing timing, and check-ins into trends compared with your own past. It is early pilot software, offered through Apple TestFlight.</p>
+          </Section>
           <Section title="Not medical advice">
             <p>Aeyron is not a medical device, emergency service, diagnostic tool, or replacement for professional medical advice. Do not start, stop, or change medication based on Aeyron. For urgent symptoms, contact local emergency services or a qualified clinician.</p>
           </Section>
           <Section title="Your account and choices">
-            <p>Keep your sign-in method secure. You control whether to grant device permissions and whether to enable any available sharing. Some features may be unavailable when permissions, connectivity, or configuration are unavailable.</p>
+            <p>Keep your sign-in method secure. Tell us if you think someone else has used your account. You decide whether to grant device permissions and whether to turn on sharing. Some features may not work when permissions, connectivity, or setup are missing.</p>
           </Section>
-          <Section title="Product changes">
-            <p>Aeyron is actively being developed. Features, availability, and supported devices may change. We may update these terms when the product changes, and will show an updated effective date when legally approved terms are published.</p>
+          <Section title="Sharing with others">
+            <p>You choose which clinicians and family members can see your data, and you can stop sharing at any time. Only share invitation codes with people you trust.</p>
+          </Section>
+          <Section title="Your data">
+            <p>Your data is yours. We use it only as described in our <a className="text-signal-deep underline underline-offset-4" href="/privacy">Privacy Policy</a>. Using Aeyron is not taking part in a research study. A study always has its own consent form.</p>
+          </Section>
+          <Section title="Fair use">
+            <p>Do not try to see other people's data, get around our security, copy or resell the service, or overload it. We may suspend an account that does these things.</p>
+          </Section>
+          <Section title="Pilot software">
+            <p>Aeyron is still being built. It may have errors, gaps, or downtime, and numbers may be missing or wrong. Features and supported devices may change. To the extent the law allows, we provide Aeyron as it is, without promises that it will always work or be accurate.</p>
+          </Section>
+          <Section title="Limits on responsibility">
+            <p>To the extent the law allows, we are not responsible for losses that come from relying on Aeyron instead of a clinician, or from the app being unavailable. Nothing in these terms takes away rights you have under consumer protection law that cannot be waived.</p>
+          </Section>
+          <Section title="Ending">
+            <p>You can stop using Aeyron at any time, and you can delete your account in the app or on the <a className="text-signal-deep underline underline-offset-4" href="/delete">Delete account</a> page. We may pause or end the pilot. If we do, we will tell you first and explain what happens to your data.</p>
+          </Section>
+          <Section title="Changes to these terms">
+            <p>If we change these terms in a way that matters, we will update the date at the top and tell you in the app or by email before the change applies.</p>
           </Section>
           <Section title="Contact">
-            <p>Questions about these terms can be sent to <a className="text-signal-deep underline underline-offset-4" href={`mailto:${brand.contactEmail}`}>{brand.contactEmail}</a>.</p>
+            <p>Questions about these terms can be sent to <Email />.</p>
           </Section>
         </>,
       }}
