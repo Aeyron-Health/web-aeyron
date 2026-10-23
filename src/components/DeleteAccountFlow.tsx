@@ -80,18 +80,18 @@ export function DeleteAccountFlow() {
 
   if (state === "submitted" && receipt) {
     return <div className="rounded-card border border-vital/40 bg-paper p-5 text-ink" role="status">
-      <p className="font-semibold">Deletion request submitted.</p>
-      <p className="mt-2 text-ink-soft">Your request was submitted on {formatDate(receipt.requested_at)}. It is not confirmation that deletion has completed. We signed this browser out.</p>
+      <p className="font-semibold">Request received. We’ll confirm within 7 days.</p>
+      <p className="mt-2 text-ink-soft">Your request was received on {formatDate(receipt.requested_at)}. Our team reviews it before anything is deleted, and you can cancel it in the app while it waits. It is not confirmation that deletion has completed. We signed this browser out.</p>
     </div>;
   }
 
   if (state === "signed-in" || state === "submitting") {
     return <form className="rounded-card border border-line bg-paper p-5" onSubmit={submit}>
       <p className="font-semibold">You are signed in.</p>
-      <p className="mt-2 text-ink-soft">Submitting a request starts Aeyron’s deletion process. It does not delete data instantly, and we will not ask for a password here.</p>
+      <p className="mt-2 text-ink-soft">Submitting sends a deletion request to our team. Nothing is deleted until we approve it, usually within 7 days. We will not ask for a password here.</p>
       <label className="mt-5 flex items-start gap-3 text-sm text-ink">
         <input checked={confirmed} className="mt-1 size-4" onChange={event => setConfirmed(event.target.checked)} type="checkbox" />
-        <span>I understand this requests permanent account and cloud-data deletion, subject to any legally required retention.</span>
+        <span>I understand that, once approved, this permanently deletes my account and cloud data, subject to any legally required retention.</span>
       </label>
       <button className="mt-5 min-h-11 rounded-full bg-ink px-5 font-semibold text-mist disabled:cursor-not-allowed disabled:opacity-50" disabled={!confirmed || state === "submitting"} type="submit">
         {state === "submitting" ? "Submitting request…" : "Request account deletion"}

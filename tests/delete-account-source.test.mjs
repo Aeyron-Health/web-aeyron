@@ -37,3 +37,13 @@ test("deletion page does not promise a completion notice it cannot send", () => 
   assert.doesNotMatch(page, /tells you when processing is complete/);
   assert.doesNotMatch(page, /properly configured deletion service/);
 });
+
+test("deletion copy says a request is reviewed first and nothing is deleted on submit", () => {
+  const page = readFileSync(new URL("../src/sections/PublicInformationPage.tsx", import.meta.url), "utf8");
+  const flow = readFileSync(new URL("../src/components/DeleteAccountFlow.tsx", import.meta.url), "utf8");
+  assert.match(page, /Nothing is deleted until we approve it/);
+  assert.match(page, /confirms within 7 days/);
+  assert.match(flow, /Request received\. We’ll confirm within 7 days\./);
+  assert.doesNotMatch(page, /You can delete your Aeyron account and the data linked to it at any time/);
+  assert.doesNotMatch(flow, /starts Aeyron’s deletion process/);
+});
