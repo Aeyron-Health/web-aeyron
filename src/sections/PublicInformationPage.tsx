@@ -119,7 +119,7 @@ function Section({ title, children }: { title: string; children: ReactNode }) {
   );
 }
 
-const UPDATED = "October 22, 2026";
+const UPDATED = "October 28, 2026";
 
 function Email() {
   return (
@@ -147,8 +147,7 @@ function PrivacyPage() {
         intro: `Aeyron is a wellness companion app for people living with Parkinson's. It is in a small pilot on Apple TestFlight. This page explains what we collect, who handles it, how long we keep it, and how to delete it. Last updated ${UPDATED}.`,
         children: <>
           <Section title="Who is responsible for your data">
-            <p>Until Aeyron's company is incorporated, Aeyron is run by its founder, Vansh Jain. He is responsible for your data and for this policy.</p>
-            <p>When the company is incorporated, we will update this policy to name it.</p>
+            <p>Aeyron Health Inc., 555 Bryant Street, San Francisco, CA 94107, USA, runs Aeyron. We are responsible for your data and for this policy.</p>
             <p>Questions or requests: <Email />.</p>
           </Section>
 
@@ -193,6 +192,8 @@ function PrivacyPage() {
               <><strong>Supabase Inc.</strong> (USA): our database and sign-in system. It runs on Amazon Web Services in the us-east-2 region, in Ohio, USA.</>,
               <><strong>Railway Corp.</strong> (USA): runs our app server in the western United States. It does not store our database. It keeps server logs.</>,
               <><strong>Resend</strong> (USA): sends our sign-in emails, so it sees your email address.</>,
+              <><strong>Vercel Inc.</strong> (USA): hosts this website. It processes basic request details, such as your IP address, to run and protect the site.</>,
+              <><strong>Garmin Ltd. and its subsidiaries</strong> (Switzerland and USA): only if you connect a Garmin account. Garmin sends your Garmin data to us. We do not send your data to Garmin.</>,
               <><strong>Apple Inc.</strong>: delivers the app through TestFlight and provides Apple Health and Sign in with Apple. Apple does not receive the data the app sends to us. Apple's own privacy policy covers what Apple collects.</>,
             ]} />
             <p>Their standard terms of service apply. We have not yet signed separate data processing agreements with them.</p>
@@ -202,6 +203,23 @@ function PrivacyPage() {
             <p><strong>Clinicians.</strong> A clinician sees your data only after you enter their invitation code in the app and agree. You choose which categories they see: Health summaries, Typing timing, or Phone motion. You also choose the name they see. They never see your check-ins, About-you answers, medication details, or hand checks. Every time a clinician views your data, we log it. You can disconnect at any time, and their access stops right away.</p>
             <p><strong>Family.</strong> A family member gets a weekly email summary only if you add them and turn it on. You can remove them at any time.</p>
             <p>We share your data with no one else, unless the law requires it, for example a valid court order.</p>
+          </Section>
+
+          <Section title="Garmin">
+            <p>Aeyron is adding the option to connect a Garmin account, for people who wear a Garmin watch. It is off until you turn it on.</p>
+            <p><strong>How it works.</strong> You tap "Connect Garmin" in the app. Garmin shows you its own permission screen, where you choose what to share. Only after you agree does Garmin send data to Aeyron. Garmin sends it to our server each time your watch syncs.</p>
+            <p><strong>What we receive from Garmin.</strong> Daily summaries of your activity (steps, distance, active minutes), 15-minute activity totals, sleep, heart rate, heart rate variability, stress, breathing rate, blood oxygen, Body Battery, and the walks you record (pace and cadence).</p>
+            <p><strong>What we keep.</strong> We turn what Garmin sends into a small set of daily numbers, such as your average walking cadence or how long you slept. We keep those daily numbers. We do not keep Garmin's minute-by-minute data after we have worked out the daily numbers.</p>
+            <p><strong>Who sees it.</strong> You, and a clinician you invited, only if you say yes to sharing Garmin data with them. They see the same summary you do. Garmin data is shown with Garmin's name next to it.</p>
+            <p><strong>Your Aeyron data does not go to Garmin.</strong> Garmin receives nothing from Aeyron about you.</p>
+            <p><strong>We never sell Garmin data.</strong> We do not license it, rent it, or give it to anyone else. We do not use it for advertising. We do not use it for research unless Garmin agrees in writing and you separately agree. Garmin data is never used to train any AI model, ours or anyone else's.</p>
+            <p><strong>Stopping.</strong> You can disconnect Garmin at any time in the app or in Garmin Connect. When you disconnect, we stop receiving Garmin data and delete the Garmin data we hold about you within 30 days. If you delete your Aeyron account, we delete your Garmin data with it.</p>
+            <p><strong>Garmin's own policy.</strong> Garmin collects your data under its own privacy policy, which you agreed to when you set up your watch. See <a className="text-signal-deep underline underline-offset-4" href="https://www.garmin.com/privacy">garmin.com/privacy</a>.</p>
+          </Section>
+
+          <Section title="Artificial intelligence">
+            <p>Aeyron does not use artificial intelligence to read, summarise, or make decisions about your health data. The sentences in your weekly report are written by fixed rules in the app, from your own numbers.</p>
+            <p>If we add a feature that uses AI, we will update this policy and tell you before it starts.</p>
           </Section>
 
           <Section title="Research">
@@ -244,7 +262,7 @@ function PrivacyPage() {
           </Section>
 
           <Section title="How we protect your data">
-            <p>Data is encrypted when it travels over the internet. Our database host encrypts it when stored. Each person can read only their own data. Only the founder has administrator access. No system is perfectly secure, so we cannot promise that a breach will never happen.</p>
+            <p>Data is encrypted when it travels over the internet. Our database host encrypts it when stored. Each person can read only their own data. Only one founder has administrator access. No system is perfectly secure, so we cannot promise that a breach will never happen.</p>
           </Section>
 
           <Section title="If there is a data breach">
@@ -253,7 +271,8 @@ function PrivacyPage() {
           </Section>
 
           <Section title="This website">
-            <p>This website does not ask for health information. If you use the Delete account page, we use your email address to send you a one-time sign-in link, through Supabase and Resend. The company that hosts this website may process basic request details, such as your IP address, to run and protect the site.</p>
+            <p>This website does not ask for health information. If you use the Delete account page, we use your email address to send you a one-time sign-in link, through Supabase and Resend. Vercel, which hosts this website, may process basic request details, such as your IP address, to run and protect the site.</p>
+            <p>If you join our early-access list, we keep what you enter (your first name, email, who you are, what worries you most, and any note) and the link you came from, in our Supabase database. We use it only to contact you about Aeyron. Email <Email /> to be removed at any time.</p>
             <p>This page is not the consent form for a research study.</p>
           </Section>
 
@@ -280,7 +299,7 @@ function TermsPage() {
         intro: `These terms apply when you use the Aeyron app or this website. By using Aeyron, you agree to them. Last updated ${UPDATED}.`,
         children: <>
           <Section title="Who you are agreeing with">
-            <p>Until Aeyron's company is incorporated, Aeyron is run by its founder, Vansh Jain, and these terms are between you and him. When the company is incorporated, we will update these terms to name it.</p>
+            <p>These terms are between you and Aeyron Health Inc., 555 Bryant Street, San Francisco, CA 94107, USA.</p>
           </Section>
           <Section title="What Aeyron is">
             <p>Aeyron is a wellness companion for people living with Parkinson's. It organizes your walking, phone motion, typing timing, and check-ins into trends compared with your own past. It is early pilot software, offered through Apple TestFlight.</p>
