@@ -77,7 +77,7 @@ export function CTA() {
         }}
       />
 
-      <div className="relative grid gap-14 lg:grid-cols-[1.05fr_1fr] lg:items-center lg:gap-20">
+      <div className="relative grid grid-cols-[minmax(0,1fr)] gap-14 lg:grid-cols-[1.05fr_1fr] lg:items-center lg:gap-20">
         {/* Left: pitch */}
         <div className="max-w-xl">
           <Reveal as="p" className="eyebrow text-signal-hi">

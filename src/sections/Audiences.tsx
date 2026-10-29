@@ -198,7 +198,7 @@ export function Audiences() {
         </p>
       </Reveal>
 
-      <div className="mt-12 grid gap-8 lg:mt-16 lg:grid-cols-[minmax(0,21rem)_1fr] lg:gap-14">
+      <div className="mt-12 grid grid-cols-[minmax(0,1fr)] gap-8 lg:mt-16 lg:grid-cols-[minmax(0,21rem)_1fr] lg:gap-14">
         {/* Tab list: scrollable row on mobile, vertical on desktop */}
         <Reveal as="div" delay={0.05}>
           <div

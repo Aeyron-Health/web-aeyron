@@ -323,7 +323,7 @@ export function LiveTremor() {
         />
       ) : null}
 
-      <div className="relative grid items-center gap-12 lg:grid-cols-[0.92fr_1.08fr] lg:gap-16">
+      <div className="relative grid grid-cols-[minmax(0,1fr)] items-center gap-12 lg:grid-cols-[0.92fr_1.08fr] lg:gap-16">
         {/* ---- Left: copy + controls ---- */}
         <div className="max-w-xl">
           <Reveal as="p" className="eyebrow text-signal-hi">

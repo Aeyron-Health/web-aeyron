@@ -25,7 +25,7 @@ export function Footer() {
 
       <div className="shell py-20 sm:py-24">
         {/* Brand + nav grid */}
-        <div className="grid gap-12 lg:grid-cols-[1.4fr_1fr_1fr_1fr] lg:gap-10">
+        <div className="grid grid-cols-[minmax(0,1fr)] gap-12 lg:grid-cols-[1.4fr_1fr_1fr_1fr] lg:gap-10">
           {/* Brand block */}
           <Reveal className="max-w-sm">
             <a
@@ -139,7 +139,7 @@ export function Footer() {
           <p className="font-mono text-xs tracking-wide text-mist-soft">
             <span className="tnum">&copy; 2026</span> {brand.wordmark}
           </p>
-          <div className="flex items-center gap-2 text-mist-soft">
+          <div className="flex flex-wrap items-center gap-x-2 gap-y-1 text-mist-soft">
             <a className="min-h-[44px] px-2 inline-flex items-center hover:text-mist" href="/privacy">Privacy</a>
             <a className="min-h-[44px] px-2 inline-flex items-center hover:text-mist" href="/terms">Terms</a>
             <a className="min-h-[44px] px-2 inline-flex items-center hover:text-mist" href="/support">Support</a>

@@ -646,6 +646,18 @@ const shots: Shot[] = [
 /** Layered, fannable stack of real screenshots. Click a card to bring it to
  * front. Cursor parallax tilts the whole stack. Reduced motion -> a calm,
  * static, evenly-spread fan with no parallax and instant selection. */
+function useNarrowViewport() {
+  const query = "(max-width: 639px)";
+  const [narrow, setNarrow] = useState(() => window.matchMedia(query).matches);
+  useEffect(() => {
+    const media = window.matchMedia(query);
+    const onChange = () => setNarrow(media.matches);
+    media.addEventListener("change", onChange);
+    return () => media.removeEventListener("change", onChange);
+  }, []);
+  return narrow;
+}
+
 function DeviceGallery() {
   const reduced = useReducedMotion();
   const { x, y } = usePointerParallax(60);
@@ -656,6 +668,10 @@ function DeviceGallery() {
   const lift = useTransform(y, (v) => v * -10);
 
   const n = shots.length;
+  // Phones are ~210px wide: at 86px per card the back of the fan reaches 260px
+  // right of centre and pushes the page sideways. Fan tighter below `sm`.
+  const narrow = useNarrowViewport();
+  const fanStep = narrow ? 22 : 86;
 
   return (
     <motion.div
@@ -672,7 +688,7 @@ function DeviceGallery() {
         const rel = ((i - active) % n + n) % n;
         // map rel index to a 0..1 depth where 0 = front
         const depth = rel;
-        const offset = depth * 86; // horizontal fan spacing
+        const offset = depth * fanStep; // horizontal fan spacing
         const drop = depth * 14; // vertical descent
         const rot = depth * -5; // fan rotation
         const scale = 1 - depth * 0.06;
@@ -682,17 +698,19 @@ function DeviceGallery() {
           <Magnetic
             key={shot.src}
             strength={isFront ? 0.18 : 0.1}
-            className="absolute left-1/2 top-0"
+            className="absolute inset-x-0 top-0"
           >
             <motion.button
               type="button"
               onClick={() => setActive(i)}
               aria-label={`Show ${shot.label} screen`}
               aria-pressed={isFront}
-              className="block cursor-pointer rounded-[2.4rem] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-signal focus-visible:ring-offset-4 focus-visible:ring-offset-canvas-sunk"
+              className="mx-auto block cursor-pointer rounded-[2.4rem] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-signal focus-visible:ring-offset-4 focus-visible:ring-offset-canvas-sunk"
               initial={false}
               animate={{
-                x: `calc(-50% + ${offset}px)`,
+                // The wrapper spans the gallery and the card is centred in it with
+                // mx-auto, so only the fan offset moves it sideways.
+                x: offset,
                 y: drop,
                 rotate: reduced ? 0 : rot,
                 scale,
@@ -809,7 +827,7 @@ export function WhatYouGet() {
       {usePin ? <PinnedPhoneHero /> : <StaticPhoneRow />}
 
       {/* SECOND row: clinician dashboard, full-bleed-ish panel */}
-      <div className="mt-20 grid gap-10 lg:mt-28 lg:grid-cols-12 lg:gap-12">
+      <div className="mt-20 grid grid-cols-[minmax(0,1fr)] gap-10 lg:mt-28 lg:grid-cols-12 lg:gap-12">
         <RevealVaried className="lg:col-span-4" variant="drift">
           <span className="eyebrow text-ink-soft">02 / For the clinic</span>
           <h3 className="mt-3 text-2xl font-semibold text-ink sm:text-3xl">
