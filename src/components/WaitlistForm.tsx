@@ -184,10 +184,10 @@ export function WaitlistForm() {
       )}
 
       <button className="btn btn-primary mt-6 w-full sm:w-auto" type="submit" disabled={status === "sending"}>
-        {status === "sending" ? "Joining..." : "Join early access"}
+        {status === "sending" ? "Joining..." : "Join the waitlist"}
       </button>
       <p className="mt-3 text-sm text-ink-soft">
-        Free during early access. We only use this to contact you about Aeyron.{" "}
+        Everything is free right now. We only use this to contact you about Aeyron.{" "}
         <a className="underline underline-offset-4 hover:text-ink" href="/privacy">
           Privacy
         </a>

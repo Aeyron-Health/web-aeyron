@@ -43,14 +43,29 @@ export const needs: Need[] = [
     body: "One tap for “taken now” against their own schedule, shown next to how the day went. Medication names stay on the phone.",
   },
   {
+    id: "caregiver_load",
+    title: "Caregiver strain",
+    body: "Nothing for them to log and nothing for you to chase. A plain weekly update reaches the family, so keeping everyone informed doesn't all fall on you.",
+  },
+  {
     id: "visits",
     title: "Doctor visits",
     body: "Walk in with a short report organised the way neurologists think: what changed, what stayed the same, and how many days of data back each point. No more rebuilding months from memory.",
   },
+];
+
+export const testflightSteps = [
   {
-    id: "caregiver_load",
-    title: "Your own load",
-    body: "Nothing for them to log and nothing for you to chase. A plain weekly update reaches the family, so everyone knows how the week went without another round of phone calls.",
+    title: "Get TestFlight",
+    body: "On the iPhone, install TestFlight from the App Store. It's Apple's free app for trying new apps early.",
+  },
+  {
+    title: "Open our invite",
+    body: "Open the Aeyron invite link on that iPhone and tap Accept.",
+  },
+  {
+    title: "Install Aeyron",
+    body: "Tap Install, open Aeyron, and follow the short setup. It starts learning their usual right away.",
   },
 ];
 
@@ -136,16 +151,20 @@ export const team = [
 
 export const faqs = [
   {
+    q: "How do we try it today?",
+    a: "The iPhone app is in App Store review. Until it's out, you can install it today through TestFlight, Apple's app for trying new apps early. It takes about five minutes.",
+  },
+  {
     q: "Do we need an Apple Watch?",
     a: "No. Aeyron works with an iPhone alone. A watch adds the hours when the phone sits on a table, and both feed the same record.",
   },
   {
     q: "What about Android?",
-    a: "Aeyron runs on iPhone today. Android is next. Join the list and we'll tell you when it's ready.",
+    a: "Android is in progress. Join the waitlist and we'll tell you as soon as it's ready.",
   },
   {
     q: "What does it cost?",
-    a: "Aeyron is free during early access.",
+    a: "Nothing. Everything is free right now.",
   },
   {
     q: "Who can see the data?",
@@ -170,7 +189,7 @@ export const worryOptions: ReadonlyArray<{ id: NeedId | "other"; label: string }
   { id: "falls", label: "Falls" },
   { id: "nights", label: "Nights and sleep" },
   { id: "medications", label: "Medications" },
+  { id: "caregiver_load", label: "Caregiver strain" },
   { id: "visits", label: "Doctor visits" },
-  { id: "caregiver_load", label: "Caring load" },
   { id: "other", label: "Something else" },
 ];

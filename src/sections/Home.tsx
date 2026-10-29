@@ -12,6 +12,7 @@ import {
   proof,
   steps,
   team,
+  testflightSteps,
 } from "../content/home";
 import { publicRoutes } from "../publicRoutes";
 import { WaitlistForm } from "../components/WaitlistForm";
@@ -45,9 +46,8 @@ function Header() {
           ))}
         </nav>
         <div className="flex items-center gap-2">
-          <a href="#join" className="btn btn-primary !min-h-11 whitespace-nowrap !px-5 !text-[0.95rem]">
-            <span className="sm:hidden">Join</span>
-            <span className="hidden sm:inline">Join early access</span>
+          <a href="#try" className="btn btn-primary !min-h-11 whitespace-nowrap !px-5 !text-[0.95rem]">
+            Try it free
           </a>
           <button
             type="button"
@@ -132,15 +132,15 @@ function Hero() {
             shared with family and the neurologist.
           </p>
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-            <a href="#join" className="btn btn-primary">
-              Join early access
+            <a href="#try" className="btn btn-primary">
+              Try it free on iPhone
             </a>
-            <a href={links.testflight} className="btn btn-ghost" target="_blank" rel="noopener noreferrer">
-              Get the iPhone app
+            <a href="#join" className="btn btn-ghost">
+              Join the waitlist
             </a>
           </div>
           <p className="mt-4 text-[0.95rem] text-ink-soft">
-            Free during early access. Nothing to buy, nothing to log.{" "}
+            Everything is free right now. Nothing to buy, nothing to log. On Android? Join the waitlist.{" "}
             <a href={links.bookCall} className="font-medium text-signal-deep underline underline-offset-4">
               Or book a 15-minute call
             </a>
@@ -204,6 +204,42 @@ function Paths() {
   );
 }
 
+function TryIt() {
+  return (
+    <section id="try" className="scroll-mt-16 bg-navy py-16 text-white sm:py-20">
+      <div className="shell grid gap-10 lg:grid-cols-[0.85fr_1.15fr] lg:gap-16">
+        <div>
+          <p className="eyebrow text-signal-hi">Try it today</p>
+          <h2 className="mt-3 text-[2.1rem] leading-[1.06] tracking-[-0.025em] sm:text-5xl">Free on iPhone, in about five minutes.</h2>
+          <p className="mt-5 text-lg text-white/80">
+            The App Store release is in review. Until then, families install Aeyron through TestFlight, Apple's own app for
+            trying new apps early.
+          </p>
+          <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+            <a href={links.testflight} className="btn btn-primary" target="_blank" rel="noopener noreferrer">
+              Open the iPhone invite
+            </a>
+            <a href="#join" className="btn btn-on-dark">
+              On Android? Join the waitlist
+            </a>
+          </div>
+        </div>
+        <ol className="grid gap-3">
+          {testflightSteps.map((step, index) => (
+            <li key={step.title} className="flex gap-4 rounded-2xl border border-white/12 bg-white/[0.04] p-5">
+              <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-signal font-semibold">{index + 1}</span>
+              <div>
+                <h3 className="text-lg">{step.title}</h3>
+                <p className="mt-1 leading-relaxed text-white/75">{step.body}</p>
+              </div>
+            </li>
+          ))}
+        </ol>
+      </div>
+    </section>
+  );
+}
+
 const needIcons: Record<string, string> = {
   falls: "M12 3a2 2 0 110 4 2 2 0 010-4zm-1 6h2l2 5h3M11 9l-3 6m5-1l-2 7m-3-6l-3 6",
   nights: "M20 14.5A8 8 0 019.5 4 8 8 0 1020 14.5z",
@@ -221,8 +257,8 @@ function Families() {
           Built around what caregivers worry about most.
         </h2>
         <p className="mt-5 max-w-2xl text-lg text-ink-soft">
-          Caregivers keep telling us the same things: falls, hard nights, medication timing, getting the most out of a
-          short appointment, and carrying all of it alone. Aeyron is built around those.
+          Caregivers keep telling us the same things: falls, hard nights, medications, and the strain of carrying it all
+          alone. Aeyron is built around those.
         </p>
         <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {needs.map(need => (
@@ -244,11 +280,11 @@ function Families() {
               </p>
             </div>
             <div className="mt-6 flex flex-col gap-3">
-              <a href={links.testflight} className="btn btn-primary" target="_blank" rel="noopener noreferrer">
-                Get the iPhone app
+              <a href="#try" className="btn btn-primary">
+                Try it free on iPhone
               </a>
               <a href="#join?role=caregiver" className="btn btn-on-dark">
-                Join early access
+                Join the waitlist
               </a>
             </div>
           </article>
@@ -398,19 +434,20 @@ function Join() {
     <section id="join" className="scroll-mt-16 bg-[linear-gradient(180deg,oklch(0.95_0.03_255),var(--color-canvas))] py-16 sm:py-24">
       <div className="shell grid gap-10 lg:grid-cols-[0.85fr_1.15fr] lg:gap-16">
         <div>
-          <p className="eyebrow text-signal-deep">Early access</p>
+          <p className="eyebrow text-signal-deep">Waitlist</p>
           <h2 className="mt-3 text-[2.1rem] leading-[1.06] tracking-[-0.025em] text-ink sm:text-5xl">
-            Join the families and clinicians already using Aeyron.
+            Not on iPhone, or not ready yet? Join the waitlist.
           </h2>
           <p className="mt-5 text-lg text-ink-soft">
-            Tell us a little about you and we'll help you get set up. Prefer to talk first? A founder will take the call.
+            Tell us a little about you. We'll tell you when Android is ready and help you get set up. Prefer to talk first?
+            A founder will take the call.
           </p>
           <div className="mt-8 flex flex-col gap-3 sm:flex-row lg:flex-col xl:flex-row">
             <a href={links.bookCall} className="btn btn-dark">
               Book a 15-minute call
             </a>
             <a href={links.testflight} className="btn btn-ghost" target="_blank" rel="noopener noreferrer">
-              Get the iPhone app now
+              Try it free on iPhone
             </a>
           </div>
         </div>
@@ -511,6 +548,7 @@ export function Home() {
         <Proof />
         <Paths />
         <Families />
+        <TryIt />
         <HowItWorks />
         <Clinicians />
         <Privacy />
