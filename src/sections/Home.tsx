@@ -82,7 +82,7 @@ function FamilyUpdateCard() {
     { label: "Walking", detail: "Slower than his normal for 2 weeks", tone: "worse" },
     { label: "Hand steadiness", detail: "About his usual", tone: "same" },
     { label: "Medications", detail: "19 of 21 doses logged", tone: "same" },
-    { label: "Check-ins", detail: "\u201cWalking took real effort\u201d on 3 days", tone: "note" },
+    { label: "Check-ins", detail: "Tapped \u201cwalking took real effort\u201d on 3 days", tone: "note" },
   ] as const;
   const dot = { worse: "bg-attention", same: "bg-vital", note: "bg-signal" } as const;
   return (
@@ -124,12 +124,12 @@ function Hero() {
         <div>
           <p className="eyebrow text-signal-deep">Parkinson's, between doctor visits</p>
           <h1 className="mt-4 text-[2.6rem] leading-[1.02] tracking-[-0.03em] text-ink sm:text-6xl lg:text-[4.4rem]">
-            Know when something changes.
+            See what changed between doctor visits.
           </h1>
           <p className="mt-6 max-w-xl text-lg leading-relaxed text-ink-soft sm:text-xl">
             Aeyron learns a person's own normal from their iPhone: how they walk, how steady their hand is, the rhythm of
-            their typing, plus a one-minute check-in. When something drifts, the family they choose hear about it in plain
-            words, and their neurologist gets a short summary before the visit.
+            their typing, plus a one-minute check-in in the app. It shows them what changed in plain words, the family
+            members they choose get a weekly update, and their neurologist gets a short summary before the visit.
           </p>
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
             <a href="#try" className="btn btn-primary">
@@ -171,7 +171,7 @@ function Paths() {
   const paths = [
     {
       who: "I'm caring for someone",
-      line: "Know when to step in, and walk into appointments prepared.",
+      line: "Know how the week went, and walk into appointments prepared.",
       href: "#families",
     },
     {
@@ -257,8 +257,8 @@ function Families() {
           Built with families, around what worries them most.
         </h2>
         <p className="mt-5 max-w-2xl text-lg text-ink-soft">
-          Families are our first users. In our conversations they keep naming the same worries: falls, medications, getting
-          the most out of short appointments, and the strain of carrying it all alone.
+          Families are our first users. Among the worries they name most: falls, medications, getting the most out of short
+          appointments, and the strain of carrying it all alone.
         </p>
         <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {needs.map(need => (
@@ -300,7 +300,7 @@ function HowItWorks() {
       <div className="shell">
         <p className="eyebrow text-signal-deep">How it works</p>
         <h2 className="mt-3 max-w-3xl text-[2.1rem] leading-[1.06] tracking-[-0.025em] text-ink sm:text-5xl">
-          It learns their normal, then notices drift.
+          It learns their normal, then shows what changed.
         </h2>
         <p className="mt-5 max-w-2xl text-lg text-ink-soft">
           Nothing to buy and almost nothing to do. Aeyron works from the iPhone they already carry.
@@ -444,7 +444,7 @@ function Join() {
             <a href={links.bookCall} className="btn btn-dark">
               Book a 15-minute call
             </a>
-            <a href={links.testflight} className="btn btn-ghost" target="_blank" rel="noopener noreferrer">
+            <a href="#try" className="btn btn-ghost">
               Try it free on iPhone
             </a>
           </div>
@@ -463,7 +463,7 @@ function Team() {
         <h2 className="mt-3 text-3xl tracking-[-0.02em] text-ink sm:text-4xl">A student-led team, building with families first.</h2>
         <p className="mt-4 max-w-2xl text-lg text-ink-soft">
           Three founders from the University of Waterloo and George Washington University. Parkinson's comes first, and
-          every screen was shaped by 287+ conversations with people with Parkinson's, caregivers and clinicians.
+          it was shaped by 287+ conversations with people with Parkinson's, caregivers and clinicians.
         </p>
         <div className="mt-8 grid gap-4 md:grid-cols-3">
           {team.map(person => (
@@ -514,7 +514,7 @@ function Footer() {
       <div className="shell grid gap-8 sm:grid-cols-[1fr_auto] sm:items-end">
         <div>
           <Logo className="text-white" />
-          <p className="mt-3 max-w-md">Notices when Parkinson's changes between doctor visits, from the iPhone people already carry.</p>
+          <p className="mt-3 max-w-md">Shows the person, their family and their neurologist what changed between visits, from the iPhone they already carry.</p>
           <a href={links.email} className="mt-3 inline-block text-white underline underline-offset-4">
             {brand.contactEmail}
           </a>
