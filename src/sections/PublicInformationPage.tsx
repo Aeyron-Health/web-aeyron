@@ -1,6 +1,7 @@
 import { type ReactNode, useState } from "react";
 import { brand } from "../content/site";
 import { DeleteAccountFlow } from "../components/DeleteAccountFlow";
+import { APPLE_CANCEL_NOTE, CANCEL_HOW, NOTHING_BEFORE_APPROVAL, REVIEW_TIMELINE } from "../content/deletionCopy";
 import { currentPublicRoute, publicRoutes, type PublicRoute } from "../publicRoutes";
 import { WaveMark } from "../components/WaveMark";
 
@@ -256,7 +257,7 @@ function PrivacyPage() {
               "Change Apple Health, motion, and keyboard permissions in iPhone Settings.",
               <>Get a copy of your data: in the app, open <strong>Your account</strong> and tap <strong>Request data export</strong>. Requests are due within 30 days.</>,
               <>Fix something that is wrong: email <Email />.</>,
-              <>Delete your account and cloud data: in the app, or on the <a className="text-signal-deep underline underline-offset-4" href="/delete">Delete account</a> page. Requests are due within 30 days. Signing out alone does not delete anything.</>,
+              <>Request deletion of your account and cloud data at any time: in the app, or on the <a className="text-signal-deep underline underline-offset-4" href="/delete">Delete account</a> page. {REVIEW_TIMELINE} {NOTHING_BEFORE_APPROVAL} {CANCEL_HOW} Signing out alone does not delete anything.</>,
             ]} />
             <p>If you live in Canada and you are not happy with how we handle a concern, you can complain to the Office of the Privacy Commissioner of Canada.</p>
           </Section>
@@ -326,7 +327,7 @@ function TermsPage() {
             <p>To the extent the law allows, we are not responsible for losses that come from relying on Aeyron instead of a clinician, or from the app being unavailable. Nothing in these terms takes away rights you have under consumer protection law that cannot be waived.</p>
           </Section>
           <Section title="Ending">
-            <p>You can stop using Aeyron at any time, and you can delete your account in the app or on the <a className="text-signal-deep underline underline-offset-4" href="/delete">Delete account</a> page. We may pause or end the pilot. If we do, we will tell you first and explain what happens to your data.</p>
+            <p>You can stop using Aeyron at any time, and you can request deletion of your account in the app or on the <a className="text-signal-deep underline underline-offset-4" href="/delete">Delete account</a> page. We may pause or end the pilot. If we do, we will tell you first and explain what happens to your data.</p>
           </Section>
           <Section title="Changes to these terms">
             <p>If we change these terms in a way that matters, we will update the date at the top and tell you in the app or by email before the change applies.</p>
@@ -367,8 +368,8 @@ function DeletePage() {
       route="/delete"
       copy={{
         eyebrow: "Delete account",
-        title: "Delete your Aeyron account and cloud data.",
-        intro: "You can delete your Aeyron account and the data linked to it at any time, from the app or from this page. Deletion is permanent.",
+        title: "Request deletion of your Aeyron account and cloud data.",
+        intro: `You can request deletion of your Aeyron account and the data linked to it at any time, from the app or from this page. ${REVIEW_TIMELINE} ${NOTHING_BEFORE_APPROVAL} Once approved, deletion is permanent.`,
         children: <>
           <Section title="Delete in the app (fastest)">
             <ol className="list-decimal space-y-1 pl-6">
@@ -376,7 +377,7 @@ function DeletePage() {
               <li>Tap <strong>Your account</strong>, then <strong>Delete account</strong>.</li>
               <li>Tap <strong>Request account and cloud data deletion</strong>, then confirm with <strong>Request deletion</strong>.</li>
             </ol>
-            <p>You can see the status of your request on the same screen.</p>
+            <p>You can see the status of your request on the same screen. {CANCEL_HOW}</p>
           </Section>
           <Section title="Delete on the web">
             <p>Enter the email address of your Aeyron account below. If you used Sign in with Apple with Hide My Email, enter that private relay address. Open the one-time sign-in link we email you on this device, then confirm the deletion request. We never ask for your password on this page, and we do not show whether an account exists for an email address.</p>
@@ -384,7 +385,8 @@ function DeletePage() {
             <p>If the page says your account cannot be deleted online, or you cannot get into your email, write to <a className="text-signal-deep underline underline-offset-4" href={`mailto:${brand.contactEmail}?subject=Delete%20my%20account`}>{brand.contactEmail}</a> from your account's email address with the subject "Delete my account". We will check that the request comes from the account holder.</p>
           </Section>
           <Section title="How long it takes">
-            <p>Deletion is not instant, because each step is checked. A request is due within 30 days. This website does not email you when deletion is complete: submitting a request is not confirmation that it has finished, and you can follow its status in the app under Your account.</p>
+            <p>Your request first goes to our team, who check that it comes from the account holder. {REVIEW_TIMELINE} {NOTHING_BEFORE_APPROVAL} We email you when we approve it. We only decline a request when we cannot confirm it is yours or when the law requires us to keep the data, and we tell you why. Submitting a request is not confirmation that deletion has finished; you can follow its status in the app under Your account.</p>
+            <p>{CANCEL_HOW} {APPLE_CANCEL_NOTE}</p>
           </Section>
           <Section title="Need help">
             <p>Contact <a className="text-signal-deep underline underline-offset-4" href={`mailto:${brand.contactEmail}`}>{brand.contactEmail}</a>. Do not include a password, sign-in code, or health information.</p>
