@@ -3,16 +3,22 @@ import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { Section } from "../components/Section";
 import { Reveal } from "../components/Reveal";
 import { Button } from "../components/Button";
+import { AppStoreButton } from "../components/AppStoreButton";
 import { brand } from "../content/site";
 import { easeOutExpo } from "../lib/motion";
 
-type AudienceKey = "patients" | "clinicians" | "partners";
+type AudienceKey = "patients" | "android" | "clinicians" | "partners";
 
 const AUDIENCES: { key: AudienceKey; label: string; subject: string }[] = [
   {
     key: "patients",
     label: "Patient or caregiver",
     subject: "Early access - patient / caregiver",
+  },
+  {
+    key: "android",
+    label: "Android or no iPhone",
+    subject: "Waitlist - Android / not on iPhone",
   },
   {
     key: "clinicians",
@@ -30,6 +36,8 @@ function bodyFor(key: AudienceKey, email: string): string {
   const lines: Record<AudienceKey, string> = {
     patients:
       "Hi Aeyron team,\n\nI'm a patient or caregiver and I'd like early access to the Aeyron wellness companion.",
+    android:
+      "Hi Aeyron team,\n\nI don't have an iPhone. Please add me to the waitlist and let me know when Aeyron is available for me.",
     clinicians:
       "Hi Aeyron team,\n\nI'm a clinician interested in Aeyron's longitudinal monitoring and a possible pilot.",
     partners:
@@ -90,6 +98,13 @@ export function CTA() {
             Aeyron is opening early access to its wellness companion, and lining
             up pilots with clinics, care facilities, and research partners. Tell
             us who you are and we'll be in touch.
+          </Reveal>
+
+          <Reveal className="mt-8" delay={0.08}>
+            <AppStoreButton />
+            <p className="mt-3 text-sm text-mist-soft">
+              On Android or not on iPhone? Choose "Android or no iPhone" to join the waitlist.
+            </p>
           </Reveal>
 
           <Reveal className="mt-8" delay={0.1}>

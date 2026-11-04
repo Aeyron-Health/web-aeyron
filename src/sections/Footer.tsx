@@ -2,6 +2,7 @@ import { type ReactNode } from "react";
 import { Reveal } from "../components/Reveal";
 import { Button } from "../components/Button";
 import { WaveMark } from "../components/WaveMark";
+import { AppStoreButton } from "../components/AppStoreButton";
 import { CredibilityWall } from "../components/CredibilityWall";
 import {
   brand,
@@ -41,14 +42,12 @@ export function Footer() {
             <p className="mt-5 text-[0.95rem] leading-relaxed text-mist-soft">
               {brand.mission}
             </p>
-            <Button
-              href="#cta"
-              variant="primary"
-              tone="dark"
-              className="mt-7"
-            >
-              Get early access
-            </Button>
+            <div className="mt-7 flex flex-wrap gap-3">
+              <AppStoreButton />
+              <Button href="#cta" variant="primary" tone="dark">
+                Join the waitlist
+              </Button>
+            </div>
           </Reveal>
 
           {/* Explore (nav links) */}
@@ -94,6 +93,17 @@ export function Footer() {
           <Reveal as="div" delay={0.12}>
             <FooterColTitle>Contact</FooterColTitle>
             <ul className="mt-5 space-y-4">
+              <li>
+                <p className="font-mono text-xs uppercase tracking-[0.14em] text-mist-soft">
+                  Questions &amp; support
+                </p>
+                <a
+                  href={`mailto:${brand.contactEmail}`}
+                  className="mt-1 inline-flex min-h-[44px] items-center text-[0.95rem] text-mist transition-colors duration-200 hover:text-signal-hi"
+                >
+                  Contact us
+                </a>
+              </li>
               <li>
                 <p className="font-mono text-xs uppercase tracking-[0.14em] text-mist-soft">
                   Partnerships &amp; investors
@@ -144,6 +154,7 @@ export function Footer() {
             <a className="min-h-[44px] px-2 inline-flex items-center hover:text-mist" href="/terms">Terms</a>
             <a className="min-h-[44px] px-2 inline-flex items-center hover:text-mist" href="/support">Support</a>
             <a className="min-h-[44px] px-2 inline-flex items-center hover:text-mist" href="/delete">Delete account</a>
+            <a className="min-h-[44px] px-2 inline-flex items-center hover:text-mist" href={`mailto:${brand.contactEmail}`}>Contact</a>
             <WaveMark className="h-5 w-5 opacity-80" />
             <span className="font-display text-sm tracking-tight text-mist">
               {brand.wordmark}

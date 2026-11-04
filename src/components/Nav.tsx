@@ -3,6 +3,7 @@ import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { nav, brand } from "../content/site";
 import { Button } from "./Button";
 import { WaveMark } from "./WaveMark";
+import { AppStoreButton } from "./AppStoreButton";
 
 /**
  * Slim sticky nav. Transparent over the dark hero, then resolves to a solid
@@ -49,7 +50,7 @@ export function Nav() {
         </a>
 
         {/* Desktop links */}
-        <div className="hidden items-center gap-7 lg:flex">
+        <div className="hidden items-center gap-7 xl:flex">
           <ul className="flex items-center gap-7">
             {nav.links.map((l) => (
               <li key={l.href}>
@@ -65,16 +66,26 @@ export function Nav() {
                 </a>
               </li>
             ))}
+            <li>
+              <a
+                href={nav.contact.href}
+                className={`text-[0.92rem] transition-colors ${
+                  solid
+                    ? "text-ink-soft hover:text-ink"
+                    : "text-mist-soft hover:text-mist"
+                }`}
+              >
+                {nav.contact.label}
+              </a>
+            </li>
           </ul>
-          <Button href={nav.cta.href} variant="primary" className="!min-h-[42px] !px-5">
-            {nav.cta.label}
-          </Button>
+          <AppStoreButton compact />
         </div>
 
         {/* Mobile toggle */}
         <button
           type="button"
-          className={`flex h-11 w-11 items-center justify-center lg:hidden ${
+          className={`flex h-11 w-11 items-center justify-center xl:hidden ${
             solid ? "text-ink" : "text-mist"
           }`}
           aria-label={open ? "Close menu" : "Open menu"}
@@ -108,7 +119,7 @@ export function Nav() {
             animate={{ opacity: 1, y: 0 }}
             exit={reduced ? { opacity: 0 } : { opacity: 0, y: -8 }}
             transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
-            className="border-t border-line bg-canvas lg:hidden"
+            className="border-t border-line bg-canvas xl:hidden"
           >
             <ul className="shell flex flex-col gap-1 py-4">
               {nav.links.map((l) => (
@@ -122,8 +133,18 @@ export function Nav() {
                   </a>
                 </li>
               ))}
-              <li className="px-3 pt-3">
-                <Button href={nav.cta.href} variant="primary" className="w-full" onClick={() => setOpen(false)}>
+              <li>
+                <a
+                  href={nav.contact.href}
+                  onClick={() => setOpen(false)}
+                  className="block rounded-lg px-3 py-3 text-base text-ink hover:bg-canvas-sunk"
+                >
+                  {nav.contact.label}
+                </a>
+              </li>
+              <li className="flex flex-col gap-3 px-3 pt-3">
+                <AppStoreButton className="w-full" onClick={() => setOpen(false)} />
+                <Button href={nav.cta.href} variant="ghost" className="w-full" onClick={() => setOpen(false)}>
                   {nav.cta.label}
                 </Button>
               </li>
