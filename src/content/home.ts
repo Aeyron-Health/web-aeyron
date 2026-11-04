@@ -1,7 +1,11 @@
 /**
- * Home page copy. Every number and claim here comes from the October 2026
- * white paper or was confirmed by the founders. Check with them before
- * adding a new one.
+ * Home page copy. Every number and claim here was confirmed by the founders
+ * (white paper, YC application, Nov 2026 brief). Check with them before adding
+ * a new one.
+ *
+ * Claim rules: never say validated, detects, predicts falls, FDA or HIPAA; the
+ * phone check-in call is not live; no sleep tracking; no Garmin (agreement §8.4
+ * bans publicity without Garmin's approval).
  */
 
 import { brand } from "./site";
@@ -19,160 +23,164 @@ export const links = {
 
 export const proof = [
   { value: "201", label: "people using Aeyron" },
-  { value: "2", label: "signed clinical LOIs: Red Cross at Walter Reed and Aster CMI" },
-  { value: "287+", label: "conversations with patients, care partners and clinicians" },
+  { value: "2", label: "signed letters of intent from clinical partners: Red Cross at Walter Reed and Aster CMI" },
+  { value: "287+", label: "conversations with people with Parkinson's, caregivers and clinicians" },
 ];
 
-export type Need = { id: NeedId; title: string; body: string };
 export type NeedId = "falls" | "nights" | "medications" | "visits" | "caregiver_load";
+export type Need = { id: NeedId; title: string; body: string };
 
 export const needs: Need[] = [
   {
     id: "falls",
-    title: "Falls and walking",
-    body: "Walking speed, step length and balance-related changes come from Apple Health and are compared with their own usual. When walking slowly changes over weeks, you see it instead of guessing. The weekly call asks about near-falls and freezing.",
-  },
-  {
-    id: "nights",
-    title: "Nights and sleep",
-    body: "Sleep from the watch, night-time phone activity, and a few questions about nights, naps and energy. Hard nights stop being a blur you try to remember later.",
+    title: "Walking",
+    body: "Aeyron looks at walking speed and step length from Apple's Health app and compares them with their own normal. If walking slows over days or weeks, it shows in the weekly update, so you can raise it with their doctor.",
   },
   {
     id: "medications",
     title: "Medications",
-    body: "One tap for “taken now” against their own schedule, shown next to how the day went. Medication names stay on the phone.",
+    body: "One tap logs each dose, with reminders, and you can see doses next to how the day went. The names of their medicines stay on their phone.",
   },
   {
     id: "caregiver_load",
     title: "Caregiver strain",
-    body: "Nothing for them to log and nothing for you to chase. A plain weekly update reaches the family, so keeping everyone informed doesn't all fall on you.",
+    body: "You don't have to keep asking how they are. The family members they choose get a plain weekly update by email, so keeping everyone informed doesn't all fall on you. A person on our team checks each update before it goes out.",
   },
   {
     id: "visits",
     title: "Doctor visits",
-    body: "Walk in with a short report organised the way neurologists think: what changed, what stayed the same, and how many days of data back each point. No more rebuilding months from memory.",
+    body: "Walk in with a short summary of what changed since the last visit, so the appointment starts from facts instead of memory.",
   },
 ];
 
 export const testflightSteps = [
   {
+    title: "Ask them first",
+    body: "It's their phone and their data. Sit down together and set it up with their OK.",
+  },
+  {
     title: "Get TestFlight",
-    body: "On the iPhone, install TestFlight from the App Store. It's Apple's free app for trying new apps early.",
+    body: "On their iPhone, search the App Store for TestFlight and install it. It's Apple's free app for early versions of new apps.",
   },
   {
     title: "Open our invite",
-    body: "Open the Aeyron invite link on that iPhone and tap Accept.",
+    body: "Open the Aeyron invite link on that iPhone, then tap Accept and Install.",
   },
   {
-    title: "Install Aeyron",
-    body: "Tap Install, open Aeyron, and follow the short setup. It starts learning their usual right away.",
+    title: "They sign in and choose",
+    body: "They create their own account and decide what to share, and with whom. Aeyron starts learning their normal in the first few days and gets better over the first few weeks.",
   },
 ];
 
 export const steps = [
   {
-    title: "Capture everyday signals",
-    body: "Walking, activity and sleep from iPhone and Apple Watch, typing rhythm and hand steadiness, short check-ins and medication taps. Nothing to log.",
+    title: "Everyday signals",
+    body: "Walking from Apple's Health app, how steady their hand is while holding the phone, and typing rhythm from the optional Aeyron keyboard, which records timing only, never the words. Plus a one-minute check-in in the app and one tap per dose.",
   },
   {
-    title: "Learn their usual",
-    body: "Over the first few weeks Aeyron learns each person's own range, then flags sustained change with a confidence level. A normal day for one person can be a hard week for another.",
+    title: "Their own normal",
+    body: "Over the first few weeks Aeyron learns what's usual for this one person, then compares each day only with them. A normal day for one person can be a hard week for another.",
   },
   {
-    title: "Share the right next step",
-    body: "A practical prompt for the person, a plain weekly update for family, and a structured report for the neurologist. Each one only with consent.",
+    title: "Who sees what",
+    body: "Plain words in the app for them, a weekly update for the family they choose, and a short summary for the neurologist they connect.",
   },
 ];
 
-export const callPoints = [
-  "About once a week, on their regular phone line. No app to open and nothing to read, which matters with tremor, low vision or low comfort with technology.",
-  "A natural five-minute conversation about how the week went: mood, sleep, thinking and daily life.",
-  "It gets shorter over time. When the phone and watch already answer a topic, the call moves on to what changed.",
-  "If someone mentions an emergency, such as a fall they can't get up from, they are directed to 911 straight away and our team is alerted.",
+/** What happens when something changes: answers "will it tell me if Mom falls?" plainly. */
+export const changePoints = [
+  "When something stays different from their normal, Aeyron says so in the app in plain words, and how many days of readings that's based on.",
+  "The family members they chose get a plain weekly update that says how the week went, including when they've been less active than usual.",
+  "If they've connected a neurologist, it's in the summary before the next visit.",
+  "Aeyron looks for slow changes, not emergencies. It isn't a fall alarm. If someone falls or is hurt, call 911.",
 ];
 
 export const clinicianPoints = [
   {
-    title: "Mirrors the MDS-UPDRS",
-    body: "Four sections that follow the four parts of the scale, under plain headings.",
+    title: "What changed since last time",
+    body: "Walking, hand steadiness, typing rhythm, check-ins and medication logs, each compared with the patient's own baseline.",
   },
   {
-    title: "Every change shows its evidence",
-    body: "Same, better, worse or not enough data, with the number of good-data days behind it. Missing days are never counted as zero.",
+    title: "How much data is behind it",
+    body: "Each change shows how many days of readings it's based on. Missing days are never counted as zero.",
   },
   {
-    title: "Parts I and II between visits",
-    body: "A weekly conversational call covers non-motor and motor experiences of daily living, combined per topic with walking, typing and hand-steadiness measures.",
+    title: "Patient-controlled",
+    body: "You see only what the patient chose to share, after they enter your invitation code. They can disconnect at any time, and every view is logged.",
   },
   {
-    title: "Patient-controlled sharing",
-    body: "Every clinician link needs the person's consent and can be revoked at any time.",
+    title: "Less work, not more",
+    body: "A short summary before the visit instead of another dashboard to check.",
   },
 ];
 
 export const exampleReport = {
-  header: "Example patient · 3 months · readings on 82 of 91 days",
+  header: "Example patient · last 12 weeks · readings on 78 of 84 days",
   rows: [
-    { area: "Daily life (non-motor)", status: "Same" },
-    { area: "Daily motor tasks: walking speed lower over 4 weeks", status: "Worse" },
-    { area: "Motor signs measured at home", status: "Same" },
-    { area: "Fluctuations", status: "Not enough data" },
+    { area: "Walking speed: lower for 4 weeks", status: "Worse" },
+    { area: "Hand steadiness", status: "Same" },
+    { area: "Typing rhythm", status: "Same" },
+    { area: "Medication logs", status: "Not enough data" },
   ],
 } as const;
 
 export const pilots =
-  "Clinical pilots with a movement-disorder neurologist at a US academic medical center, measured against clinician-rated MDS-UPDRS, and with a university neuroscience lab in Canada.";
+  "We're designing studies with movement-disorder neurologists in the US and a Parkinson's mobility lab in Canada.";
 
 export const privacyPoints = [
-  "Nothing is uploaded until the person turns sharing on.",
-  "Family and clinician links each need consent and can be revoked.",
-  "Medication names and typed text stay on the phone. The keyboard records key timing only, never the words.",
-  "Voice is off until the person turns it on. Aeyron never listens in the background.",
-  "Data is stored in the United States.",
+  "Aeyron goes on their phone, with their own account and their agreement.",
+  "Nothing is uploaded until they turn sharing on.",
+  "Each family member and clinician needs their yes, and they can remove anyone at any time.",
+  "Medication names and typed words stay on the phone. Only daily summaries are shared, such as walking, doses logged and check-in answers.",
+  "They can download or delete their data whenever they want. It's stored in the United States.",
 ];
 
 export const team = [
   {
     name: "Pingash Vohra",
     role: "Co-founder & CEO",
-    bio: "Computer science, University of Waterloo. Software engineer at early-stage startups including Booked AI, with voice-systems experience.",
+    bio: "Computer science, University of Waterloo. Builds voice agents at Booked AI.",
   },
   {
     name: "Vansh Jain",
     role: "Co-founder & CTO",
-    bio: "Computer science, University of Waterloo. Engineering roles at E3 Group, AMD, Microsoft and Mercor.",
+    bio: "Computer science, University of Waterloo. Engineering at Microsoft, AMD, Mercor and E3. Built the app and the engine that learns each person's normal.",
   },
   {
     name: "Siddharth Kwatra",
     role: "Co-founder & COO",
-    bio: "Finance and business, George Washington University. Former Federal Reserve Board research analyst.",
+    bio: "Finance and business, George Washington University. Former Federal Reserve Board research analyst. Leads clinical partnerships and study planning.",
   },
 ];
 
 export const faqs = [
   {
     q: "How do we try it today?",
-    a: "The iPhone app is in App Store review. Until it's out, you can install it today through TestFlight, Apple's app for trying new apps early. It takes about five minutes.",
+    a: "Aeyron is in review for the App Store. Until it's out, you install it through TestFlight, Apple's free app for early versions. With their OK, setting it up together on their iPhone takes about five minutes.",
+  },
+  {
+    q: "Does my family member have to agree?",
+    a: "Yes. Aeyron runs on their phone, under their own account. They choose what to share and with whom, and they can stop sharing or delete everything at any time.",
+  },
+  {
+    q: "Will it tell me if Mom falls?",
+    a: "Not as it happens. Aeyron isn't a fall alarm or an emergency service. It looks for slower changes over days and weeks, like walking getting harder, so you can act early. If you need to know the moment someone falls, use a medical alert button. In an emergency, call 911.",
   },
   {
     q: "Do we need an Apple Watch?",
-    a: "No. Aeyron works with an iPhone alone. A watch adds the hours when the phone sits on a table, and both feed the same record.",
+    a: "No. An iPhone is enough. If they wear an Apple Watch, Apple's Health app adds its walking data too.",
   },
   {
     q: "What about Android?",
-    a: "Android is in progress. Join the waitlist and we'll tell you as soon as it's ready.",
+    a: "Android is on the way. Join the waitlist and we'll tell you as soon as it's ready.",
   },
   {
     q: "What does it cost?",
     a: "Nothing. Everything is free right now.",
   },
   {
-    q: "Who can see the data?",
-    a: "Only the people the person chooses. Nothing leaves the phone until sharing is on, every family or clinician link needs consent, and any link can be revoked.",
-  },
-  {
     q: "Does Aeyron diagnose Parkinson's?",
-    a: "No. Aeyron is a general-wellness product that shows what changed between visits, so you and the care team can decide what to do. Clinical measures follow the FDA pathway as they are validated.",
+    a: "No. Aeyron doesn't diagnose or treat anything. It helps the person, their family and their care team see what changed between visits.",
   },
 ];
 
@@ -185,9 +193,10 @@ export const roles = [
 
 export type RoleId = (typeof roles)[number]["id"];
 
+// The waitlist asks what worries people. These are their answers, not product claims.
 export const worryOptions: ReadonlyArray<{ id: NeedId | "other"; label: string }> = [
   { id: "falls", label: "Falls" },
-  { id: "nights", label: "Nights and sleep" },
+  { id: "nights", label: "Hard nights" },
   { id: "medications", label: "Medications" },
   { id: "caregiver_load", label: "Caregiver strain" },
   { id: "visits", label: "Doctor visits" },
