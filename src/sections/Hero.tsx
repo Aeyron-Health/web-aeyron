@@ -8,6 +8,7 @@ import {
 } from "framer-motion";
 import { Section } from "../components/Section";
 import { Button } from "../components/Button";
+import { AppStoreButton } from "../components/AppStoreButton";
 import { CinematicVideo } from "../components/CinematicVideo";
 import { SignalWave } from "../components/SignalWave";
 import { Magnetic } from "../components/Magnetic";
@@ -212,10 +213,11 @@ export function Hero() {
               className="mt-9 flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-4"
             >
               <Magnetic strength={0.25}>
-                <Button variant="primary" href="#cta">
-                  Get early access
-                </Button>
+                <AppStoreButton className="w-full sm:w-auto" />
               </Magnetic>
+              <Button variant="primary" href="#cta">
+                Join the waitlist
+              </Button>
               <Button variant="ghost" tone="dark" href="#audiences">
                 For clinicians
               </Button>

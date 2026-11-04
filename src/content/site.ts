@@ -14,6 +14,7 @@ export const brand = {
   taglineSub: "The hours between visits, finally seen.",
   investorEmail: "aeyron7hq@gmail.com",
   contactEmail: "aeyron7hq@gmail.com",
+  appStoreUrl: "https://apps.apple.com/app/aeyron/id6806319683",
 };
 
 export const nav = {
@@ -25,7 +26,8 @@ export const nav = {
     { label: "Who it's for", href: "#audiences" },
     { label: "Roadmap", href: "#roadmap" },
   ],
-  cta: { label: "Get early access", href: "#cta" },
+  cta: { label: "Join the waitlist", href: "#cta" },
+  contact: { label: "Contact us", href: "mailto:aeyron7hq@gmail.com" },
 };
 
 export type Measurement = {
