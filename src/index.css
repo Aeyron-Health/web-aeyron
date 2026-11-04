@@ -21,7 +21,6 @@
   --color-ink: oklch(0.21 0.021 255); /* primary text on light */
   --color-ink-soft: oklch(0.455 0.022 255); /* muted text on light (>=4.5:1 on canvas) */
   --color-ink-faint: oklch(0.62 0.018 255); /* captions / least emphasis (use sparingly, large only) */
-  --color-navy: #123067; /* app brand navy (apps/mobile src/brand.ts) */
 
   /* ---- Mist / text on dark ---- */
   --color-mist: oklch(0.965 0.005 255); /* primary text on dark */
@@ -178,63 +177,5 @@
     to {
       transform: translateX(-50%);
     }
-  }
-}
-
-/* =========================================================================
-   Home page buttons (plain CSS so links and buttons share one look)
-   ========================================================================= */
-@layer components {
-  .btn {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.5rem;
-    min-height: 52px;
-    padding-inline: 1.5rem;
-    border-radius: 999px;
-    font-weight: 600;
-    font-size: 1rem;
-    line-height: 1.2;
-    text-align: center;
-    transition: background-color 150ms var(--ease-out-quint), border-color 150ms var(--ease-out-quint),
-      transform 150ms var(--ease-out-quint);
-  }
-  .btn:active {
-    transform: scale(0.98);
-  }
-  .btn:disabled {
-    opacity: 0.6;
-    cursor: progress;
-  }
-  .btn-primary {
-    background: var(--color-signal);
-    color: white;
-    box-shadow: 0 8px 24px -10px oklch(0.565 0.188 255 / 0.65);
-  }
-  .btn-primary:hover {
-    background: var(--color-signal-deep);
-  }
-  .btn-dark {
-    background: var(--color-navy);
-    color: white;
-  }
-  .btn-dark:hover {
-    background: var(--color-ink);
-  }
-  .btn-ghost {
-    border: 1.5px solid var(--color-line-strong);
-    background: var(--color-paper);
-    color: var(--color-ink);
-  }
-  .btn-ghost:hover {
-    border-color: var(--color-signal);
-  }
-  .btn-on-dark {
-    border: 1.5px solid oklch(1 0 0 / 0.28);
-    color: white;
-  }
-  .btn-on-dark:hover {
-    background: oklch(1 0 0 / 0.1);
   }
 }

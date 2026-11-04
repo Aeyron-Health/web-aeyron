@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 90" role="img" aria-label="Y Combinator Summer School">
+  <g transform="translate(20,18)">
+    <rect x="0" y="0" width="54" height="54" fill="#F26522" rx="3"/>
+    <text x="27" y="40" text-anchor="middle" fill="#FFFFFF" font-family="'Playfair Display', serif" font-weight="700" font-size="36">Y</text>
+  </g>
+  <g fill="#FAFAFA" font-family="'Space Mono', monospace">
+    <text x="86" y="36" font-size="13" font-weight="700" letter-spacing="2">Y COMBINATOR</text>
+    <text x="86" y="56" font-size="14" font-weight="700" letter-spacing="2" fill="#F26522">SUMMER SCHOOL</text>
+  </g>
+</svg>
