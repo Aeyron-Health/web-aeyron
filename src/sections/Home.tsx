@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { brand } from "../content/site";
 import {
-  callPoints,
+  changePoints,
   clinicianPoints,
   exampleReport,
   faqs,
@@ -79,10 +79,10 @@ function Header() {
 /** Synthetic weekly family update, styled like the app. */
 function FamilyUpdateCard() {
   const rows = [
-    { label: "Walking", detail: "A little slower than his usual for 2 weeks", tone: "worse" },
-    { label: "Nights", detail: "Up more than usual on 3 of 7 nights", tone: "worse" },
-    { label: "Medications", detail: "19 of 21 doses tapped on time", tone: "same" },
-    { label: "Weekly call", detail: "Mentioned freezing at the kitchen doorway", tone: "note" },
+    { label: "Walking", detail: "Slower than his normal for 2 weeks", tone: "worse" },
+    { label: "Hand steadiness", detail: "About his usual", tone: "same" },
+    { label: "Medications", detail: "19 of 21 doses logged", tone: "same" },
+    { label: "Check-ins", detail: "\u201cWalking took real effort\u201d on 3 days", tone: "note" },
   ] as const;
   const dot = { worse: "bg-attention", same: "bg-vital", note: "bg-signal" } as const;
   return (
@@ -108,7 +108,7 @@ function FamilyUpdateCard() {
           </ul>
           <div className="mt-4 rounded-2xl bg-navy p-4 text-white">
             <p className="text-xs font-semibold uppercase tracking-wider text-white/70">Next step</p>
-            <p className="mt-1 text-[0.95rem] leading-snug">Worth raising walking and nights at the next neurology visit. The report is ready to share.</p>
+            <p className="mt-1 text-[0.95rem] leading-snug">Worth mentioning walking at the next neurology visit. A short summary is ready to share.</p>
           </div>
         </div>
       </div>
@@ -122,14 +122,14 @@ function Hero() {
       <div className="absolute inset-x-0 top-0 -z-10 h-[620px] bg-[linear-gradient(180deg,oklch(0.95_0.03_255),transparent)]" />
       <div className="shell grid items-center gap-12 pb-16 pt-10 sm:pt-16 lg:grid-cols-[1.1fr_0.9fr] lg:gap-16 lg:pb-24 lg:pt-20">
         <div>
-          <p className="eyebrow text-signal-deep">For families and neurologists</p>
+          <p className="eyebrow text-signal-deep">Parkinson's, between doctor visits</p>
           <h1 className="mt-4 text-[2.6rem] leading-[1.02] tracking-[-0.03em] text-ink sm:text-6xl lg:text-[4.4rem]">
-            See the days between doctor visits.
+            Know when something changes.
           </h1>
           <p className="mt-6 max-w-xl text-lg leading-relaxed text-ink-soft sm:text-xl">
-            Parkinson's changes hour to hour, but doctors see it a few times a year. Aeyron turns the iPhone and Apple Watch
-            your family already owns into a clear picture of walking, nights, medications and how the week really went,
-            shared with family and the neurologist.
+            Aeyron learns a person's own normal from their iPhone: how they walk, how steady their hand is, the rhythm of
+            their typing, plus a one-minute check-in. When something drifts, the family they choose hear about it in plain
+            words, and their neurologist gets a short summary before the visit.
           </p>
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
             <a href="#try" className="btn btn-primary">
@@ -140,7 +140,7 @@ function Hero() {
             </a>
           </div>
           <p className="mt-4 text-[0.95rem] text-ink-soft">
-            Everything is free right now. Nothing to buy, nothing to log. On Android? Join the waitlist.{" "}
+            Free right now. iPhone only for now, no watch needed. On Android? Join the waitlist.{" "}
             <a href={links.bookCall} className="font-medium text-signal-deep underline underline-offset-4">
               Or book a 15-minute call
             </a>
@@ -171,12 +171,12 @@ function Paths() {
   const paths = [
     {
       who: "I'm caring for someone",
-      line: "Know how the week really went, and walk into appointments prepared.",
+      line: "Know when to step in, and walk into appointments prepared.",
       href: "#families",
     },
     {
       who: "I'm a clinician",
-      line: "The few things that changed between visits, organised like the MDS-UPDRS.",
+      line: "A short summary of what changed between visits, before the patient walks in.",
       href: "#clinicians",
     },
   ];
@@ -210,10 +210,10 @@ function TryIt() {
       <div className="shell grid gap-10 lg:grid-cols-[0.85fr_1.15fr] lg:gap-16">
         <div>
           <p className="eyebrow text-signal-hi">Try it today</p>
-          <h2 className="mt-3 text-[2.1rem] leading-[1.06] tracking-[-0.025em] sm:text-5xl">Free on iPhone, in about five minutes.</h2>
+          <h2 className="mt-3 text-[2.1rem] leading-[1.06] tracking-[-0.025em] sm:text-5xl">Set it up together, in about five minutes.</h2>
           <p className="mt-5 text-lg text-white/80">
-            The App Store release is in review. Until then, families install Aeyron through TestFlight, Apple's own app for
-            trying new apps early.
+            Aeyron is free on iPhone. It's in review for the App Store, so for now it installs through TestFlight, Apple's
+            free app for early versions. Sit down with them: it goes on their phone, with their agreement.
           </p>
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
             <a href={links.testflight} className="btn btn-primary" target="_blank" rel="noopener noreferrer">
@@ -254,11 +254,11 @@ function Families() {
       <div className="shell">
         <p className="eyebrow text-signal-deep">For families</p>
         <h2 className="mt-3 max-w-3xl text-[2.1rem] leading-[1.06] tracking-[-0.025em] text-ink sm:text-5xl">
-          Built around what caregivers worry about most.
+          Built with families, around what worries them most.
         </h2>
         <p className="mt-5 max-w-2xl text-lg text-ink-soft">
-          Caregivers keep telling us the same things: falls, hard nights, medications, and the strain of carrying it all
-          alone. Aeyron is built around those.
+          Families are our first users. In our conversations they keep naming the same worries: falls, medications, getting
+          the most out of short appointments, and the strain of carrying it all alone.
         </p>
         <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {needs.map(need => (
@@ -274,9 +274,9 @@ function Families() {
           ))}
           <article className="flex flex-col justify-between rounded-[var(--radius-card)] bg-navy p-6 text-white">
             <div>
-              <h3 className="text-xl">Start this week</h3>
+              <h3 className="text-xl">Set it up together</h3>
               <p className="mt-2 leading-relaxed text-white/80">
-                Install on their iPhone in a few minutes. It learns their usual over the first few weeks.
+                It goes on their iPhone with their agreement. They sign in, choose who sees what, and can stop at any time.
               </p>
             </div>
             <div className="mt-6 flex flex-col gap-3">
@@ -300,11 +300,10 @@ function HowItWorks() {
       <div className="shell">
         <p className="eyebrow text-signal-deep">How it works</p>
         <h2 className="mt-3 max-w-3xl text-[2.1rem] leading-[1.06] tracking-[-0.025em] text-ink sm:text-5xl">
-          Nothing to buy. Nothing to remember.
+          It learns their normal, then notices drift.
         </h2>
         <p className="mt-5 max-w-2xl text-lg text-ink-soft">
-          Aeyron works with an iPhone alone. Add an Apple Watch and it covers the hours the phone sits on a table, joined
-          into one personal record.
+          Nothing to buy and almost nothing to do. Aeyron works from the iPhone they already carry.
         </p>
         <ol className="mt-10 grid gap-4 lg:grid-cols-3">
           {steps.map((step, index) => (
@@ -318,11 +317,11 @@ function HowItWorks() {
 
         <div className="mt-6 grid gap-8 rounded-[var(--radius-card)] border border-line bg-paper p-6 sm:p-10 lg:grid-cols-[0.8fr_1.2fr] lg:gap-12">
           <div>
-            <p className="eyebrow text-signal-deep">The weekly call</p>
-            <h3 className="mt-3 text-3xl leading-tight text-ink">A five-minute phone call fills in what sensors can't see.</h3>
+            <p className="eyebrow text-signal-deep">When something changes</p>
+            <h3 className="mt-3 text-3xl leading-tight text-ink">What actually happens, and who hears about it.</h3>
           </div>
           <ul className="space-y-4">
-            {callPoints.map(point => (
+            {changePoints.map(point => (
               <li key={point} className="flex gap-3 leading-relaxed text-ink-soft">
                 <span className="mt-2.5 h-1.5 w-1.5 shrink-0 rounded-full bg-signal" aria-hidden="true" />
                 {point}
@@ -344,7 +343,7 @@ function ReportCard() {
   return (
     <figure className="rounded-[var(--radius-card)] border border-white/12 bg-white/[0.04] p-5 sm:p-7">
       <div className="flex items-center justify-between gap-3">
-        <p className="eyebrow text-signal-hi">Clinician report</p>
+        <p className="eyebrow text-signal-hi">Visit summary</p>
         <span className="rounded-full px-2.5 py-1 text-xs text-white/70 ring-1 ring-white/20">Example</span>
       </div>
       <p className="mt-3 text-[0.95rem] text-white/75">{exampleReport.header}</p>
@@ -356,7 +355,7 @@ function ReportCard() {
           </li>
         ))}
       </ul>
-      <figcaption className="mt-4 text-sm text-white/60">First page of the structured report, simplified.</figcaption>
+      <figcaption className="mt-4 text-sm text-white/60">Simplified example of the summary a neurologist sees.</figcaption>
     </figure>
   );
 }
@@ -368,11 +367,11 @@ function Clinicians() {
         <div>
           <p className="eyebrow text-signal-hi">For neurologists and clinics</p>
           <h2 className="mt-3 text-[2.1rem] leading-[1.06] tracking-[-0.025em] sm:text-5xl">
-            The few things that changed, in the framework you already use.
+            A short summary before the visit, not another dashboard.
           </h2>
           <p className="mt-5 max-w-xl text-lg text-white/80">
-            Neurologists told us they don't want more data. Aeyron sends a short report of what changed between visits and
-            how far to trust each finding.
+            Neurologists told us they don't want more data. They want the few things that changed between visits, and how
+            far to trust each one.
           </p>
           <div className="mt-10 grid gap-6 sm:grid-cols-2">
             {clinicianPoints.map(point => (
@@ -410,8 +409,7 @@ function Privacy() {
             Their data, their choice.
           </h2>
           <p className="mt-5 text-lg text-ink-soft">
-            Changes are described against the person's own range, calmly. A low reading leads to a gentle prompt or an
-            earlier check-in, never an alarm.
+            The person using Aeyron decides what is shared and with whom, and can change their mind at any time.
           </p>
         </div>
         <ul className="grid gap-3">
@@ -462,7 +460,11 @@ function Team() {
     <section className="py-16 sm:py-20">
       <div className="shell">
         <p className="eyebrow text-signal-deep">The team</p>
-        <h2 className="mt-3 text-3xl tracking-[-0.02em] text-ink sm:text-4xl">Built with patients, care partners and clinicians.</h2>
+        <h2 className="mt-3 text-3xl tracking-[-0.02em] text-ink sm:text-4xl">A student-led team, building with families first.</h2>
+        <p className="mt-4 max-w-2xl text-lg text-ink-soft">
+          Three founders from the University of Waterloo and George Washington University. Parkinson's comes first, and
+          every screen was shaped by 287+ conversations with people with Parkinson's, caregivers and clinicians.
+        </p>
         <div className="mt-8 grid gap-4 md:grid-cols-3">
           {team.map(person => (
             <div key={person.name} className="rounded-[var(--radius-card)] border border-line bg-paper p-6">
@@ -512,7 +514,7 @@ function Footer() {
       <div className="shell grid gap-8 sm:grid-cols-[1fr_auto] sm:items-end">
         <div>
           <Logo className="text-white" />
-          <p className="mt-3 max-w-md">Everyday Parkinson's monitoring from the iPhone and Apple Watch people already own.</p>
+          <p className="mt-3 max-w-md">Notices when Parkinson's changes between doctor visits, from the iPhone people already carry.</p>
           <a href={links.email} className="mt-3 inline-block text-white underline underline-offset-4">
             {brand.contactEmail}
           </a>
