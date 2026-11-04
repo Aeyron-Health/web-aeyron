@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="120" height="120">
+  <rect width="120" height="120" fill="#FFFFFF" rx="0"/>
+  <!-- Angular R mark -->
+  <polygon points="28,20 28,72 42,72 42,52 58,72 74,72 54,46 72,20" fill="#E8305A"/>
+  <!-- REFRACTION text -->
+  <text x="60" y="92" font-family="Arial, Helvetica, sans-serif" font-size="7.5" font-weight="700" fill="#1A1A1A" text-anchor="middle" letter-spacing="1.2">REFRACTION</text>
+  <text x="60" y="104" font-family="Arial, Helvetica, sans-serif" font-size="7" font-weight="600" fill="#1A1A1A" text-anchor="middle" letter-spacing="1.5">INNOVATION HUB</text>
+</svg>
