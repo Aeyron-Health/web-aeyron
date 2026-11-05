@@ -618,25 +618,25 @@ function ClinicianMockup() {
 type Shot = { src: string; alt: string; label: string; fit: "cover" | "contain" };
 const shots: Shot[] = [
   {
-    src: "/screens/app-vitals.png",
+    src: "/screens/app-vitals.webp",
     alt: "Aeyron app vitals screen showing daily health signals",
     label: "Daily vitals",
     fit: "cover",
   },
   {
-    src: "/screens/app-telemetry.png",
+    src: "/screens/app-telemetry.webp",
     alt: "Aeyron app telemetry screen showing motion-sensor signal capture",
     label: "Live telemetry",
     fit: "cover",
   },
   {
-    src: "/screens/app-fidelity.png",
+    src: "/screens/app-fidelity.webp",
     alt: "Aeyron app signal-fidelity screen",
     label: "Signal fidelity",
     fit: "cover",
   },
   {
-    src: "/screens/app-impact.png",
+    src: "/screens/app-impact.webp",
     alt: "Aeyron app impact summary screen",
     label: "Your impact",
     fit: "contain",

@@ -19,7 +19,6 @@ export function AppStoreButton({
       target="_blank"
       rel="noopener noreferrer"
       onClick={onClick}
-      aria-label="Download Aeyron on the App Store"
       className={`inline-flex items-center justify-center gap-2.5 rounded-full border border-white/20 bg-black font-medium text-white transition-[transform,background-color] duration-150 hover:bg-night-raise active:scale-[0.97] focus-visible:outline-2 focus-visible:outline-offset-3 ${
         compact ? "min-h-[42px] px-5 text-[0.9rem]" : "min-h-[48px] px-6 text-[0.95rem]"
       } ${className}`}
@@ -28,6 +27,7 @@ export function AppStoreButton({
         <path d="M12 3v12m0 0-5-5m5 5 5-5M5 20h14" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
       </svg>
       Download on the App Store
+      <span className="sr-only"> (opens in a new tab)</span>
     </a>
   );
 }
