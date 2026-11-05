@@ -119,7 +119,8 @@ function Section({ title, children }: { title: string; children: ReactNode }) {
   );
 }
 
-const UPDATED = "October 28, 2026";
+const UPDATED = "November 5, 2026";
+const TERMS_UPDATED = "October 28, 2026";
 
 function Email() {
   return (
@@ -179,7 +180,7 @@ function PrivacyPage() {
             <Bullets items={[
               "To show you your own trends.",
               "To share your data with a clinician or family member, only if you choose to.",
-              "To send you sign-in emails.",
+              "To send you sign-in emails, and occasional reminder emails, for example when we haven't received data from your phone in a couple of days.",
               "To run the service, keep it secure, and fix problems.",
               "To check that Aeyron's measurements work as intended.",
             ]} />
@@ -191,7 +192,7 @@ function PrivacyPage() {
             <Bullets items={[
               <><strong>Supabase Inc.</strong> (USA): our database and sign-in system. It runs on Amazon Web Services in the us-east-2 region, in Ohio, USA.</>,
               <><strong>Railway Corp.</strong> (USA): runs our app server in the western United States. It does not store our database. It keeps server logs.</>,
-              <><strong>Resend</strong> (USA): sends our sign-in emails, so it sees your email address.</>,
+              <><strong>Resend</strong> (USA): sends our sign-in emails and occasional reminder emails, for example when we haven't received data from your phone in a couple of days, so it sees your email address.</>,
               <><strong>Vercel Inc.</strong> (USA): hosts this website. It processes basic request details, such as your IP address, to run and protect the site.</>,
               <><strong>Garmin Ltd. and its subsidiaries</strong> (Switzerland and USA): only if you connect a Garmin account. Garmin sends your Garmin data to us. We do not send your data to Garmin.</>,
               <><strong>Apple Inc.</strong>: delivers the app through TestFlight and provides Apple Health and Sign in with Apple. Apple does not receive the data the app sends to us. Apple's own privacy policy covers what Apple collects.</>,
@@ -296,7 +297,7 @@ function TermsPage() {
       copy={{
         eyebrow: "Terms of use",
         title: "Use Aeyron carefully and stay in control.",
-        intro: `These terms apply when you use the Aeyron app or this website. By using Aeyron, you agree to them. Last updated ${UPDATED}.`,
+        intro: `These terms apply when you use the Aeyron app or this website. By using Aeyron, you agree to them. Last updated ${TERMS_UPDATED}.`,
         children: <>
           <Section title="Who you are agreeing with">
             <p>These terms are between you and Aeyron Health Inc., 555 Bryant Street, San Francisco, CA 94107, USA.</p>
